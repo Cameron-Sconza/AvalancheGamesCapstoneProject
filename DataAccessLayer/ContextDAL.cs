@@ -27,7 +27,7 @@ namespace DataAccessLayer
             //
             //get = return the property value _connectionstring 
             get { return _connection.ConnectionString; }
-            //set = assigning new value to _connectionstring
+            //set = assigning value to _connectionstring
             set { _connection.ConnectionString = value; }
         }
         //new method used to check if connected
@@ -89,6 +89,48 @@ namespace DataAccessLayer
 
             }
             return propsedReturnValue;
+        }
+        public int GenerateStoredProcedureNotFound()
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                //the name of the stored procedure is incorrect, so it should throw and exception
+                using (SqlCommand command = new SqlCommand("xxxx", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    object answer = command.ExecuteScalar();
+                    proposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public int GenerateParametersNotIncluded()
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                //the parameter to the stored procedure is incorrect so it should thrown an exception
+                using(SqlCommand command = new SqlCommand("FindRoleByRoleID", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    //the following line is where the parapeter name is incorrect
+                    command.Parameters.AddWithValue("@xxxx", 1);
+                    object answer = command.ExecuteReader();
+                    proposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
         }
         #endregion
 
@@ -156,6 +198,94 @@ namespace DataAccessLayer
             }
             return proposedReturnValue;
         }
+        public int ObtainRoleCount()
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("ObtainRoleCount", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    object answer = command.ExecuteScalar();
+                    proposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public int CreateRole(string RoleName)
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("CreateRole", _connection ))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@RoleName", RoleName);
+                    command.Parameters.AddWithValue("@RoleID", 0);
+                    command.Parameters["@RoleID"].Direction = System.Data.ParameterDirection.Output;
+                    command.ExecuteNonQuery();
+                    proposedReturnValue = Convert.ToInt32(command.Parameters["@RoleID"].Value);
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public void UpdateRole(int RoleID, string RoleName)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("JustUpdateRole", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@RoleName", RoleName);
+                    command.Parameters.AddWithValue("@RoleID", RoleID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public void DeleteRole(int RoleID)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("DeleteRole", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@RoleID", RoleID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        #endregion
+        #region User Stuff
+        public int CreateUser(string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
+        { }
+        #endregion
+        #region Game Stuff
+        #endregion
+        #region Score Stuff
+        #endregion
+        #region Comment Stuff
+        #endregion
+        #region LogEntries
         #endregion
     }
 }
