@@ -36,7 +36,30 @@ namespace DataAccessLayer
                 return reader.GetString(ordinal);
             }
         }
+        //this method is very similar to the method above it
+        //this method is just get an Int 
+        public int GetInt32OrDefault(SqlDataReader reader, int ordinal, int defaultValue = 0)
 
-        
+        {
+            if (reader.IsDBNull(ordinal))
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return reader.GetInt32(ordinal);
+            }
+        }
+        public DateTime GetDateTimeOrDefault(SqlDataReader reader, int ordinal, DateTime defaultValue)
+        {
+            if (reader.IsDBNull(ordinal))
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return reader.GetDateTime(ordinal);
+            }
+        }
     }
 }

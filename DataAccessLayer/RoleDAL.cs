@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    class RoleDAL
+    public class RoleDAL
     {
         #region Direct Role Properties 
         //Direct role properties 
@@ -23,7 +23,7 @@ namespace DataAccessLayer
             //ToString will now return
             //RoleID: (the id of the role) RoleName: (name of the role)  
             //in {} accessing the properties 
-                return $"RoleID: {RoleID,5} RoleName: {RoleName}";
+            return $"RoleID: {RoleID,5} RoleName: {RoleName}";
         }
     }
 }
