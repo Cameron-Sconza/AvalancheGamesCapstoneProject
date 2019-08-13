@@ -48,6 +48,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleDAL.cs" />
     <Compile Include="RoleMapper.cs" />
+    <Compile Include="ScoreDAL.cs" />
+    <Compile Include="ScoreMapper.cs" />
     <Compile Include="UserDAL.cs" />
     <Compile Include="UserMapper.cs" />
   </ItemGroup>
