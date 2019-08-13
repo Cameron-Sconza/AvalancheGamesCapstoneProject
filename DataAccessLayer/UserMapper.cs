@@ -51,10 +51,11 @@ namespace DataAccessLayer
         public UserDAL UserFromReader(System.Data.SqlClient.SqlDataReader reader)
         {
             UserDAL proposedReturnValue = new UserDAL();
-            // reader["UserID"]  is very slow and makes a lot of garbage
-            // reader[0] makes a lot of garbage
-            // reader.GetInt32(0) is fast, but hard codes the offset to 0
-            // reader.GetInt32(OffsetToUserID) is best and allows verification
+            //reader["UserID"]  is very slow and makes a lot of garbage
+            //reader[0] makes a lot of garbage
+            //reader.GetInt32(0) is fast, but hard codes the offset to 0
+            //reader.GetInt32(OffsetToUserID) is best and allows verification
+            //verifing user userdal from reader 
             proposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
             proposedReturnValue.FirstName = reader.GetString(OffsetToFirstName);
             proposedReturnValue.LastName = reader.GetString(OffsetToLastName);

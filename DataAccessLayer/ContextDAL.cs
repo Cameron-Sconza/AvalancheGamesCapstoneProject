@@ -276,12 +276,349 @@ namespace DataAccessLayer
         }
         #endregion
         #region User Stuff
+        //creating a user (parameters are being called so when a user a created they will be filled)
         public int CreateUser(string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
-        { }
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                //using try catches everywhere!!! this allows exceptions to be thrown and handle them
+                //this ensures the application does not break
+                //ensureconnected is a method literally made in this same level of ContextDAL and will ensure connection
+                EnsureConnected();
+                //using staties is used with an object that implements the Idisposable interface
+                using (SqlCommand command = new SqlCommand("CreateUser", _connection))
+                {
+
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", 0);
+                    command.Parameters.AddWithValue("@FirstName", FirstName);
+                    command.Parameters.AddWithValue("@LastName", LastName);
+                    command.Parameters.AddWithValue("@UserName", UserName);
+                    command.Parameters.AddWithValue("@Email", Email);
+                    command.Parameters.AddWithValue("@PhoneNumber", PhoneNumber);
+                    command.Parameters.AddWithValue("@SALT", SALT);
+                    command.Parameters.AddWithValue("@HASH", HASH);
+                    command.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
+                    command.Parameters.AddWithValue("@RoleID", RoleID);
+                    command.Parameters["@UserID"].Direction = System.Data.ParameterDirection.Output;
+                    command.ExecuteNonQuery();
+                    proposedReturnValue = Convert.ToInt32(command.Parameters["@UserID"].Value);
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public void UpdateUser(int UserID, string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("JustUpdateUser", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@FirstName", FirstName);
+                    command.Parameters.AddWithValue("@LastName", LastName);
+                    command.Parameters.AddWithValue("@UserName", UserName);
+                    command.Parameters.AddWithValue("@Email", Email);
+                    command.Parameters.AddWithValue("@PhoneNumber", PhoneNumber);
+                    command.Parameters.AddWithValue("@SALT", SALT);
+                    command.Parameters.AddWithValue("@HASH", HASH);
+                    command.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
+                    command.Parameters.AddWithValue("@RoleID", RoleID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public void DeleteUser(int UserID)
+        {
+            try
+            {
+                EnsureConnected();
+                using(SqlCommand command = new SqlCommand("DeleteUser", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public UserDAL FindUserByUserID(int UserID)
+        {
+            UserDAL proposedReturnValue = null;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("FineUserByUserID", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        UserMapper mapper = new UserMapper(reader);
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            proposedReturnValue = mapper.UserFromReader(reader);
+                            count++;
+                        }
+                        if (count > 1)
+                        {
+                            throw new Exception($"Found more then 1 User with key {UserID}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public UserDAL FindUserByUserEmail(string Email)
+        {
+            UserDAL proposedReturnValue = null;
+            try
+            {
+                EnsureConnected();
+                using(SqlCommand command = new SqlCommand("FindUserByUserEmail", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Email", Email);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        UserMapper mapper = new UserMapper(reader);
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            proposedReturnValue = mapper.UserFromReader(reader);
+                            count++;
+                        }
+                        if (count > 1)
+                        {
+                            throw new Exception($"Found more than 1 User with key {Email}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<UserDAL> GetUsers(int skip, int take)
+        {
+            List<UserDAL> proposedReturnValue = new List<UserDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetUsers", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        UserMapper mapper = new UserMapper(reader);
+                        while (reader.Read())
+                        {
+                            UserDAL u = mapper.UserFromReader(reader);
+                            proposedReturnValue.Add(u);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+                
+            }
+            return proposedReturnValue;
+        }
+        public List<UserDAL> GetUsersRelatedToRoleID (int RoleID, int skip, int take)
+        {
+            List<UserDAL> proposedReturnValue = new List<UserDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetUsers", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@RoleID", RoleID);
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        UserMapper mapper = new UserMapper(reader);
+                        while (reader.Read())
+                        {
+                            UserDAL u = mapper.UserFromReader(reader);
+                            proposedReturnValue.Add(u);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public int ObtainUserCount()
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("ObtainUserCount",  _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    object answer = command.ExecuteScalar();
+                    proposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
         #endregion
         #region Game Stuff
+        public int CreateGame(string GameName)
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("CreateGame", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@GameName", GameName);
+                    command.Parameters.AddWithValue("@GameID", 0);
+                    command.Parameters["@GameID"].Direction = System.Data.ParameterDirection.Output;
+                    command.ExecuteNonQuery();
+                    proposedReturnValue = Convert.ToInt32(command.Parameters["@GameID"].Value);
+
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+               
+            }
+            return proposedReturnValue;
+        }
+        public void UpdateGame(int GameID, string GameName)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("JustUpdateGames", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@GameName", GameName);
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public void DeleteGame(int GameID)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("DeleteGame", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public GameDAL FindGameByGameID (int GameID)
+        {
+            GameDAL proposedReturnValue = null;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("FindGameByGameID", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        GameMapper mapper = new GameMapper(reader);
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            proposedReturnValue = mapper.GameFromReader(reader);
+                            count++;
+                        }
+                        if (count > 1)
+                        {
+                            throw new Exception($"Found more than 1 Game with key {GameID}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex)
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<GameDAL> GetGames(int skip, int take)
+        {
+            List<GameDAL> proposedReturnValue = new List<GameDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetGames",_connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        GameMapper mapper = new GameMapper(reader);
+                        while (reader.Read())
+                        {
+                            GameDAL g = mapper.GameFromReader(reader);
+                            proposedReturnValue.Add(g);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        
         #endregion
         #region Score Stuff
+
         #endregion
         #region Comment Stuff
         #endregion
