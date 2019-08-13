@@ -581,7 +581,7 @@ namespace DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) when (Log(ex)
+            catch (Exception ex) when (Log(ex))
             {
 
             }
@@ -618,7 +618,212 @@ namespace DataAccessLayer
         
         #endregion
         #region Score Stuff
+        public int CreateScore(string Score, int UserID, int GameID, int AmountPlayed, string Email, string GameName)
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("CreateScore", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Score", Score);
+                    command.Parameters.AddWithValue("@ScoreID", 0);
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.Parameters.AddWithValue("@AmountPlayed", AmountPlayed);
+                    command.Parameters.AddWithValue("@Email", Email);
+                    command.Parameters.AddWithValue("@GameName", GameName);
+                    command.Parameters["@ScoreID"].Direction = System.Data.ParameterDirection.Output;
+                    command.ExecuteNonQuery();
+                    proposedReturnValue = Convert.ToInt32(command.Parameters["@ScoreID"].Value);
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
 
+            }
+            return proposedReturnValue;
+        }
+        public void UpdateScore(int ScoreID, string Score, int UserID, int GameID, int AmountPlayed, string Email, string GameName)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("JustUpdateScores", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@ScoreID", ScoreID);
+                    command.Parameters.AddWithValue("@Score", Score);
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.Parameters.AddWithValue("@AmountPlayed", AmountPlayed);
+                    command.Parameters.AddWithValue("@Email", Email);
+                    command.Parameters.AddWithValue("@GameName", GameName);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public void DeleteScore(int ScoreID)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("DeleteScore", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@ScoreID", ScoreID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+
+        }
+        public ScoreDAL FindScoreByScoreID(int ScoreID)
+        {
+            ScoreDAL proposedReturnValue = null;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("FindScoreByScoreID", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@ScoreID", ScoreID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        ScoreMapper mapper = new ScoreMapper(reader);
+                        int count = 0;
+                        while  (reader.Read())
+                        {
+                            proposedReturnValue = mapper.ScoreFromReader(reader);
+                            count++;
+                        }
+                        if (count > 1)
+                        {
+                            throw new Exception($"Found more than 1 Score with key {ScoreID}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<ScoreDAL> GetScores(int skip, int take)
+        {
+            List<ScoreDAL> proposedReturnValue = new List<ScoreDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetScores", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        ScoreMapper mapper = new ScoreMapper(reader);
+                        while (reader.Read())
+                        {
+                            ScoreDAL s = mapper.ScoreFromReader(reader);
+                            proposedReturnValue.Add(s);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<ScoreDAL> GetScoresRelatedToGameID(int GameID, int skip, int take)
+        {
+            List<ScoreDAL> proposedReturnValue = new List<ScoreDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetScoresRelatedToGameID"))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        ScoreMapper mapper = new ScoreMapper(reader);
+                        while (reader.Read())
+                        {
+                            ScoreDAL s = mapper.ScoreFromReader(reader);
+                            proposedReturnValue.Add(s);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<ScoreDAL> GetScoresRelatedToUserID(int UserID, int skip, int take)
+        {
+            List<ScoreDAL> proposedReturnValue = new List<ScoreDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetScoresRelatedToUserID"))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        ScoreMapper mapper = new ScoreMapper(reader);
+                        while (reader.Read())
+                        {
+                            ScoreDAL s = mapper.ScoreFromReader(reader);
+                            proposedReturnValue.Add(s);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public int ObtainScoreCount()
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("ObtainScoreCount", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    object answer = command.ExecuteScalar();
+                    proposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+
+            return proposedReturnValue;
+        }     
         #endregion
         #region Comment Stuff
         #endregion
