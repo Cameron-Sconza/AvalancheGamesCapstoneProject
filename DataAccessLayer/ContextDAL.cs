@@ -826,8 +826,256 @@ namespace DataAccessLayer
         }     
         #endregion
         #region Comment Stuff
+        public int CreateComment(string GameComment, int UserID, int GameID, bool Liked)
+        {
+            int proposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("CreateComment", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CommentID", 0);
+                    command.Parameters.AddWithValue("@GameComment", GameComment);
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.Parameters.AddWithValue("@Liked", Liked);
+                    command.Parameters["@CommentID"].Direction = System.Data.ParameterDirection.Output;
+                    command.ExecuteNonQuery();
+                    proposedReturnValue = Convert.ToInt32(command.Parameters["@CommentID"].Value);
+
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public void JustUpdateComment(int CommentID, string GameComment, int UserID, int GameID, bool Liked)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("JustUpdateComment", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CommentID", CommentID);
+                    command.Parameters.AddWithValue("@GameComment", GameComment);
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.Parameters.AddWithValue("@Liked", Liked);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public void DeleteComment(int CommentID)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("DeleteComment", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CommentID", CommentID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public CommentDAL FindCommentByCommentID(int CommentID)
+        {
+            CommentDAL proposedReturnValue = null;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("FindCommentByCommentID", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CommentID", CommentID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        CommentMapper mapper = new CommentMapper(reader);
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            proposedReturnValue = mapper.CommentFromReader(reader);
+                            count++;
+                        }
+                        if (count > 1)
+                        {
+                            throw new Exception($"Found more than 1 Comment with key {CommentID}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<CommentDAL> GetComments(int skip, int take)
+        {
+            List<CommentDAL> proposedReturnValue = new List<CommentDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetComments", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        CommentMapper mapper = new CommentMapper(reader);
+                        while (reader.Read())
+                        {
+                            CommentDAL c = mapper.CommentFromReader(reader);
+                            proposedReturnValue.Add(c);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<CommentDAL> GetCommentsRelatedToGameID(int GameID, int skip, int take)
+        {
+            List<CommentDAL> proposedReturnValue = new List<CommentDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetCommentsRelatedToGameID", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@GameID", GameID);
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        CommentMapper mapper = new CommentMapper(reader);
+                        while (reader.Read())
+                        {
+                            CommentDAL c = mapper.CommentFromReader(reader);
+                            proposedReturnValue.Add(c);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
+        public List<CommentDAL> GetCommentsRelatedToUserID(int UserID, int skip, int take)
+        {
+            List<CommentDAL> proposedReturnValue = new List<CommentDAL>();
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("GetCommentsRelatedToUserID", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Take", take);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        CommentMapper mapper = new CommentMapper(reader);
+                        while (reader.Read())
+                        {
+                            CommentDAL c = mapper.CommentFromReader(reader);
+                            proposedReturnValue.Add(c);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedReturnValue;
+        }
         #endregion
         #region LogEntries
+        public int CreateLogEntries(string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
+        {
+            int proposedRetrunValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("CreateLogEntry", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@LogEntryID", 0);
+                    command.Parameters.AddWithValue("@Message", Message);
+                    command.Parameters.AddWithValue("@TimeOfException", TimeOfException);
+                    command.Parameters.AddWithValue("@LogComments", LogComments);
+                    command.Parameters.AddWithValue("@Category", Category);
+                    command.Parameters.AddWithValue("@ErrorLevel", ErrorLevel);
+                    command.Parameters["@LogEntryID"].Direction = System.Data.ParameterDirection.Output;
+                    command.ExecuteNonQuery();
+                    proposedRetrunValue = Convert.ToInt32(command.Parameters["@LogEntryID"].Value);
+
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return proposedRetrunValue;
+        }
+        public void JustUpdateLogEntries(int LogEntryID, string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("JustUpdateLogEntries", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@LogEntryID", LogEntryID);
+                    command.Parameters.AddWithValue("@Message", Message);
+                    command.Parameters.AddWithValue("@TimeOfException", TimeOfException);
+                    command.Parameters.AddWithValue("@LogComments", LogComments);
+                    command.Parameters.AddWithValue("@Category", Category);
+                    command.Parameters.AddWithValue("@ErrorLevel", ErrorLevel);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
+        public void DeleteLogEntry(int LogEntryID)
+        {
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("DeleteLogEntry", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@LogEntryID", LogEntryID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+        }
         #endregion
     }
 }
