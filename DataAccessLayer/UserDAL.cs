@@ -23,7 +23,8 @@ namespace DataAccessLayer
         public DateTime DateOfBirth { get; set; }
         public int RoleID { get; set; }
         #endregion
-        #region Indirect Properties
+        #region Indirect Properties 
+        //from inner join
         //this is needed for showing Role names bc users shouldn't be able to see roleID
         public string RoleName { get; set; }
         #endregion
