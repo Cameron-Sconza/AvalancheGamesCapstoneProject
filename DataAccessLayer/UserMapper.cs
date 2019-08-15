@@ -8,6 +8,7 @@ namespace DataAccessLayer
 {
     public class UserMapper : Mapper
     {
+        //checking shape (column offset) in database
         int OffsetToUserID; //expected to be 0
         int OffsetToFirstName; //expected to be 1
         int OffsetToLastName; //expected to be 2
@@ -64,7 +65,7 @@ namespace DataAccessLayer
             proposedReturnValue.PhoneNumber = reader.GetInt32(OffsetToPhoneNumber);
             proposedReturnValue.SALT = reader.GetString(OffsetToSALT);
             proposedReturnValue.HASH = reader.GetString(OffsetToHASH);
-            proposedReturnValue.DateOfBirth = reader.GetDateTime(OffsetToDateOfBirth);
+            proposedReturnValue.DateOfBirth = this.GetDateTimeOrDefault(reader,OffsetToDateOfBirth,new DateTime(1800,01,01));
             proposedReturnValue.RoleID = reader.GetInt16(OffsetToRoleID);
             proposedReturnValue.RoleName = reader.GetString(OffsetToRoleID);
             return proposedReturnValue;

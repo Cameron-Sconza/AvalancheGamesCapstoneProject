@@ -185,8 +185,8 @@ namespace DataAccessLayer
                         RoleMapper mapper = new RoleMapper(reader);
                         while (reader.Read())
                         {
-                            RoleDAL read = mapper.RoleFromReader(reader);
-                            proposedReturnValue.Add(read);
+                            RoleDAL role = mapper.RoleFromReader(reader);
+                            proposedReturnValue.Add(role);
                         }
                     }
 
@@ -287,6 +287,8 @@ namespace DataAccessLayer
                 //ensureconnected is a method literally made in this same level of ContextDAL and will ensure connection
                 EnsureConnected();
                 //using staties is used with an object that implements the Idisposable interface
+                //using obtain resource, use it, then properly clean it(introduces a new scope into method and newly created object
+                //once leaves scope the newly created object will invoke dispose method 
                 using (SqlCommand command = new SqlCommand("CreateUser", _connection))
                 {
 
@@ -419,24 +421,28 @@ namespace DataAccessLayer
             }
             return proposedReturnValue;
         }
+        //returning a list!!!
         public List<UserDAL> GetUsers(int skip, int take)
         {
+            //making a new list called proposedreturnValue
             List<UserDAL> proposedReturnValue = new List<UserDAL>();
             try
             {
-                EnsureConnected();
+                EnsureConnected();//helper method
+                //command is heavy
                 using (SqlCommand command = new SqlCommand("GetUsers", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@Skip", skip);
+                    command.Parameters.AddWithValue("@Skip", skip);//skip and take used for paging
                     command.Parameters.AddWithValue("@Take", take);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        //verifing the shape 
                         UserMapper mapper = new UserMapper(reader);
                         while (reader.Read())
                         {
-                            UserDAL u = mapper.UserFromReader(reader);
-                            proposedReturnValue.Add(u);
+                            UserDAL user = mapper.UserFromReader(reader);
+                            proposedReturnValue.Add(user);
                         }
                     }
                 }
@@ -445,6 +451,7 @@ namespace DataAccessLayer
             {
                 
             }
+            //populated list
             return proposedReturnValue;
         }
         public List<UserDAL> GetUsersRelatedToRoleID (int RoleID, int skip, int take)
@@ -453,7 +460,7 @@ namespace DataAccessLayer
             try
             {
                 EnsureConnected();
-                using (SqlCommand command = new SqlCommand("GetUsers", _connection))
+                using (SqlCommand command = new SqlCommand("GetUsersRelatedToUserID", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@RoleID", RoleID);
@@ -464,8 +471,8 @@ namespace DataAccessLayer
                         UserMapper mapper = new UserMapper(reader);
                         while (reader.Read())
                         {
-                            UserDAL u = mapper.UserFromReader(reader);
-                            proposedReturnValue.Add(u);
+                            UserDAL user = mapper.UserFromReader(reader);
+                            proposedReturnValue.Add(user);
                         }
                     }
                 }
@@ -603,8 +610,8 @@ namespace DataAccessLayer
                         GameMapper mapper = new GameMapper(reader);
                         while (reader.Read())
                         {
-                            GameDAL g = mapper.GameFromReader(reader);
-                            proposedReturnValue.Add(g);
+                            GameDAL game = mapper.GameFromReader(reader);
+                            proposedReturnValue.Add(game);
                         }
                     }
                 }
@@ -734,8 +741,8 @@ namespace DataAccessLayer
                         ScoreMapper mapper = new ScoreMapper(reader);
                         while (reader.Read())
                         {
-                            ScoreDAL s = mapper.ScoreFromReader(reader);
-                            proposedReturnValue.Add(s);
+                            ScoreDAL score = mapper.ScoreFromReader(reader);
+                            proposedReturnValue.Add(score);
                         }
                     }
                 }
@@ -763,8 +770,8 @@ namespace DataAccessLayer
                         ScoreMapper mapper = new ScoreMapper(reader);
                         while (reader.Read())
                         {
-                            ScoreDAL s = mapper.ScoreFromReader(reader);
-                            proposedReturnValue.Add(s);
+                            ScoreDAL score = mapper.ScoreFromReader(reader);
+                            proposedReturnValue.Add(score);
                         }
                     }
                 }
@@ -792,8 +799,8 @@ namespace DataAccessLayer
                         ScoreMapper mapper = new ScoreMapper(reader);
                         while (reader.Read())
                         {
-                            ScoreDAL s = mapper.ScoreFromReader(reader);
-                            proposedReturnValue.Add(s);
+                            ScoreDAL score = mapper.ScoreFromReader(reader);
+                            proposedReturnValue.Add(score);
                         }
                     }
                 }
@@ -938,8 +945,8 @@ namespace DataAccessLayer
                         CommentMapper mapper = new CommentMapper(reader);
                         while (reader.Read())
                         {
-                            CommentDAL c = mapper.CommentFromReader(reader);
-                            proposedReturnValue.Add(c);
+                            CommentDAL comment = mapper.CommentFromReader(reader);
+                            proposedReturnValue.Add(comment);
                         }
                     }
                 }
@@ -967,8 +974,8 @@ namespace DataAccessLayer
                         CommentMapper mapper = new CommentMapper(reader);
                         while (reader.Read())
                         {
-                            CommentDAL c = mapper.CommentFromReader(reader);
-                            proposedReturnValue.Add(c);
+                            CommentDAL comment = mapper.CommentFromReader(reader);
+                            proposedReturnValue.Add(comment);
                         }
                     }
                 }
@@ -996,8 +1003,8 @@ namespace DataAccessLayer
                         CommentMapper mapper = new CommentMapper(reader);
                         while (reader.Read())
                         {
-                            CommentDAL c = mapper.CommentFromReader(reader);
-                            proposedReturnValue.Add(c);
+                            CommentDAL comment = mapper.CommentFromReader(reader);
+                            proposedReturnValue.Add(comment);
                         }
                     }
                 }
