@@ -35,15 +35,15 @@ namespace DataAccessLayer
         }
         public CommentDAL CommentFromReader (System.Data.SqlClient.SqlDataReader reader)
         {
-            CommentDAL proposedReturnValue = new CommentDAL();
-            proposedReturnValue.CommentID = reader.GetInt32(OffsetToCommentID);
-            proposedReturnValue.GameComment = reader.GetString(OffsetToGameComment);
-            proposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
-            proposedReturnValue.GameID = reader.GetInt32(OffsetToGameID);
-            proposedReturnValue.Liked = reader.GetBoolean(OffsetToLiked);
-            proposedReturnValue.GameName = reader.GetString(OffsetToGameName);
-            proposedReturnValue.Email = reader.GetString(OffsetToEmail);
-            return proposedReturnValue;
+            CommentDAL ProposedReturnValue = new CommentDAL();
+            ProposedReturnValue.CommentID = reader.GetInt32(OffsetToCommentID);
+            ProposedReturnValue.GameComment = reader.GetString(OffsetToGameComment);
+            ProposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
+            ProposedReturnValue.GameID = reader.GetInt32(OffsetToGameID);
+            ProposedReturnValue.Liked = reader.GetBoolean(OffsetToLiked);
+            ProposedReturnValue.GameName = reader.GetString(OffsetToGameName);
+            ProposedReturnValue.Email = reader.GetString(OffsetToEmail);
+            return ProposedReturnValue;
         }
 
     }

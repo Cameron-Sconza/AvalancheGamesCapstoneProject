@@ -36,15 +36,15 @@ namespace DataAccessLayer
 
         public ScoreDAL ScoreFromReader(System.Data.SqlClient.SqlDataReader reader)
         {
-            ScoreDAL proposedReturnValue = new ScoreDAL();
-            proposedReturnValue.ScoreID = reader.GetInt32(OffsetToScoreID);
-            proposedReturnValue.Score = reader.GetString(OffsetToScore);
-            proposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
-            proposedReturnValue.GameID = reader.GetInt32(OffsetToGameID);
-            proposedReturnValue.AmountPlayed = reader.GetInt32(OffsetToAmountPlayed);
-            proposedReturnValue.Email = reader.GetString(OffsetToEmail);
-            proposedReturnValue.GameName = reader.GetString(OffsetToGameName);
-            return proposedReturnValue;
+            ScoreDAL ProposedReturnValue = new ScoreDAL();
+            ProposedReturnValue.ScoreID = reader.GetInt32(OffsetToScoreID);
+            ProposedReturnValue.Score = reader.GetString(OffsetToScore);
+            ProposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
+            ProposedReturnValue.GameID = reader.GetInt32(OffsetToGameID);
+            ProposedReturnValue.AmountPlayed = reader.GetInt32(OffsetToAmountPlayed);
+            ProposedReturnValue.Email = reader.GetString(OffsetToEmail);
+            ProposedReturnValue.GameName = reader.GetString(OffsetToGameName);
+            return ProposedReturnValue;
         }
     }
 }

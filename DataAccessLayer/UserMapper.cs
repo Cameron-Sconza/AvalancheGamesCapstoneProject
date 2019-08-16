@@ -51,24 +51,24 @@ namespace DataAccessLayer
         }
         public UserDAL UserFromReader(System.Data.SqlClient.SqlDataReader reader)
         {
-            UserDAL proposedReturnValue = new UserDAL();
+            UserDAL ProposedReturnValue = new UserDAL();
             //reader["UserID"]  is very slow and makes a lot of garbage
             //reader[0] makes a lot of garbage
             //reader.GetInt32(0) is fast, but hard codes the offset to 0
             //reader.GetInt32(OffsetToUserID) is best and allows verification
             //verifing user userdal from reader 
-            proposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
-            proposedReturnValue.FirstName = reader.GetString(OffsetToFirstName);
-            proposedReturnValue.LastName = reader.GetString(OffsetToLastName);
-            proposedReturnValue.UserName = reader.GetString(OffsetToUserName);
-            proposedReturnValue.Email = reader.GetString(OffsetToEmail);
-            proposedReturnValue.PhoneNumber = reader.GetInt32(OffsetToPhoneNumber);
-            proposedReturnValue.SALT = reader.GetString(OffsetToSALT);
-            proposedReturnValue.HASH = reader.GetString(OffsetToHASH);
-            proposedReturnValue.DateOfBirth = this.GetDateTimeOrDefault(reader,OffsetToDateOfBirth,new DateTime(1800,01,01));
-            proposedReturnValue.RoleID = reader.GetInt16(OffsetToRoleID);
-            proposedReturnValue.RoleName = reader.GetString(OffsetToRoleID);
-            return proposedReturnValue;
+            ProposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
+            ProposedReturnValue.FirstName = reader.GetString(OffsetToFirstName);
+            ProposedReturnValue.LastName = reader.GetString(OffsetToLastName);
+            ProposedReturnValue.UserName = reader.GetString(OffsetToUserName);
+            ProposedReturnValue.Email = reader.GetString(OffsetToEmail);
+            ProposedReturnValue.PhoneNumber = reader.GetInt32(OffsetToPhoneNumber);
+            ProposedReturnValue.SALT = reader.GetString(OffsetToSALT);
+            ProposedReturnValue.HASH = reader.GetString(OffsetToHASH);
+            ProposedReturnValue.DateOfBirth = this.GetDateTimeOrDefault(reader,OffsetToDateOfBirth,new DateTime(1800,01,01));
+            ProposedReturnValue.RoleID = reader.GetInt16(OffsetToRoleID);
+            ProposedReturnValue.RoleName = reader.GetString(OffsetToRoleID);
+            return ProposedReturnValue;
         }
     }
 }

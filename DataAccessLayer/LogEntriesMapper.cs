@@ -32,14 +32,14 @@ namespace DataAccessLayer
         }
         public LogEntriesDAL LogEntriesFromReader (System.Data.SqlClient.SqlDataReader reader)
         {
-            LogEntriesDAL proposedReturnValue = new LogEntriesDAL();
-            proposedReturnValue.LogEntryID = reader.GetInt32(OffsetToLogEntryID);
-            proposedReturnValue.Message = reader.GetString(OffsetToMessage);
-            proposedReturnValue.TimeOfException = reader.GetDateTime(OffsetToTimeOfException);
-            proposedReturnValue.LogComments = reader.GetString(OffsetToLogComments);
-            proposedReturnValue.Category = reader.GetString(OffsetToCategory);
-            proposedReturnValue.ErrorLevel = reader.GetString(OffsetToErrorLevel);
-            return proposedReturnValue;
+            LogEntriesDAL ProposedReturnValue = new LogEntriesDAL();
+            ProposedReturnValue.LogEntryID = reader.GetInt32(OffsetToLogEntryID);
+            ProposedReturnValue.Message = reader.GetString(OffsetToMessage);
+            ProposedReturnValue.TimeOfException = reader.GetDateTime(OffsetToTimeOfException);
+            ProposedReturnValue.LogComments = reader.GetString(OffsetToLogComments);
+            ProposedReturnValue.Category = reader.GetString(OffsetToCategory);
+            ProposedReturnValue.ErrorLevel = reader.GetString(OffsetToErrorLevel);
+            return ProposedReturnValue;
 
         }
     }
