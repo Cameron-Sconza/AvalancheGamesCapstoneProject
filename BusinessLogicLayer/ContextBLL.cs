@@ -50,15 +50,15 @@ namespace BusinessLogicLayer
         #region UserBLL
         public int CreateUser(string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
-            int proposedReturnValue = -1;
-            proposedReturnValue = _context.CreateUser(FirstName, LastName, UserName, Email, PhoneNumber, SALT, HASH, DateOfBirth, RoleID);
-            return proposedReturnValue;
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateUser(FirstName, LastName, UserName, Email, PhoneNumber, SALT, HASH, DateOfBirth, RoleID);
+            return ProposedReturnValue;
         }
         public int CreateUser(UserBLL user)
         {
-            int proposedReturnValue = -1;
-            proposedReturnValue = _context.CreateUser(user.FirstName, user.LastName, user.UserName, user.Email, user.PhoneNumber, user.SALT, user.HASH, user.DateOfBirth, user.RoleID);
-            return proposedReturnValue;
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateUser(user.FirstName, user.LastName, user.UserName, user.Email, user.PhoneNumber, user.SALT, user.HASH, user.DateOfBirth, user.RoleID);
+            return ProposedReturnValue;
         }
         public void UpdateUser(int UserID, string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
@@ -78,65 +78,65 @@ namespace BusinessLogicLayer
         }
         public UserBLL FindUserByUserID(int UserID)
         {
-            UserBLL proposedReturnValue = null;
+            UserBLL ProposedReturnValue = null;
             UserDAL DataLayerObject = _context.FindUserByUserID(UserID);
             if (null != DataLayerObject)
             {
-                proposedReturnValue = new UserBLL(DataLayerObject);
+                ProposedReturnValue = new UserBLL(DataLayerObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public UserBLL FindUserByUserEmail(string Email)
         {
-            UserBLL proposedReturnValue = null;
+            UserBLL ProposedReturnValue = null;
             UserDAL DataLayerObject = _context.FindUserByUserEmail(Email);
             if (null != DataLayerObject)
             {
-                proposedReturnValue = new UserBLL(DataLayerObject);
+                ProposedReturnValue = new UserBLL(DataLayerObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<UserBLL> GetUsers(int skip, int take)
         {
-            List<UserBLL> proposedReturnValue = new List<UserBLL>();
+            List<UserBLL> ProposedReturnValue = new List<UserBLL>();
             List<UserDAL> ListOfDataLayerObjects = _context.GetUsers(skip, take);
             foreach (UserDAL User in ListOfDataLayerObjects)
             {
                 UserBLL BusinessObject = new UserBLL(User);
-                proposedReturnValue.Add(BusinessObject);
+                ProposedReturnValue.Add(BusinessObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<UserBLL> GetUsersRelatedToRoleID(int RoleID, int skip, int take)
         {
-            List<UserBLL> proposedReturnValue = new List<UserBLL>();
+            List<UserBLL> ProposedReturnValue = new List<UserBLL>();
             List<UserDAL> ListOfDataLayerObjects = _context.GetUsersRelatedToRoleID(RoleID, skip, take);
             foreach (UserDAL User in ListOfDataLayerObjects)
             {
                 UserBLL BusinessObject = new UserBLL(User);
-                proposedReturnValue.Add(BusinessObject);
+                ProposedReturnValue.Add(BusinessObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public int ObtainUserCount()
         {
-            int proposedReturnValue = 0;
-            proposedReturnValue = _context.ObtainUserCount();
-            return proposedReturnValue;
+            int ProposedReturnValue = 0;
+            ProposedReturnValue = _context.ObtainUserCount();
+            return ProposedReturnValue;
         }
         #endregion
         #region RoleBLL
         public int CreateRole(string RoleName)
         {
-            int proposedReturnValue = -1;
-            proposedReturnValue = _context.CreateRole(RoleName);
-            return proposedReturnValue;
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateRole(RoleName);
+            return ProposedReturnValue;
         }
         public int CreateRole(RoleBLL role)
         {
-            int proposedReturnValue = -1;
-            proposedReturnValue = _context.CreateRole(role.RoleName);
-            return proposedReturnValue;
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateRole(role.RoleName);
+            return ProposedReturnValue;
         }
         public void UpdateRole(int RoleID, string RoleName)
         {
@@ -156,52 +156,52 @@ namespace BusinessLogicLayer
         }
         public RoleBLL FindRoleByRoleID(int RoleID)
         {
-            RoleBLL proposedReturnValue = null;
+            RoleBLL ProposedReturnValue = null;
             RoleDAL DataLayerObject = _context.FindRoleByRoleID(RoleID);
             if (null != DataLayerObject)
             {
-                proposedReturnValue = new RoleBLL(DataLayerObject);
+                ProposedReturnValue = new RoleBLL(DataLayerObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<RoleBLL> GetRoles(int skip, int take)
         {
-            List<RoleBLL> proposedReturnValue = new List<RoleBLL>();
+            List<RoleBLL> ProposedReturnValue = new List<RoleBLL>();
             List<RoleDAL> ListOfDataLayerObjects = _context.GetRoles(skip, take);
             foreach (RoleDAL role in ListOfDataLayerObjects)
             {
                 RoleBLL BusinessObject = new RoleBLL(role);
-                proposedReturnValue.Add(BusinessObject);
+                ProposedReturnValue.Add(BusinessObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public int ObtainRoleCount()
         {
-            int proposedReturnValue = 0;
-            proposedReturnValue = _context.ObtainRoleCount();
-            return proposedReturnValue;
+            int ProposedReturnValue = 0;
+            ProposedReturnValue = _context.ObtainRoleCount();
+            return ProposedReturnValue;
         }
         #endregion
         #region CommentBLL
         public int CreateComment(string GameComment, int UserID, int GameID, bool Liked)
         {
-            int proposedReturnValue = -1;
-            proposedReturnValue = _context.CreateComment(GameComment, UserID, GameID, Liked);
-            return proposedReturnValue;
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateComment(GameComment, UserID, GameID, Liked);
+            return ProposedReturnValue;
         }
         public int CreateComment(CommentBLL comment)
         {
-            int proposedReturnValue = -1;
-            proposedReturnValue = _context.CreateComment(comment.GameComment, comment.UserID, comment.GameID, comment.Liked);
-            return proposedReturnValue;
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateComment(comment.GameComment, comment.UserID, comment.GameID, comment.Liked);
+            return ProposedReturnValue;
         }
         public void UpdateComment(int CommentID, string GameComment, int UserID, int GameID, bool Liked)
         {
-            _context.JustUpdateComment(CommentID, GameComment, UserID, GameID, Liked);
+            _context.UpdateComment(CommentID, GameComment, UserID, GameID, Liked);
         }
         public void UpdateComment(CommentBLL comment)
         {
-            _context.JustUpdateComment(comment.CommentID, comment.GameComment, comment.UserID, comment.GameID, comment.Liked);
+            _context.UpdateComment(comment.CommentID, comment.GameComment, comment.UserID, comment.GameID, comment.Liked);
         }
         public void DeleteComment(int CommentID)
         {
@@ -213,47 +213,201 @@ namespace BusinessLogicLayer
         }
         public CommentBLL FindCommentByCommentID(int CommentID)
         {
-            CommentBLL proposedReturnValue = null;
+            CommentBLL ProposedReturnValue = null;
             CommentDAL DataLayerObject = _context.FindCommentByCommentID(CommentID);
             if (null != DataLayerObject)
             {
-                proposedReturnValue = new CommentBLL(DataLayerObject);
+                ProposedReturnValue = new CommentBLL(DataLayerObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<CommentBLL> GetComments(int skip, int take)
         {
-            List<CommentBLL> proposedReturnValue = new List<CommentBLL>();
+            List<CommentBLL> ProposedReturnValue = new List<CommentBLL>();
             List<CommentDAL> ListOfDataLayerObjects = _context.GetComments(skip, take);
             foreach(CommentDAL comment in ListOfDataLayerObjects)
             {
                 CommentBLL BusinessObject = new CommentBLL(comment);
-                proposedReturnValue.Add(BusinessObject);
+                ProposedReturnValue.Add(BusinessObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<CommentBLL> GetCommentsRelatedToGameID(int GameID, int skip, int take)
         {
-            List<CommentBLL> proposedReturnValue = new List<CommentBLL>();
+            List<CommentBLL> ProposedReturnValue = new List<CommentBLL>();
             List<CommentDAL> ListOfDataLayerObjects = _context.GetCommentsRelatedToGameID(GameID, skip, take);
             foreach (CommentDAL comment in ListOfDataLayerObjects)
             {
                 CommentBLL BusinessObject = new CommentBLL(comment);
-                proposedReturnValue.Add(BusinessObject);
+                ProposedReturnValue.Add(BusinessObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<CommentBLL> GetCommentsRelatedToUserID(int UserID, int skip, int take)
         {
-            List<CommentBLL> proposedReturnValue = new List<CommentBLL>();
+            List<CommentBLL> ProposedReturnValue = new List<CommentBLL>();
             List<CommentDAL> ListOfDataLayerObjects = _context.GetCommentsRelatedToUserID(UserID, skip, take);
             foreach (CommentDAL comment in ListOfDataLayerObjects)
             {
                 CommentBLL BusinessObject = new CommentBLL(comment);
-                proposedReturnValue.Add(BusinessObject);
+                ProposedReturnValue.Add(BusinessObject);
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
+        #endregion
+        #region GameBLL
+        public int CreateGame(string GameName)
+        {
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateGame(GameName);
+            return ProposedReturnValue;
+        }
+        public int CreateGame(GameBLL game)
+        {
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateGame(game.GameName);
+            return ProposedReturnValue;
+        }
+        public void UpdateGame(int GameID, string GameName)
+        {
+            _context.UpdateGame(GameID, GameName);
+        }
+        public void UpdateGame(GameBLL game)
+        {
+            _context.UpdateGame(game.GameID, game.GameName);
+        }
+        public void DeleteGame(int GameID)
+        {
+            _context.DeleteGame(GameID);
+        }
+        public void DeleteGame(GameBLL game)
+        {
+            _context.DeleteGame(game.GameID);
+        }
+        public GameBLL FindGameByGameID(int GameID)
+        {
+            GameBLL ProposedReturnValue = null;
+            GameDAL DataLayerObject = _context.FindGameByGameID(GameID);
+            if (null != DataLayerObject)
+            {
+                ProposedReturnValue = new GameBLL(DataLayerObject);
+            }
+            return ProposedReturnValue;
+        }
+        public List<GameBLL> GetGames(int skip, int take)
+        {
+            List<GameBLL> ProposedReturnValue = new List<GameBLL>();
+            List<GameDAL> ListOfDataLayerObjects = _context.GetGames(skip, take);
+            foreach (GameDAL Game in ListOfDataLayerObjects)
+            {
+                GameBLL BusinessObject = new GameBLL(Game);
+                ProposedReturnValue.Add(BusinessObject);
+            }
+            return ProposedReturnValue;
+        }
+
+        #endregion
+        #region ScoreBLL
+        public int CreateScore(int Score, int UserID, int GameID, int AmountPlayed)
+        {
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateScore(Score, UserID, GameID, AmountPlayed);
+            return ProposedReturnValue;
+        }
+        public int CreateScore(ScoreBLL score)
+        {
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateScore(score.Score, score.UserID, score.GameID, score.AmountPlayed);
+            return ProposedReturnValue;
+        }
+        public void UpdateScore(int ScoreID, int Score, int UserID, int GameID, int AmountPlayed)
+        {
+            _context.UpdateScore(ScoreID, Score, UserID, GameID, AmountPlayed);
+        }
+        public void UpdateScore(ScoreBLL score)
+        {
+            _context.UpdateScore(score.ScoreID, score.Score, score.UserID, score.GameID, score.AmountPlayed);
+        }
+        public void DeleteScore(int ScoreID)
+        {
+            _context.DeleteScore(ScoreID);
+        }
+        public void DeleteScore(ScoreBLL score)
+        {
+            _context.DeleteScore(score.ScoreID);
+        }
+        public ScoreBLL FindScoreByScoreID(int ScoreID)
+        {
+            ScoreBLL ProposedReturnValue = null;
+            ScoreDAL DataLayerObject = _context.FindScoreByScoreID(ScoreID);
+            if (null != DataLayerObject)
+            {
+                ProposedReturnValue = new ScoreBLL(DataLayerObject);
+            }
+            return ProposedReturnValue;
+        }
+        public List<ScoreBLL> GetScores(int skip, int take)
+        {
+            List<ScoreBLL> ProposedReturnValue = new List<ScoreBLL>();
+            List<ScoreDAL> ListOfDataLayerObjects = _context.GetScores(skip, take);
+            foreach(ScoreDAL score in ListOfDataLayerObjects)
+            {
+                ScoreBLL BusinessObject = new ScoreBLL(score);
+                ProposedReturnValue.Add(BusinessObject);
+            }
+            return ProposedReturnValue;
+        }
+        public List<ScoreBLL> GetScoresReltatedToGameID(int GameID, int skip, int take)
+        {
+            List<ScoreBLL> ProposedReturnValue = new List<ScoreBLL>();
+            List<ScoreDAL> ListOfDataLayerObjects = _context.GetScoresRelatedToGameID(GameID, skip, take);
+            foreach(ScoreDAL score in ListOfDataLayerObjects)
+            {
+                ScoreBLL BusinessObject = new ScoreBLL(score);
+                ProposedReturnValue.Add(BusinessObject);
+            }
+            return ProposedReturnValue;
+        }
+        public List<ScoreBLL> GetScoresReltatedToRoleID(int RoleID, int skip, int take)
+        {
+            List<ScoreBLL> ProposedReturnValue = new List<ScoreBLL>();
+            List<ScoreDAL> ListOfDataLayerObjects = _context.GetScoresRelatedToGameID(RoleID, skip, take);
+            foreach (ScoreDAL score in ListOfDataLayerObjects)
+            {
+                ScoreBLL BusinessObject = new ScoreBLL(score);
+                ProposedReturnValue.Add(BusinessObject);
+            }
+            return ProposedReturnValue;
+        }
+        public int ObtainScoreCount()
+        {
+            int ProposedReturnValue = 0;
+            ProposedReturnValue = _context.ObtainRoleCount();
+            return ProposedReturnValue;
+        }
+        #endregion
+        #region LogEntryBLL
+        public int CreateLogEntries(string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
+        {
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateLogEntries(Message, TimeOfException, LogComments, Category, ErrorLevel);
+            return ProposedReturnValue;
+        }
+        public int CreateLogEntries(LogEntriesBLL logEntry)
+        {
+            int ProposedReturnValue = -1;
+            ProposedReturnValue = _context.CreateLogEntries(logEntry.Message, logEntry.TimeOfException, logEntry.LogComments, logEntry.Category, logEntry.ErrorLevel);
+            return ProposedReturnValue;
+        }
+        public void UpdateLogEntries(int LogEntryID, string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
+        {
+            _context.UpdateLogEntries(LogEntryID, Message, TimeOfException, LogComments, Category, ErrorLevel);
+        }
+        public void UpdateLogEntries(LogEntriesBLL logEntries)
+        {
+            _context.UpdateLogEntries(logEntries.LogEntryID, logEntries.Message, logEntries.TimeOfException, logEntries.LogComments, logEntries.Category, logEntries.ErrorLevel);
+        }
+
         #endregion
     }
 }

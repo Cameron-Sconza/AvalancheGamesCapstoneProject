@@ -92,7 +92,7 @@ namespace DataAccessLayer
         }
         public int GenerateStoredProcedureNotFound()
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -101,18 +101,18 @@ namespace DataAccessLayer
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     object answer = command.ExecuteScalar();
-                    proposedReturnValue = (int)answer;
+                    ProposedReturnValue = (int)answer;
                 }
             }
             catch (Exception ex) when (Log(ex))
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public int GenerateParametersNotIncluded()
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -123,14 +123,14 @@ namespace DataAccessLayer
                     //the following line is where the parapeter name is incorrect
                     command.Parameters.AddWithValue("@xxxx", 1);
                     object answer = command.ExecuteReader();
-                    proposedReturnValue = (int)answer;
+                    ProposedReturnValue = (int)answer;
                 }
             }
             catch (Exception ex) when (Log(ex))
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         #endregion
 
@@ -171,7 +171,7 @@ namespace DataAccessLayer
         }
         public List<RoleDAL> GetRoles(int skip, int take)
         {
-            List<RoleDAL> proposedReturnValue = new List<RoleDAL>();
+            List<RoleDAL> ProposedReturnValue = new List<RoleDAL>();
             try
             {
                 EnsureConnected();
@@ -186,7 +186,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             RoleDAL role = mapper.RoleFromReader(reader);
-                            proposedReturnValue.Add(role);
+                            ProposedReturnValue.Add(role);
                         }
                     }
 
@@ -196,11 +196,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public int ObtainRoleCount()
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -208,18 +208,18 @@ namespace DataAccessLayer
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     object answer = command.ExecuteScalar();
-                    proposedReturnValue = (int)answer;
+                    ProposedReturnValue = (int)answer;
                 }
             }
             catch (Exception ex) when (Log(ex))
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public int CreateRole(string RoleName)
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -230,14 +230,14 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@RoleID", 0);
                     command.Parameters["@RoleID"].Direction = System.Data.ParameterDirection.Output;
                     command.ExecuteNonQuery();
-                    proposedReturnValue = Convert.ToInt32(command.Parameters["@RoleID"].Value);
+                    ProposedReturnValue = Convert.ToInt32(command.Parameters["@RoleID"].Value);
                 }
             }
             catch (Exception ex) when (Log(ex))
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public void UpdateRole(int RoleID, string RoleName)
         {
@@ -279,7 +279,7 @@ namespace DataAccessLayer
         //creating a user (parameters are being called so when a user a created they will be filled)
         public int CreateUser(string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 //using try catches everywhere!!! this allows exceptions to be thrown and handle them
@@ -305,14 +305,14 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@RoleID", RoleID);
                     command.Parameters["@UserID"].Direction = System.Data.ParameterDirection.Output;
                     command.ExecuteNonQuery();
-                    proposedReturnValue = Convert.ToInt32(command.Parameters["@UserID"].Value);
+                    ProposedReturnValue = Convert.ToInt32(command.Parameters["@UserID"].Value);
                 }
             }
             catch (Exception ex) when (Log(ex))
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public void UpdateUser(int UserID, string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
@@ -359,7 +359,7 @@ namespace DataAccessLayer
         }
         public UserDAL FindUserByUserID(int UserID)
         {
-            UserDAL proposedReturnValue = null;
+            UserDAL ProposedReturnValue = null;
             try
             {
                 EnsureConnected();
@@ -373,7 +373,7 @@ namespace DataAccessLayer
                         int count = 0;
                         while (reader.Read())
                         {
-                            proposedReturnValue = mapper.UserFromReader(reader);
+                            ProposedReturnValue = mapper.UserFromReader(reader);
                             count++;
                         }
                         if (count > 1)
@@ -387,11 +387,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public UserDAL FindUserByUserEmail(string Email)
         {
-            UserDAL proposedReturnValue = null;
+            UserDAL ProposedReturnValue = null;
             try
             {
                 EnsureConnected();
@@ -405,7 +405,7 @@ namespace DataAccessLayer
                         int count = 0;
                         while (reader.Read())
                         {
-                            proposedReturnValue = mapper.UserFromReader(reader);
+                            ProposedReturnValue = mapper.UserFromReader(reader);
                             count++;
                         }
                         if (count > 1)
@@ -419,13 +419,13 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         //returning a list!!!
         public List<UserDAL> GetUsers(int skip, int take)
         {
-            //making a new list called proposedreturnValue
-            List<UserDAL> proposedReturnValue = new List<UserDAL>();
+            //making a new list called ProposedReturnValue
+            List<UserDAL> ProposedReturnValue = new List<UserDAL>();
             try
             {
                 EnsureConnected();//helper method
@@ -442,7 +442,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             UserDAL user = mapper.UserFromReader(reader);
-                            proposedReturnValue.Add(user);
+                            ProposedReturnValue.Add(user);
                         }
                     }
                 }
@@ -452,11 +452,11 @@ namespace DataAccessLayer
                 
             }
             //populated list
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<UserDAL> GetUsersRelatedToRoleID (int RoleID, int skip, int take)
         {
-            List<UserDAL> proposedReturnValue = new List<UserDAL>();
+            List<UserDAL> ProposedReturnValue = new List<UserDAL>();
             try
             {
                 EnsureConnected();
@@ -472,7 +472,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             UserDAL user = mapper.UserFromReader(reader);
-                            proposedReturnValue.Add(user);
+                            ProposedReturnValue.Add(user);
                         }
                     }
                 }
@@ -481,11 +481,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public int ObtainUserCount()
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -493,20 +493,20 @@ namespace DataAccessLayer
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     object answer = command.ExecuteScalar();
-                    proposedReturnValue = (int)answer;
+                    ProposedReturnValue = (int)answer;
                 }
             }
             catch (Exception ex) when (Log(ex))
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         #endregion
         #region Game Stuff
         public int CreateGame(string GameName)
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -517,7 +517,7 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@GameID", 0);
                     command.Parameters["@GameID"].Direction = System.Data.ParameterDirection.Output;
                     command.ExecuteNonQuery();
-                    proposedReturnValue = Convert.ToInt32(command.Parameters["@GameID"].Value);
+                    ProposedReturnValue = Convert.ToInt32(command.Parameters["@GameID"].Value);
 
                 }
             }
@@ -525,7 +525,7 @@ namespace DataAccessLayer
             {
                
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public void UpdateGame(int GameID, string GameName)
         {
@@ -564,7 +564,7 @@ namespace DataAccessLayer
         }
         public GameDAL FindGameByGameID (int GameID)
         {
-            GameDAL proposedReturnValue = null;
+            GameDAL ProposedReturnValue = null;
             try
             {
                 EnsureConnected();
@@ -578,7 +578,7 @@ namespace DataAccessLayer
                         int count = 0;
                         while (reader.Read())
                         {
-                            proposedReturnValue = mapper.GameFromReader(reader);
+                            ProposedReturnValue = mapper.GameFromReader(reader);
                             count++;
                         }
                         if (count > 1)
@@ -592,11 +592,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<GameDAL> GetGames(int skip, int take)
         {
-            List<GameDAL> proposedReturnValue = new List<GameDAL>();
+            List<GameDAL> ProposedReturnValue = new List<GameDAL>();
             try
             {
                 EnsureConnected();
@@ -611,7 +611,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             GameDAL game = mapper.GameFromReader(reader);
-                            proposedReturnValue.Add(game);
+                            ProposedReturnValue.Add(game);
                         }
                     }
                 }
@@ -620,14 +620,14 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         
         #endregion
         #region Score Stuff
-        public int CreateScore(string Score, int UserID, int GameID, int AmountPlayed, string Email, string GameName)
+        public int CreateScore(int Score, int UserID, int GameID, int AmountPlayed)
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -639,20 +639,18 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@UserID", UserID);
                     command.Parameters.AddWithValue("@GameID", GameID);
                     command.Parameters.AddWithValue("@AmountPlayed", AmountPlayed);
-                    command.Parameters.AddWithValue("@Email", Email);
-                    command.Parameters.AddWithValue("@GameName", GameName);
                     command.Parameters["@ScoreID"].Direction = System.Data.ParameterDirection.Output;
                     command.ExecuteNonQuery();
-                    proposedReturnValue = Convert.ToInt32(command.Parameters["@ScoreID"].Value);
+                    ProposedReturnValue = Convert.ToInt32(command.Parameters["@ScoreID"].Value);
                 }
             }
             catch (Exception ex) when (Log(ex))
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
-        public void UpdateScore(int ScoreID, string Score, int UserID, int GameID, int AmountPlayed, string Email, string GameName)
+        public void UpdateScore(int ScoreID, int Score, int UserID, int GameID, int AmountPlayed)
         {
             try
             {
@@ -665,8 +663,6 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@UserID", UserID);
                     command.Parameters.AddWithValue("@GameID", GameID);
                     command.Parameters.AddWithValue("@AmountPlayed", AmountPlayed);
-                    command.Parameters.AddWithValue("@Email", Email);
-                    command.Parameters.AddWithValue("@GameName", GameName);
                     command.ExecuteNonQuery();
                 }
             }
@@ -695,7 +691,7 @@ namespace DataAccessLayer
         }
         public ScoreDAL FindScoreByScoreID(int ScoreID)
         {
-            ScoreDAL proposedReturnValue = null;
+            ScoreDAL ProposedReturnValue = null;
             try
             {
                 EnsureConnected();
@@ -709,7 +705,7 @@ namespace DataAccessLayer
                         int count = 0;
                         while  (reader.Read())
                         {
-                            proposedReturnValue = mapper.ScoreFromReader(reader);
+                            ProposedReturnValue = mapper.ScoreFromReader(reader);
                             count++;
                         }
                         if (count > 1)
@@ -723,11 +719,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<ScoreDAL> GetScores(int skip, int take)
         {
-            List<ScoreDAL> proposedReturnValue = new List<ScoreDAL>();
+            List<ScoreDAL> ProposedReturnValue = new List<ScoreDAL>();
             try
             {
                 EnsureConnected();
@@ -742,7 +738,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             ScoreDAL score = mapper.ScoreFromReader(reader);
-                            proposedReturnValue.Add(score);
+                            ProposedReturnValue.Add(score);
                         }
                     }
                 }
@@ -751,11 +747,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<ScoreDAL> GetScoresRelatedToGameID(int GameID, int skip, int take)
         {
-            List<ScoreDAL> proposedReturnValue = new List<ScoreDAL>();
+            List<ScoreDAL> ProposedReturnValue = new List<ScoreDAL>();
             try
             {
                 EnsureConnected();
@@ -771,7 +767,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             ScoreDAL score = mapper.ScoreFromReader(reader);
-                            proposedReturnValue.Add(score);
+                            ProposedReturnValue.Add(score);
                         }
                     }
                 }
@@ -780,11 +776,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<ScoreDAL> GetScoresRelatedToUserID(int UserID, int skip, int take)
         {
-            List<ScoreDAL> proposedReturnValue = new List<ScoreDAL>();
+            List<ScoreDAL> ProposedReturnValue = new List<ScoreDAL>();
             try
             {
                 EnsureConnected();
@@ -800,7 +796,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             ScoreDAL score = mapper.ScoreFromReader(reader);
-                            proposedReturnValue.Add(score);
+                            ProposedReturnValue.Add(score);
                         }
                     }
                 }
@@ -809,11 +805,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public int ObtainScoreCount()
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -821,7 +817,7 @@ namespace DataAccessLayer
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     object answer = command.ExecuteScalar();
-                    proposedReturnValue = (int)answer;
+                    ProposedReturnValue = (int)answer;
                 }
             }
             catch (Exception ex) when (Log(ex))
@@ -829,13 +825,13 @@ namespace DataAccessLayer
 
             }
 
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }     
         #endregion
         #region Comment Stuff
         public int CreateComment(string GameComment, int UserID, int GameID, bool Liked)
         {
-            int proposedReturnValue = -1;
+            int ProposedReturnValue = -1;
             try
             {
                 EnsureConnected();
@@ -849,7 +845,7 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@Liked", Liked);
                     command.Parameters["@CommentID"].Direction = System.Data.ParameterDirection.Output;
                     command.ExecuteNonQuery();
-                    proposedReturnValue = Convert.ToInt32(command.Parameters["@CommentID"].Value);
+                    ProposedReturnValue = Convert.ToInt32(command.Parameters["@CommentID"].Value);
 
                 }
             }
@@ -857,9 +853,9 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
-        public void JustUpdateComment(int CommentID, string GameComment, int UserID, int GameID, bool Liked)
+        public void UpdateComment(int CommentID, string GameComment, int UserID, int GameID, bool Liked)
         {
             try
             {
@@ -899,7 +895,7 @@ namespace DataAccessLayer
         }
         public CommentDAL FindCommentByCommentID(int CommentID)
         {
-            CommentDAL proposedReturnValue = null;
+            CommentDAL ProposedReturnValue = null;
             try
             {
                 EnsureConnected();
@@ -913,7 +909,7 @@ namespace DataAccessLayer
                         int count = 0;
                         while (reader.Read())
                         {
-                            proposedReturnValue = mapper.CommentFromReader(reader);
+                            ProposedReturnValue = mapper.CommentFromReader(reader);
                             count++;
                         }
                         if (count > 1)
@@ -927,11 +923,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<CommentDAL> GetComments(int skip, int take)
         {
-            List<CommentDAL> proposedReturnValue = new List<CommentDAL>();
+            List<CommentDAL> ProposedReturnValue = new List<CommentDAL>();
             try
             {
                 EnsureConnected();
@@ -946,7 +942,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             CommentDAL comment = mapper.CommentFromReader(reader);
-                            proposedReturnValue.Add(comment);
+                            ProposedReturnValue.Add(comment);
                         }
                     }
                 }
@@ -955,11 +951,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<CommentDAL> GetCommentsRelatedToGameID(int GameID, int skip, int take)
         {
-            List<CommentDAL> proposedReturnValue = new List<CommentDAL>();
+            List<CommentDAL> ProposedReturnValue = new List<CommentDAL>();
             try
             {
                 EnsureConnected();
@@ -975,7 +971,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             CommentDAL comment = mapper.CommentFromReader(reader);
-                            proposedReturnValue.Add(comment);
+                            ProposedReturnValue.Add(comment);
                         }
                     }
                 }
@@ -984,11 +980,11 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         public List<CommentDAL> GetCommentsRelatedToUserID(int UserID, int skip, int take)
         {
-            List<CommentDAL> proposedReturnValue = new List<CommentDAL>();
+            List<CommentDAL> ProposedReturnValue = new List<CommentDAL>();
             try
             {
                 EnsureConnected();
@@ -1004,7 +1000,7 @@ namespace DataAccessLayer
                         while (reader.Read())
                         {
                             CommentDAL comment = mapper.CommentFromReader(reader);
-                            proposedReturnValue.Add(comment);
+                            ProposedReturnValue.Add(comment);
                         }
                     }
                 }
@@ -1013,7 +1009,7 @@ namespace DataAccessLayer
             {
 
             }
-            return proposedReturnValue;
+            return ProposedReturnValue;
         }
         #endregion
         #region LogEntries
@@ -1044,7 +1040,7 @@ namespace DataAccessLayer
             }
             return proposedRetrunValue;
         }
-        public void JustUpdateLogEntries(int LogEntryID, string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
+        public void UpdateLogEntries(int LogEntryID, string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
         {
             try
             {

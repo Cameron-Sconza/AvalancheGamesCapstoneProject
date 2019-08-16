@@ -10,7 +10,7 @@ namespace DataAccessLayer
     {
         #region Direct Properties
         public int ScoreID { get; set; }
-        public string Score { get; set; }
+        public int Score { get; set; }
         public int UserID { get; set; }
         public int GameID { get; set; }
         public int AmountPlayed { get; set; }
