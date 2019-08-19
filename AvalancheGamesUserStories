@@ -10,15 +10,16 @@ UserStories for AvalancheGames Capstone Project
 	-Profile Page
 	-HighScore Page
 	-Redirecting to Home Page
-	
-2)Unverified User
+
+2)Casual Site visitor
 	-is able to view Home Page
-		-Unverified User's NavBar consist of 
+		-Casual Site Visitor's NavBar consist of 
 			-Home button link
 			-Login Button link
 			-Sign Up button link
-		-Is able to play Games shown on Game Page
-		-If Unverified User tries to login without having account
+		-Is able to see Games listed on Game Page
+			-if Site Visitor tries to play game will be propmted to log in or create new accout
+		-If Site Visitor tries to login without having account
 			-will be shown message that login credientials were incorrect
 			promoted to try again or create new account if new User
 	-is able to create an account in Sign Up Page
@@ -31,13 +32,24 @@ UserStories for AvalancheGames Capstone Project
 			-Phone Number
 			-BirthDate	
 			-Submit button
+3)Unverified User
+	-is able to view Home Page
+		-Unverified User's NavBar consist of 
+			-Home button link
+			-Login Button link
+			-Sign Up button link
+		-Is able to play Games shown on Game Page
+		-If Unverified User tries to login without having account
+			-will be shown message that login credientials were incorrect
+			promoted to try again or create new account if new User
 	-is able to view individual Game Page
 		-is able to play game on game page
 		-will be able to see comments under games
 		-will be shown a message in comment section
 			-"Please login to leave a like or comment!"
 			
-3)Verified User
+			
+4)Verified User
 		-Is able to Login
 			-Login will require
 					-Email
@@ -71,7 +83,7 @@ UserStories for AvalancheGames Capstone Project
 		-is able to log out
 			-redirected to home page
 
-4)Admin User
+5)Admin User
 	-Is able to Login
 			-Login will require
 					-Email

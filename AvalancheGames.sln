@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{15FAAA4C-7D0C-4F1A-AB59-669702E7E4DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalancheGamesWeb", "AvalancheGamesWeb\AvalancheGamesWeb.csproj", "{4710222D-B7EC-4E49-BC80-073A2CA47746}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{15FAAA4C-7D0C-4F1A-AB59-669702E7E4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15FAAA4C-7D0C-4F1A-AB59-669702E7E4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15FAAA4C-7D0C-4F1A-AB59-669702E7E4DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4710222D-B7EC-4E49-BC80-073A2CA47746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4710222D-B7EC-4E49-BC80-073A2CA47746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4710222D-B7EC-4E49-BC80-073A2CA47746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4710222D-B7EC-4E49-BC80-073A2CA47746}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

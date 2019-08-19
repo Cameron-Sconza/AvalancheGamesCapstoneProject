@@ -38,7 +38,7 @@ namespace DataAccessLayer
         {
             ScoreDAL ProposedReturnValue = new ScoreDAL();
             ProposedReturnValue.ScoreID = reader.GetInt32(OffsetToScoreID);
-            ProposedReturnValue.Score = reader.GetString(OffsetToScore);
+            ProposedReturnValue.Score = reader.GetInt32(OffsetToScore);
             ProposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
             ProposedReturnValue.GameID = reader.GetInt32(OffsetToGameID);
             ProposedReturnValue.AmountPlayed = reader.GetInt32(OffsetToAmountPlayed);

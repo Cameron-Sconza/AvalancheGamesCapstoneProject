@@ -15,6 +15,7 @@ namespace BusinessLogicLayer
             //empty constructor needed for MVC
         }
         #region Direct Properties
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
