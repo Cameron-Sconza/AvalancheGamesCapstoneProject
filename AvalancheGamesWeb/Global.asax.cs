@@ -17,5 +17,12 @@ namespace AvalancheGamesWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            var ex = Server.GetLastError();
+            if (ex is System.Threading.ThreadAbortException)
+                return;//redirects may cause this exception
+            Logging.Logger.Log(ex);
+        }
     }
 }
