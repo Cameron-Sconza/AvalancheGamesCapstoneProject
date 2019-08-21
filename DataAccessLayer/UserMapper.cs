@@ -14,12 +14,11 @@ namespace DataAccessLayer
         int OffsetToLastName; //expected to be 2
         int OffsetToUserName; //expected to be 3
         int OffsetToEmail;
-        int OffsetToPhoneNumber;
         int OffsetToSALT;
         int OffsetToHASH;
         int OffsetToDateOfBirth;
         int OffsetToRoleID;
-        int OffsetToRoleName; //expected to be 10 
+        int OffsetToRoleName; //expected to be 9
 
         public UserMapper (System.Data.SqlClient.SqlDataReader reader)
         {
@@ -36,18 +35,16 @@ namespace DataAccessLayer
             Assert(3 == OffsetToUserName, $"Username is {OffsetToUserName} not 3 as expected");
             OffsetToEmail = reader.GetOrdinal("Email");
             Assert(4 == OffsetToEmail, $"Email is {OffsetToEmail} not 4 as expected");
-            OffsetToPhoneNumber = reader.GetOrdinal("PhoneNumber");
-            Assert(5 == OffsetToPhoneNumber, $"PhoneNumbe is {OffsetToPhoneNumber} not 5 as expected");
             OffsetToSALT = reader.GetOrdinal("SALT");
-            Assert(6 == OffsetToSALT, $"SALT is {OffsetToSALT} not 6 as expected");
+            Assert(5 == OffsetToSALT, $"SALT is {OffsetToSALT} not 5 as expected");
             OffsetToHASH = reader.GetOrdinal("HASH");
-            Assert(7 == OffsetToHASH, $"HASH is {OffsetToHASH} not 7 as expected");
+            Assert(6 == OffsetToHASH, $"HASH is {OffsetToHASH} not 6 as expected");
             OffsetToDateOfBirth = reader.GetOrdinal("DateOfBirth");
-            Assert(8 == OffsetToDateOfBirth, $"DateOfBirth is {OffsetToDateOfBirth} not 8 as expected");
+            Assert(7 == OffsetToDateOfBirth, $"DateOfBirth is {OffsetToDateOfBirth} not 7 as expected");
             OffsetToRoleID = reader.GetOrdinal("RoleID");
-            Assert(9 == OffsetToRoleID, $"RoleID is {OffsetToRoleID} not 9 as expected");
+            Assert(8 == OffsetToRoleID, $"RoleID is {OffsetToRoleID} not 8 as expected");
             OffsetToRoleName = reader.GetOrdinal("RoleName");
-            Assert(10 == OffsetToRoleName, $"RoleName is {OffsetToRoleName} not 10 as expected");
+            Assert(9 == OffsetToRoleName, $"RoleName is {OffsetToRoleName} not 9 as expected");
         }
         public UserDAL UserFromReader(System.Data.SqlClient.SqlDataReader reader)
         {
@@ -62,12 +59,11 @@ namespace DataAccessLayer
             ProposedReturnValue.LastName = reader.GetString(OffsetToLastName);
             ProposedReturnValue.UserName = reader.GetString(OffsetToUserName);
             ProposedReturnValue.Email = reader.GetString(OffsetToEmail);
-            ProposedReturnValue.PhoneNumber = reader.GetInt32(OffsetToPhoneNumber);
             ProposedReturnValue.SALT = reader.GetString(OffsetToSALT);
             ProposedReturnValue.HASH = reader.GetString(OffsetToHASH);
             ProposedReturnValue.DateOfBirth = this.GetDateTimeOrDefault(reader,OffsetToDateOfBirth,new DateTime(1800,01,01));
-            ProposedReturnValue.RoleID = reader.GetInt16(OffsetToRoleID);
-            ProposedReturnValue.RoleName = reader.GetString(OffsetToRoleID);
+            ProposedReturnValue.RoleID = reader.GetInt32(OffsetToRoleID);
+            ProposedReturnValue.RoleName = reader.GetString(OffsetToRoleName);
             return ProposedReturnValue;
         }
     }

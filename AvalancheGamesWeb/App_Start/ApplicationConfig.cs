@@ -10,7 +10,7 @@ namespace AvalancheGamesWeb
         public static void RegisterApplicationVariables()
         {
             string pageSizeString = System.Configuration.ConfigurationManager.AppSettings["DefaultPageSize"];
-            int DefaultPageSize = 0;
+            int DefaultPageSize = 1;
             bool parsable = int.TryParse(pageSizeString, out DefaultPageSize);
             if (!parsable)
             {
@@ -26,7 +26,7 @@ namespace AvalancheGamesWeb
         {
             get
             {
-                return (int)HttpContext.Current.Application["DefaultPageSize"];
+                return (int)(HttpContext.Current.Application["DefaultPageSize"]??3);
             }
         }
     }

@@ -21,7 +21,6 @@ namespace BusinessLogicLayer
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
         public string SALT { get; set; }
         public string HASH { get; set; }
         [DataType(DataType.Date)]
@@ -39,7 +38,6 @@ namespace BusinessLogicLayer
             this.LastName = dal.LastName;
             this.UserName = dal.UserName;
             this.Email = dal.Email;
-            this.PhoneNumber = dal.PhoneNumber;
             this.SALT = dal.SALT;
             this.HASH = dal.HASH;
             this.DateOfBirth = dal.DateOfBirth;
@@ -48,7 +46,7 @@ namespace BusinessLogicLayer
         }
         public  override string ToString()
         {
-            return $"UserID: {UserID} FirstName: {FirstName} LastName: {LastName} UserName: {UserName} Email: {Email} PhoneNumber: {PhoneNumber} SALT: {SALT} HASH: {HASH} DateOfBirth: {DateOfBirth} RoleID: {RoleID} RoleName: {RoleName}";
+            return $"UserID: {UserID} FirstName: {FirstName} LastName: {LastName} UserName: {UserName} Email: {Email} SALT: {SALT} HASH: {HASH} DateOfBirth: {DateOfBirth} RoleID: {RoleID} RoleName: {RoleName}";
         }
     }
 }

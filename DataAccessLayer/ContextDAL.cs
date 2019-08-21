@@ -244,7 +244,7 @@ namespace DataAccessLayer
             try
             {
                 EnsureConnected();
-                using (SqlCommand command = new SqlCommand("JustUpdateRole", _connection))
+                using (SqlCommand command = new SqlCommand("JustUpdateRoles", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@RoleName", RoleName);
@@ -277,7 +277,7 @@ namespace DataAccessLayer
         #endregion
         #region User Stuff
         //creating a user (parameters are being called so when a user a created they will be filled)
-        public int CreateUser(string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
+        public int CreateUser(string FirstName, string LastName, string UserName, string Email, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
             int ProposedReturnValue = -1;
             try
@@ -298,7 +298,6 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@LastName", LastName);
                     command.Parameters.AddWithValue("@UserName", UserName);
                     command.Parameters.AddWithValue("@Email", Email);
-                    command.Parameters.AddWithValue("@PhoneNumber", PhoneNumber);
                     command.Parameters.AddWithValue("@SALT", SALT);
                     command.Parameters.AddWithValue("@HASH", HASH);
                     command.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
@@ -314,12 +313,12 @@ namespace DataAccessLayer
             }
             return ProposedReturnValue;
         }
-        public void UpdateUser(int UserID, string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
+        public void UpdateUser(int UserID, string FirstName, string LastName, string UserName, string Email, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
             try
             {
                 EnsureConnected();
-                using (SqlCommand command = new SqlCommand("JustUpdateUser", _connection))
+                using (SqlCommand command = new SqlCommand("JustUpdateUsers", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@UserID", UserID);
@@ -327,7 +326,6 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@LastName", LastName);
                     command.Parameters.AddWithValue("@UserName", UserName);
                     command.Parameters.AddWithValue("@Email", Email);
-                    command.Parameters.AddWithValue("@PhoneNumber", PhoneNumber);
                     command.Parameters.AddWithValue("@SALT", SALT);
                     command.Parameters.AddWithValue("@HASH", HASH);
                     command.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
@@ -363,7 +361,7 @@ namespace DataAccessLayer
             try
             {
                 EnsureConnected();
-                using (SqlCommand command = new SqlCommand("FineUserByUserID", _connection))
+                using (SqlCommand command = new SqlCommand("FindUserByUserID", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@UserID", UserID);
@@ -1012,73 +1010,6 @@ namespace DataAccessLayer
             return ProposedReturnValue;
         }
         #endregion
-        #region LogEntries
-        public int CreateLogEntries(string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
-        {
-            int proposedRetrunValue = -1;
-            try
-            {
-                EnsureConnected();
-                using (SqlCommand command = new SqlCommand("CreateLogEntry", _connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@LogEntryID", 0);
-                    command.Parameters.AddWithValue("@Message", Message);
-                    command.Parameters.AddWithValue("@TimeOfException", TimeOfException);
-                    command.Parameters.AddWithValue("@LogComments", LogComments);
-                    command.Parameters.AddWithValue("@Category", Category);
-                    command.Parameters.AddWithValue("@ErrorLevel", ErrorLevel);
-                    command.Parameters["@LogEntryID"].Direction = System.Data.ParameterDirection.Output;
-                    command.ExecuteNonQuery();
-                    proposedRetrunValue = Convert.ToInt32(command.Parameters["@LogEntryID"].Value);
-
-                }
-            }
-            catch (Exception ex) when (Log(ex))
-            {
-
-            }
-            return proposedRetrunValue;
-        }
-        public void UpdateLogEntries(int LogEntryID, string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
-        {
-            try
-            {
-                EnsureConnected();
-                using (SqlCommand command = new SqlCommand("JustUpdateLogEntries", _connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@LogEntryID", LogEntryID);
-                    command.Parameters.AddWithValue("@Message", Message);
-                    command.Parameters.AddWithValue("@TimeOfException", TimeOfException);
-                    command.Parameters.AddWithValue("@LogComments", LogComments);
-                    command.Parameters.AddWithValue("@Category", Category);
-                    command.Parameters.AddWithValue("@ErrorLevel", ErrorLevel);
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex) when (Log(ex))
-            {
-
-            }
-        }
-        public void DeleteLogEntry(int LogEntryID)
-        {
-            try
-            {
-                EnsureConnected();
-                using (SqlCommand command = new SqlCommand("DeleteLogEntry", _connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@LogEntryID", LogEntryID);
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex) when (Log(ex))
-            {
-
-            }
-        }
-        #endregion
+     
     }
 }
