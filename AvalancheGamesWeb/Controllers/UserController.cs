@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BusinessLogicLayer;
 
+
 namespace AvalancheGamesWeb.Controllers
 {
     public class UserController : Controller

@@ -48,25 +48,25 @@ namespace BusinessLogicLayer
         }
         #endregion
         #region UserBLL
-        public int CreateUser(string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
+        public int CreateUser(string FirstName, string LastName, string UserName, string Email, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
             int ProposedReturnValue = -1;
-            ProposedReturnValue = _context.CreateUser(FirstName, LastName, UserName, Email, PhoneNumber, SALT, HASH, DateOfBirth, RoleID);
+            ProposedReturnValue = _context.CreateUser(FirstName, LastName, UserName, Email, SALT, HASH, DateOfBirth, RoleID);
             return ProposedReturnValue;
         }
         public int CreateUser(UserBLL user)
         {
             int ProposedReturnValue = -1;
-            ProposedReturnValue = _context.CreateUser(user.FirstName, user.LastName, user.UserName, user.Email, user.PhoneNumber, user.SALT, user.HASH, user.DateOfBirth, user.RoleID);
+            ProposedReturnValue = _context.CreateUser(user.FirstName, user.LastName, user.UserName, user.Email, user.SALT, user.HASH, user.DateOfBirth, user.RoleID);
             return ProposedReturnValue;
         }
-        public void UpdateUser(int UserID, string FirstName, string LastName, string UserName, string Email, int PhoneNumber, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
+        public void UpdateUser(int UserID, string FirstName, string LastName, string UserName, string Email, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
-            _context.UpdateUser(UserID, FirstName, LastName, UserName, Email, PhoneNumber, SALT, HASH, DateOfBirth, RoleID);
+            _context.UpdateUser(UserID, FirstName, LastName, UserName, Email, SALT, HASH, DateOfBirth, RoleID);
         }
         public void UpdateUser(UserBLL user)
         {
-            _context.UpdateUser(user.UserID, user.FirstName, user.LastName, user.UserName, user.Email, user.PhoneNumber, user.SALT, user.HASH, user.DateOfBirth, user.RoleID);
+            _context.UpdateUser(user.UserID, user.FirstName, user.LastName, user.UserName, user.Email, user.SALT, user.HASH, user.DateOfBirth, user.RoleID);
         }
         public void DeleteUser(int UserID)
         {
@@ -385,29 +385,6 @@ namespace BusinessLogicLayer
             ProposedReturnValue = _context.ObtainRoleCount();
             return ProposedReturnValue;
         }
-        #endregion
-        #region LogEntryBLL
-        public int CreateLogEntries(string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
-        {
-            int ProposedReturnValue = -1;
-            ProposedReturnValue = _context.CreateLogEntries(Message, TimeOfException, LogComments, Category, ErrorLevel);
-            return ProposedReturnValue;
-        }
-        public int CreateLogEntries(LogEntriesBLL logEntry)
-        {
-            int ProposedReturnValue = -1;
-            ProposedReturnValue = _context.CreateLogEntries(logEntry.Message, logEntry.TimeOfException, logEntry.LogComments, logEntry.Category, logEntry.ErrorLevel);
-            return ProposedReturnValue;
-        }
-        public void UpdateLogEntries(int LogEntryID, string Message, DateTime TimeOfException, string LogComments, string Category, string ErrorLevel)
-        {
-            _context.UpdateLogEntries(LogEntryID, Message, TimeOfException, LogComments, Category, ErrorLevel);
-        }
-        public void UpdateLogEntries(LogEntriesBLL logEntries)
-        {
-            _context.UpdateLogEntries(logEntries.LogEntryID, logEntries.Message, logEntries.TimeOfException, logEntries.LogComments, logEntries.Category, logEntries.ErrorLevel);
-        }
-
         #endregion
     }
 }

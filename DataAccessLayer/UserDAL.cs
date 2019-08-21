@@ -17,7 +17,6 @@ namespace DataAccessLayer
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
         public string SALT { get; set; }
         public string HASH { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -31,7 +30,7 @@ namespace DataAccessLayer
         //override allows child class to overide parent class with name parameters
         public override string ToString()
         {
-            return $"User: UserID:{UserID} FirstName: {FirstName} LastName: {LastName} UserName: {UserName} Email: {Email} PhoneNumber: {PhoneNumber} SALT: {SALT} HASH: {HASH} DateOfBirth: {DateOfBirth} RoleID: {RoleID} RoleName: {RoleName} ";
+            return $"User: UserID:{UserID} FirstName: {FirstName} LastName: {LastName} UserName: {UserName} Email: {Email}  SALT: {SALT} HASH: {HASH} DateOfBirth: {DateOfBirth} RoleID: {RoleID} RoleName: {RoleName} ";
         }
     }
 }
