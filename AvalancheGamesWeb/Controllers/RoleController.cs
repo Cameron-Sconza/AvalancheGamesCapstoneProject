@@ -42,7 +42,7 @@ namespace AvalancheGamesWeb.Controllers
                 {
                     ViewBag.PageNumber = 0;
                     ViewBag.PageSize = ApplicationConfig.DefaultPageSize;
-                    ViewBag.TotalCoutn = ctx.ObtainRoleCount();
+                    ViewBag.TotalCount = ctx.ObtainRoleCount();
                     Model = ctx.GetRoles(0, ViewBag.PageSize);
                 }
             }

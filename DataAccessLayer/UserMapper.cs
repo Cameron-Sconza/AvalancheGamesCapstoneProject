@@ -66,8 +66,8 @@ namespace DataAccessLayer
             ProposedReturnValue.SALT = reader.GetString(OffsetToSALT);
             ProposedReturnValue.HASH = reader.GetString(OffsetToHASH);
             ProposedReturnValue.DateOfBirth = this.GetDateTimeOrDefault(reader,OffsetToDateOfBirth,new DateTime(1800,01,01));
-            ProposedReturnValue.RoleID = reader.GetInt16(OffsetToRoleID);
-            ProposedReturnValue.RoleName = reader.GetString(OffsetToRoleID);
+            ProposedReturnValue.RoleID = reader.GetInt32(OffsetToRoleID);
+            ProposedReturnValue.RoleName = reader.GetString(OffsetToRoleName);
             return ProposedReturnValue;
         }
     }

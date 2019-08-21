@@ -55,7 +55,7 @@ namespace AvalancheGamesWeb.Controllers
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ViewBag.PageNumber = 0;
+                    ViewBag.PageNumber = 1;
                     ViewBag.PageSize = ApplicationConfig.DefaultPageSize;
                     ViewBag.TotalCount = ctx.ObtainUserCount();
                     Model = ctx.GetUsers(0, ViewBag.PageSize);
