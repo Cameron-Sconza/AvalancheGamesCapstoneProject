@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
+    //three parts to this class
     public class UserMapper : Mapper
     {
-        //checking shape (column offset) in database
+        //feilds
+        //checking shape (column offset) in database //int is primitive type(bulit in typs are primative)
         int OffsetToUserID; //expected to be 0
         int OffsetToFirstName; //expected to be 1
         int OffsetToLastName; //expected to be 2
@@ -20,6 +22,7 @@ namespace DataAccessLayer
         int OffsetToRoleID;
         int OffsetToRoleName; //expected to be 9
 
+        //constructor part
         public UserMapper (System.Data.SqlClient.SqlDataReader reader)
         {
             //checking fields to the sql data base to see if the columns line up
@@ -46,9 +49,11 @@ namespace DataAccessLayer
             OffsetToRoleName = reader.GetOrdinal("RoleName");
             Assert(9 == OffsetToRoleName, $"RoleName is {OffsetToRoleName} not 9 as expected");
         }
+        //method that does all the work
         public UserDAL UserFromReader(System.Data.SqlClient.SqlDataReader reader)
         {
             UserDAL ProposedReturnValue = new UserDAL();
+            //primitive type of
             //reader["UserID"]  is very slow and makes a lot of garbage
             //reader[0] makes a lot of garbage
             //reader.GetInt32(0) is fast, but hard codes the offset to 0

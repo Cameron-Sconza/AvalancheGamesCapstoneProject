@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BusinessLogicLayer.GameBLL>
+
+@{
+    ViewBag.Title = "Index";
+    int PageNumber = ViewBag.PageNumber;
+    int PageSize = ViewBag.PageSize;
+    int TotalCount = ViewBag.TotalCount;
+    int TotalPageButtonCount = ((TotalCount % PageSize == 0) ? 0 : 1) + TotalCount / PageSize;
+    int CorrectedPageButtonCount = (TotalPageButtonCount > 9) ? 10 : TotalPageButtonCount;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@{
+    for (int i = 0; i < CorrectedPageButtonCount; i++)
+    {
+        string classstring = (i == PageNumber) ? "btn btn-sm btn-success glyphicon glyphicon-star-empty" : "btn btn-sm btn-normal glyphicon glyphicon-asterisk";
+        @Html.ActionLink($"-Page {i}-", "Page", new { PageNumber = i, PageSize = PageSize }, new { @class = classstring });
+    }
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GameID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GameName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.GameID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.GameID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.GameID })
+            </td>
+        </tr>
+    }
+
+</table>

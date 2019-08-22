@@ -5,7 +5,7 @@
     int PageNumber = ViewBag.PageNumber;
     int PageSize = ViewBag.PageSize;
     int TotalCount = ViewBag.TotalCount;
-    int TotalPageButtonCount = 1 + TotalCount / PageSize;
+    int TotalPageButtonCount = ((TotalCount%PageSize == 0)? 0:1) + TotalCount / PageSize;
     int CorrectedPageButtonCount = (TotalPageButtonCount > 9) ? 10 : TotalPageButtonCount;
 }
 
