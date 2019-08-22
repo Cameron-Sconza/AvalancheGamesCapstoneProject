@@ -21,7 +21,7 @@ namespace DataAccessLayer
         #endregion
         public override string ToString()
         {
-            return $"Score: ScoreID: {ScoreID,5} Score: {Score,10} UserID: {UserID} Email: {Email,25} GameID: {GameID} GameName: {GameName,25} AmountPlayed: {AmountPlayed}";
+            return $"Score: ScoreID: {ScoreID,5} Score: {Score,10} UserID: {UserID}  GameID: {GameID} AmountPlayed: {AmountPlayed}Email: {Email,25} GameName: {GameName,25}";
         }
     }
 }

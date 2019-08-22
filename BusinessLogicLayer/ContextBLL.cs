@@ -54,6 +54,7 @@ namespace BusinessLogicLayer
             ProposedReturnValue = _context.CreateUser(FirstName, LastName, UserName, Email, SALT, HASH, DateOfBirth, RoleID);
             return ProposedReturnValue;
         }
+        //overloading 
         public int CreateUser(UserBLL user)
         {
             int ProposedReturnValue = -1;
@@ -254,6 +255,12 @@ namespace BusinessLogicLayer
             }
             return ProposedReturnValue;
         }
+        public int ObtainCommentCount()
+        {
+            int ProposedReturnValue = 0;
+            ProposedReturnValue = _context.ObtainCommentCount();
+            return ProposedReturnValue;
+        }
         #endregion
         #region GameBLL
         public int CreateGame(string GameName)
@@ -303,6 +310,12 @@ namespace BusinessLogicLayer
                 GameBLL BusinessObject = new GameBLL(Game);
                 ProposedReturnValue.Add(BusinessObject);
             }
+            return ProposedReturnValue;
+        }
+        public int ObtainGameCount()
+        {
+            int ProposedReturnValue = 0;
+            ProposedReturnValue = _context.ObtainGameCount();
             return ProposedReturnValue;
         }
 

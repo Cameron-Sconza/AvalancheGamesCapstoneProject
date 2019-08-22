@@ -437,6 +437,8 @@ namespace DataAccessLayer
                     {
                         //verifing the shape 
                         UserMapper mapper = new UserMapper(reader);
+                        //reader.read is the condition and when it returns false it ends the while loop
+                        //reader.read reads the process for SQL
                         while (reader.Read())
                         {
                             UserDAL user = mapper.UserFromReader(reader);
@@ -620,7 +622,26 @@ namespace DataAccessLayer
             }
             return ProposedReturnValue;
         }
-        
+        public int ObtainGameCount()
+        {
+            int ProposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("ObtainGameCount", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    object answer = command.ExecuteScalar();
+                    ProposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return ProposedReturnValue;
+        }
+
         #endregion
         #region Score Stuff
         public int CreateScore(int Score, int UserID, int GameID, int AmountPlayed)
@@ -858,7 +879,7 @@ namespace DataAccessLayer
             try
             {
                 EnsureConnected();
-                using (SqlCommand command = new SqlCommand("JustUpdateComment", _connection))
+                using (SqlCommand command = new SqlCommand("JustUpdateComments", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CommentID", CommentID);
@@ -1009,7 +1030,26 @@ namespace DataAccessLayer
             }
             return ProposedReturnValue;
         }
+        public int ObtainCommentCount()
+        {
+            int ProposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("ObtainCommentCount", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    object answer = command.ExecuteScalar();
+                    ProposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return ProposedReturnValue;
+        }
         #endregion
-     
+
     }
 }

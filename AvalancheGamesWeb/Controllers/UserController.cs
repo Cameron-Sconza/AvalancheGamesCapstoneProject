@@ -56,7 +56,7 @@ namespace AvalancheGamesWeb.Controllers
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ViewBag.PageNumber = 1;
+                    ViewBag.PageNumber = 0;
                     ViewBag.PageSize = ApplicationConfig.DefaultPageSize;
                     ViewBag.TotalCount = ctx.ObtainUserCount();
                     Model = ctx.GetUsers(0, ViewBag.PageSize);
@@ -134,6 +134,7 @@ namespace AvalancheGamesWeb.Controllers
                     if(null == User)
                     {
                         return View("ItemNotFound");
+                        
                     }
                 }
             }
