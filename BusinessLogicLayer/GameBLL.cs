@@ -15,6 +15,7 @@ namespace BusinessLogicLayer
         }
 
         #region Properties
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int GameID { get; set; }
         public string GameName { get; set; }
         #endregion

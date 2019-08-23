@@ -18,7 +18,10 @@ namespace BusinessLogicLayer
         #region Direct Properties
         public int ScoreID { get; set; }
         public int Score { get; set; }
+
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int UserID { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int GameID { get; set; }
         public int AmountPlayed { get; set; }
         #endregion

@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using BusinessLogicLayer;
 
-
 namespace AvalancheGamesWeb.Controllers
 {
     public class UserController : Controller
@@ -209,6 +208,20 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Exception = ex;
                 return View("Error");
             }
+        }
+    [HttpGet] public ActionResult Register()
+        {
+            return View();
+        }
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+        [HttpPost]
+        public ActionResult Register(Models.RegistrationModel NewUser)
+        {
+            return Redirect("URL of a Welcome Page");
         }
     }
 }
