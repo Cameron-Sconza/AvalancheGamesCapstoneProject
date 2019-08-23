@@ -14,9 +14,12 @@ namespace BusinessLogicLayer
 
         }
         #region direct properties
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int CommentID { get; set; }
         public string GameComment { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int UserID { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int GameID { get; set; }
         public bool Liked { get; set; }
         #endregion

@@ -23,16 +23,16 @@
 }
 <table class="table">
     <tr>
-        <th>
+        <th hidden>
             @Html.DisplayNameFor(model => model.CommentID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GameComment)
         </th>
-        <th>
+        <th hidden>
             @Html.DisplayNameFor(model => model.UserID)
         </th>
-        <th>
+        <th hidden>
             @Html.DisplayNameFor(model => model.GameID)
         </th>
         <th>
@@ -50,16 +50,16 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td hidden>
                 @Html.DisplayFor(modelItem => item.CommentID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GameComment)
             </td>
-            <td>
+            <td hidden>
                 @Html.DisplayFor(modelItem => item.UserID)
             </td>
-            <td>
+            <td hidden>
                 @Html.DisplayFor(modelItem => item.GameID)
             </td>
             <td>

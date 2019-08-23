@@ -21,11 +21,14 @@ namespace BusinessLogicLayer
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public string SALT { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public string HASH { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int RoleID { get; set; }
         #endregion
         #region Indirect Properties

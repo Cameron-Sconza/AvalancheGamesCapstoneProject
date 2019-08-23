@@ -10,12 +10,12 @@
     <h4>RoleBLL</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt hidden>
             @Html.DisplayNameFor(model => model.RoleID)
-        </dt>
+        </dthidden>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleID)
+        <dd hidden>
+            @Html.HiddenFor(model => model.RoleID)
         </dd>
 
         <dt>
