@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BusinessLogicLayer;
+using AvalancheGamesWeb.Models;
 
 namespace AvalancheGamesWeb.Controllers
 {
@@ -95,31 +96,65 @@ namespace AvalancheGamesWeb.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-            UserBLL defUser = new UserBLL();
-            defUser.UserID = 0;
-            ViewBag.Role = GetRoleItems();
-            return View(defUser);
+            Models.CreateUser NewUser = new CreateUser();
+            NewUser.RoleID = 0;
+            //UserBLL defUser = new UserBLL();
+            ViewBag.Roles = GetRoleItems();
+            return View(NewUser);
+            //defUser.UserID = 0;
+            //return View(defUser);
         }
 
         // POST: User/Create
+
         [HttpPost]
-        public ActionResult Create(BusinessLogicLayer.UserBLL collection)
+        public ActionResult Create(Models.CreateUser info)
         {
-            try
+            using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
             {
-                // TODO: Add insert logic here
-                using (ContextBLL ctx = new ContextBLL())
-                {
-                    ctx.CreateUser(collection);
-                }
+                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.Email);
+                //if (user != null)
+                //{
+                //    info.Message = $"The EMail Address '{info.Email}' already exists in the database";
+                //    return View(info);
+                //}
+                user = new UserBLL();
+                user.FirstName = info.FirstName;
+                user.LastName = info.LastName;
+                user.UserName = info.UserName;
+                user.DateOfBirth = info.DateOfBirth;
+                user.RoleID = info.RoleID;
+                user.SALT = System.Web.Helpers.Crypto.
+                    GenerateSalt(Models.Constants.SaltSize);
+                user.HASH = System.Web.Helpers.Crypto.
+                    HashPassword(info.Password + user.SALT);
+                user.Email = info.Email;
+                ctx.CreateUser(user);
+                Session["AUTHEmail"] = user.Email;
+                Session["AUTHRoles"] = user.RoleName;
+                Session["AUTHTYPE"] = "HASHED";
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
-            {
-                ViewBag.Exception = ex;
-                return View("Error");
-            }
         }
+
+        //public ActionResult Create(BusinessLogicLayer.UserBLL collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
+        //        using (ContextBLL ctx = new ContextBLL())
+        //        {
+        //            ViewBag.Roles = GetRoleItems();
+        //            ctx.CreateUser(collection);
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Exception = ex;
+        //        return View("Error");
+        //    }
+        //}
 
         // GET: User/Edit/5
         public ActionResult Edit(int id)
@@ -132,6 +167,7 @@ namespace AvalancheGamesWeb.Controllers
                     User = ctx.FindUserByUserID(id);
                     if(null == User)
                     {
+                        ViewBag.Roles = GetRoleItems();
                         return View("ItemNotFound");
                         
                     }
@@ -154,6 +190,7 @@ namespace AvalancheGamesWeb.Controllers
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
+
                     ctx.UpdateUser(collection);
                 }
                 // TODO: Add update logic here
@@ -209,19 +246,32 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-    [HttpGet] public ActionResult Register()
+        public ActionResult Impersonate(string Email)
         {
-            return View();
-        }
-        public ActionResult LogOut()
-        {
-            Session.Clear();
-            return RedirectToAction("Index", "Home", new { area = "" });
-        }
-        [HttpPost]
-        public ActionResult Register(Models.RegistrationModel NewUser)
-        {
-            return Redirect("URL of a Welcome Page");
+            UserBLL user;
+            try
+            {
+                using (ContextBLL ctx = new ContextBLL())
+                {
+                    user = ctx.FindUserByUserEmail(Email);
+                    if (null == user)
+                    {
+                        return View("ItemNotFound"); // BKW make this view
+                    }
+                    Session["AUTHUsername"] = user.Email;
+                    Session["AUTHRoles"] = user.RoleName;
+                    Session["AUTHTYPE"] = $"IMPERSONATED:{user.UserID}";
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Exception = ex;
+                return View("Error");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

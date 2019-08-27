@@ -35,7 +35,7 @@ namespace DataAccessLayer
             OffsetToLastName = reader.GetOrdinal("LastName");
             Assert(2 == OffsetToLastName, $"LastName is {OffsetToLastName} not 2 as expected");
             OffsetToUserName = reader.GetOrdinal("UserName");
-            Assert(3 == OffsetToUserName, $"Username is {OffsetToUserName} not 3 as expected");
+            Assert(3 == OffsetToUserName, $"UserName is {OffsetToUserName} not 3 as expected");
             OffsetToEmail = reader.GetOrdinal("Email");
             Assert(4 == OffsetToEmail, $"Email is {OffsetToEmail} not 4 as expected");
             OffsetToSALT = reader.GetOrdinal("SALT");

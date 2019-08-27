@@ -28,51 +28,148 @@ namespace AvalancheGamesWeb.Controllers
 
             return View();
         }
-        public ActionResult Roles()
+        //public ActionResult Roles()
+        //{
+        //    using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+        //    {
+        //        List<BusinessLogicLayer.RoleBLL> model = ctx.GetRoles(0, 100);
+        //        return View(model);
+        //    }
+        //}
+
+        [HttpGet]
+        public ActionResult Logout()
         {
-            using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
-            {
-                List<BusinessLogicLayer.RoleBLL> model = ctx.GetRoles(0, 100);
-                return View(model);
-            }
+            Session.Remove("AUTHEmail");
+            Session.Remove("AUTHRoles");
+            Session.Remove("AuthType");
+            return RedirectToAction("Index");
         }
         [HttpGet]
-      public ActionResult Login()
+        public ActionResult Login()
         {
-           // displays empty login screen with predefined returnURL
-            Models.LoginModel mapper = new Models.LoginModel(); 
-            mapper.Message   = TempData["Message"]?.ToString()??"";
-            mapper.ReturnURL = TempData["ReturnURL"]?.ToString()??@"~/Home";
-            mapper.UserEmail  = "genericuser";
-            mapper.Password  = "genericpassword";
- 
+            // displays empty login screen with predefined returnURL
+            Models.LoginModel mapper = new Models.LoginModel();
+            mapper.Message = TempData["Message"]?.ToString() ?? "";
+            mapper.ReturnURL = TempData["ReturnURL"]?.ToString() ?? @"~/Home";
+            mapper.Email = "";
+            mapper.Password = "";
             return View(mapper);
         }
-   [HttpPost]
+        [HttpPost]
         public ActionResult Login(Models.LoginModel info)
         {
-          using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+            if (!ModelState.IsValid)
             {
-               BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.UserEmail);
-               if (user == null) 
-                            { 
-                               info.Message = $"The Email '{info.UserEmail}' does not exist in the database";
-                               return View(info);
-                            }
-             string actual = user.HASH;
-               //string potential = user.Salt + info.Password;
-                    string potential = info.Password;
-                //bool validateduser = System.Web.Helpers.Crypto.VerifyHashedPassword(actual,potential);
-                    bool validateduser = potential == actual;
+                return View(info);
+            }
+            using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+            {
+                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.Email);
+                if (user == null)
+                {
+                    info.Message = $"The Email '{info.Email}' does not exist in the database";
+                    return View(info);
+                }
+                string actual = user.HASH;
+                string potential = info.Password;  
+                string ValidationType = $"ClearText:({user.UserID})";
+                //bool validateduser = potential == actual;
+                bool validateduser = potential == actual;
+                if (!validateduser)
+                {
+                    potential = info.Password + user.SALT;
+
+                    validateduser = System.Web.Helpers.Crypto.VerifyHashedPassword(actual, potential);
+                    ValidationType = $"HASHED:({user.UserID})";
+                }
                 if (validateduser)
                 {
-                   Session["AUTHUsername"] = user.UserName;
-                  Session["AUTHRoles"] = user.RoleName;
+                    Session["AUTHEmail"] = user.Email;
+                    Session["AUTHRoles"] = user.RoleName;
+                    Session["AUTHTYPE"] = ValidationType;
                     return Redirect(info.ReturnURL);
                 }
-                  info.Message = "The password was incorrect";  
-                return View(info);           
-           }
+                info.Message = "The password was incorrect";
+                return View(info);
+            }
+        }
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(Models.RegistrationModel info)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(info);
+            }
+            using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+            {
+                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.Email);
+                //if (user != null)
+                //{
+                //    info.Message = $"The EMail Address '{info.Email}' already exists in the database";
+                //    return View(info);
+                //}
+                user = new UserBLL();
+                user.FirstName = info.FirstName;
+                user.LastName = info.LastName;
+                user.UserName = info.UserName;
+                user.DateOfBirth = info.DateOfBirth;
+                user.SALT = System.Web.Helpers.Crypto.
+                    GenerateSalt(Models.Constants.SaltSize);
+                user.HASH = System.Web.Helpers.Crypto.
+                    HashPassword(info.Password + user.SALT);
+                user.Email = info.Email;
+                user.RoleID = 3;
+
+                ctx.CreateUser(user);
+                Session["AUTHEmail"] = user.Email;
+                Session["AUTHRoles"] = user.RoleName;
+                Session["AUTHTYPE"] = "HASHED";
+                return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult Hash()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return View("NotLoggedIn");
+
+            }
+            if (User.Identity.AuthenticationType.StartsWith("HASHED"))
+            {
+                return View("AlreadyHashed");
+            }
+            if (User.Identity.AuthenticationType.StartsWith("IMPERSONATED"))
+            {
+                return View("ActionNotAllowed");
+            }
+            using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+            {
+                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(User.Identity.Name);
+                if (user == null)
+                {
+                    Exception Message = new Exception($"The Email '{User.Identity.Name}' does not exist in the database");
+                    ViewBag.Exception = Message;
+                    return View("Error");
+                }
+                user.SALT = System.Web.Helpers.Crypto.GenerateSalt(Models.Constants.SaltSize);
+                user.HASH = System.Web.Helpers.Crypto.HashPassword(user.HASH + user.SALT);
+                ctx.UpdateUser(user);
+
+                string ValidationType = $"HASHED:({user.UserID})";
+
+                Session["AUTHEmail"] = user.Email;
+                Session["AUTHRoles"] = user.RoleName;
+                Session["AUTHTYPE"] = ValidationType;
+
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
