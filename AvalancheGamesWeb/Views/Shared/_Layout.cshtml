@@ -12,14 +12,14 @@
         <div class="container">
             <div class="navbar-header">
 
-       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @* this logo needs to be fixed/transparent *@
-                <a href="#" class="navbar-left"><img src=" ~/Content/Images/AvalancheGamesLogo.png" width="100" height="100"</a>
-                @Html.ActionLink("AvalancheGames", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                @*<a href="#" class="navbar-left"><img src=" ~/Content/Images/AvalancheGamesLogo.PNG" width = "200", height= "100"</a>*@
+                @Html.ActionLink("Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -33,11 +33,17 @@
                     <li>@Html.ActionLink("Games", "Index", "Game")</li>
                     <li>@Html.ActionLink("Testing", "Index", "ErrorTest")</li>
                     <li>@Html.ActionLink("Login", "Login", "Home")</li>
-                    <li>@Html.ActionLink("Log Out", "Log Out", "User")</li>
-                    <li>@Html.ActionLink("Register", "Register", "User")</li>
+                    <li>@Html.ActionLink("LogOut", "LogOut", "Home")</li>
+                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
 
                 </ul>
             </div>
+            @*want to add username in top right corner*@
+            @*<div>@User.Identity.Name</div>
+                {
+                    <span class="icon-bar navbar-brand pull-right">@User.Identity.Name </span>
+                }*@
+                <ul class="nav navbar-nav"></ul>
         </div>
     </div>
     <div class="container body-content">

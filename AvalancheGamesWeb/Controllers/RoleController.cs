@@ -91,6 +91,10 @@ namespace AvalancheGamesWeb.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
                 // TODO: Add insert logic here
                 using (ContextBLL ctx = new ContextBLL())
                 {
@@ -134,7 +138,11 @@ namespace AvalancheGamesWeb.Controllers
         public ActionResult Edit(int id, BusinessLogicLayer.RoleBLL collection)
         {
             try
-            { // TODO: Add update logic here
+            {
+                if(!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
                 using(ContextBLL ctx = new ContextBLL())
                 {
                     ctx.UpdateRole(collection);
@@ -177,6 +185,10 @@ namespace AvalancheGamesWeb.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
                 // TODO: Add delete logic here
                 using (ContextBLL ctx = new ContextBLL())
                 {

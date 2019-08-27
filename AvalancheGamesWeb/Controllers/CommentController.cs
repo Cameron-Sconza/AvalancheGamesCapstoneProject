@@ -125,6 +125,10 @@ namespace AvalancheGamesWeb.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
                 // TODO: Add insert logic here
                 using (ContextBLL ctx = new ContextBLL())
                 {
@@ -170,8 +174,12 @@ namespace AvalancheGamesWeb.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
                 // TODO: Add update logic here
-                using(ContextBLL ctx = new ContextBLL())
+                using (ContextBLL ctx = new ContextBLL())
                 {
                     ctx.UpdateComment(collection);
                 }
@@ -213,7 +221,11 @@ namespace AvalancheGamesWeb.Controllers
         {
             try
             {
-                using(ContextBLL ctx = new ContextBLL())
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
+                using (ContextBLL ctx = new ContextBLL())
                 {
                     ctx.DeleteComment(id);
                 }
