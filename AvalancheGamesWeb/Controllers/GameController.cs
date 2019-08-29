@@ -202,5 +202,22 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
+        public ActionResult Snake()
+        {
+            return View();
+        }
+        public ActionResult EndlessRunner()
+        {
+            return View();
+        }
+        public ActionResult PongBall()
+        {
+            return View();
+        }
+        public ActionResult PongBallResult(int id)
+        {
+            ViewBag.score = id;
+            return View("Pongballscore");
+        }
     }
 }

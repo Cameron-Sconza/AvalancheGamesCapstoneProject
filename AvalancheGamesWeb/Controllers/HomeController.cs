@@ -120,7 +120,7 @@ namespace AvalancheGamesWeb.Controllers
                 user.UserName = info.UserName;
                 user.DateOfBirth = info.DateOfBirth;
                 user.SALT = System.Web.Helpers.Crypto.
-                    GenerateSalt(Models.Constants.SaltSize);
+                    GenerateSalt(Constants.SaltSize);
                 user.HASH = System.Web.Helpers.Crypto.
                     HashPassword(info.Password + user.SALT);
                 user.Email = info.Email;
@@ -158,7 +158,7 @@ namespace AvalancheGamesWeb.Controllers
                     ViewBag.Exception = Message;
                     return View("Error");
                 }
-                user.SALT = System.Web.Helpers.Crypto.GenerateSalt(Models.Constants.SaltSize);
+                user.SALT = System.Web.Helpers.Crypto.GenerateSalt(Constants.SaltSize);
                 user.HASH = System.Web.Helpers.Crypto.HashPassword(user.HASH + user.SALT);
                 ctx.UpdateUser(user);
 

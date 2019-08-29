@@ -7,6 +7,7 @@ using BusinessLogicLayer;
 
 namespace AvalancheGamesWeb.Controllers
 {
+    [AvalancheGamesWeb.Models.MustBeInRole(Roles = Constants.AdminRoleName)]
     public class RoleController : Controller
     {
         public ActionResult Page(int? PageNumber, int? PageSize)
