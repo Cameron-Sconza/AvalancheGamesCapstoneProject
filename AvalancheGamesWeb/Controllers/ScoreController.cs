@@ -1,14 +1,12 @@
-﻿using System;
+﻿using BusinessLogicLayer;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BusinessLogicLayer;
 
 
 namespace AvalancheGamesWeb.Controllers
 {
-       public class ScoreController : Controller
+    public class ScoreController : Controller
     {
         List<SelectListItem> GetUserItems()
         {

@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalancheGamesWeb", "Avalan
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2441696F-ECA6-4464-A418-DA2C84FAFE18}"
 	ProjectSection(SolutionItems) = preProject
-		AvalancheGames.sqll = AvalancheGames.sqll
+		AvalancheGames.sql = AvalancheGames.sql
 	EndProjectSection
 EndProject
 Global

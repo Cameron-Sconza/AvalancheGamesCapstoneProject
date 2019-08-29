@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using AvalancheGamesWeb.Models;
 using BusinessLogicLayer;
-using AvalancheGamesWeb.Models;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace AvalancheGamesWeb.Controllers
 {
@@ -171,11 +169,11 @@ namespace AvalancheGamesWeb.Controllers
                 using (ContextBLL ctx = new ContextBLL())
                 {
                     User = ctx.FindUserByUserID(id);
-                    if(null == User)
+                    if (null == User)
                     {
                         ViewBag.Roles = GetRoleItems();
                         return View("ItemNotFound");
-                        
+
                     }
                 }
             }
@@ -239,7 +237,7 @@ namespace AvalancheGamesWeb.Controllers
 
         // POST: User/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id,BusinessLogicLayer.UserBLL collection)
+        public ActionResult Delete(int id, BusinessLogicLayer.UserBLL collection)
         {
             try
             {
