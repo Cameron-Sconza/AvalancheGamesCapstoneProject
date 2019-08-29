@@ -8,6 +8,8 @@ using AvalancheGamesWeb.Models;
 
 namespace AvalancheGamesWeb.Controllers
 {
+    [AvalancheGamesWeb.Models.MustBeInRole(Roles = Constants.AdminRoleName)]
+
     public class UserController : Controller
     {
         List<SelectListItem> GetRoleItems()
@@ -112,6 +114,10 @@ namespace AvalancheGamesWeb.Controllers
         {
             using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(info);
+                }
                 BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.Email);
                 //if (user != null)
                 //{
@@ -125,7 +131,7 @@ namespace AvalancheGamesWeb.Controllers
                 user.DateOfBirth = info.DateOfBirth;
                 user.RoleID = info.RoleID;
                 user.SALT = System.Web.Helpers.Crypto.
-                    GenerateSalt(Models.Constants.SaltSize);
+                    GenerateSalt(Constants.SaltSize);
                 user.HASH = System.Web.Helpers.Crypto.
                     HashPassword(info.Password + user.SALT);
                 user.Email = info.Email;
@@ -188,6 +194,10 @@ namespace AvalancheGamesWeb.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
                 using (ContextBLL ctx = new ContextBLL())
                 {
 
@@ -232,9 +242,13 @@ namespace AvalancheGamesWeb.Controllers
         public ActionResult Delete(int id,BusinessLogicLayer.UserBLL collection)
         {
             try
-            {  
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
                 // TODO: Add delete logic here
-            using (ContextBLL ctx = new ContextBLL())
+                using (ContextBLL ctx = new ContextBLL())
                 {
                     ctx.DeleteUser(id);
                 }
