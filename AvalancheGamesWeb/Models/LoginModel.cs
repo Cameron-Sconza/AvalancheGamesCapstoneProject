@@ -5,7 +5,7 @@ namespace AvalancheGamesWeb.Models
     public class LoginModel
     {
         [Required]
-        public string Email { get; set; }
+        public string UserName { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]

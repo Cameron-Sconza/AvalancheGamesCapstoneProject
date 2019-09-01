@@ -17,11 +17,11 @@ namespace DataAccessLayer
         #endregion
         #region indirect properties 
         public string GameName { get; set; }
-        public string Email { get; set; }
+        public string UserName { get; set; }
         #endregion
         public override string ToString()
         {
-            return $"CommentID: {CommentID,5} GameComment: {GameComment,250} UserID: {UserID} GameID: {GameID,5} Liked: {Liked} GameName: {GameName,25} Email: {Email}";
+            return $"CommentID: {CommentID,5} GameComment: {GameComment,250} UserID: {UserID} GameID: {GameID,5} Liked: {Liked} GameName: {GameName,25} UserName: {UserName}";
         }
     }
 }

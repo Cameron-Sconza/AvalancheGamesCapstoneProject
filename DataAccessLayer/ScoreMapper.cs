@@ -13,7 +13,7 @@ namespace DataAccessLayer
         int OffsetToUserID;
         int OffsetToGameID;
         int OffsetToAmountPlayed;
-        int OffsetToEmail;
+        int OffsetToUserName;
         int OffsetToGameName;
         
         public ScoreMapper(System.Data.SqlClient.SqlDataReader reader)
@@ -28,8 +28,8 @@ namespace DataAccessLayer
             Assert(3 == OffsetToGameID, $"GameID is {OffsetToGameID} not 3 as expected");
             OffsetToAmountPlayed = reader.GetOrdinal("AmountPlayed");
             Assert(4 == OffsetToAmountPlayed, $"AmountPlayed in {OffsetToAmountPlayed} not 4 as expected");
-            OffsetToEmail = reader.GetOrdinal("Email");
-            Assert(5 == OffsetToEmail, $"Email is {OffsetToEmail} not 5 as expected");
+            OffsetToUserName = reader.GetOrdinal("UserName");
+            Assert(5 == OffsetToUserName, $"Email is {OffsetToUserName} not 5 as expected");
             OffsetToGameName = reader.GetOrdinal("GameName");
             Assert(6 == OffsetToGameName, $"GameName is {OffsetToGameName} not 6 as expected");
         }
@@ -42,7 +42,7 @@ namespace DataAccessLayer
             ProposedReturnValue.UserID = reader.GetInt32(OffsetToUserID);
             ProposedReturnValue.GameID = reader.GetInt32(OffsetToGameID);
             ProposedReturnValue.AmountPlayed = reader.GetInt32(OffsetToAmountPlayed);
-            ProposedReturnValue.Email = reader.GetString(OffsetToEmail);
+            ProposedReturnValue.UserName = reader.GetString(OffsetToUserName);
             ProposedReturnValue.GameName = reader.GetString(OffsetToGameName);
             return ProposedReturnValue;
         }

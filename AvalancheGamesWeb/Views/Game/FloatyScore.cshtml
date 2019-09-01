@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "FloatyScore";
+}
+
+
+
+<h2>FloatyScore</h2>
+
+You Scored @ViewBag.score
+<br />
+<form action="~/Controllers/GameController/FloatyResult/@ViewBag.score" method="get" id="form1"></form>
+<button type="submit" form="form1" value="Submit">Click To Save Score</button>

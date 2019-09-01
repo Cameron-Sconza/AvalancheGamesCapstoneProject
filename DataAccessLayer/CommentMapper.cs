@@ -14,7 +14,7 @@ namespace DataAccessLayer
         int OffsetToGameID;
         int OffsetToLiked;
         int OffsetToGameName;
-        int OffsetToEmail;
+        int OffsetToUserName;
 
         public CommentMapper (System.Data.SqlClient.SqlDataReader reader)
         {
@@ -30,8 +30,8 @@ namespace DataAccessLayer
             Assert(4 == OffsetToLiked, $"Liked is {OffsetToLiked} not 4 as expected");
             OffsetToGameName = reader.GetOrdinal("GameName");
             Assert(5 == OffsetToGameName, $"GameName is {OffsetToGameName} not 5 as expected");
-            OffsetToEmail = reader.GetOrdinal("Email");
-            Assert(6 == OffsetToEmail, $"Email is {OffsetToEmail} not 6 as expected");
+            OffsetToUserName = reader.GetOrdinal("UserName");
+            Assert(6 == OffsetToUserName, $"Email is {OffsetToUserName} not 6 as expected");
         }
         public CommentDAL CommentFromReader (System.Data.SqlClient.SqlDataReader reader)
         {
@@ -42,7 +42,7 @@ namespace DataAccessLayer
             ProposedReturnValue.GameID = reader.GetInt32(OffsetToGameID);
             ProposedReturnValue.Liked = reader.GetBoolean(OffsetToLiked);
             ProposedReturnValue.GameName = reader.GetString(OffsetToGameName);
-            ProposedReturnValue.Email = reader.GetString(OffsetToEmail);
+            ProposedReturnValue.UserName = reader.GetString(OffsetToUserName);
             return ProposedReturnValue;
         }
 

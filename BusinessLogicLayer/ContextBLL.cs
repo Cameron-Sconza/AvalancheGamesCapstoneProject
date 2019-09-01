@@ -8,9 +8,9 @@ using DataAccessLayer;
 namespace BusinessLogicLayer
 {
     public class ContextBLL : IDisposable
-    #region Context stuff
+    { 
+        #region Context stuff
 
-    {
         DataAccessLayer.ContextDAL _context = new DataAccessLayer.ContextDAL();
         public void Dispose()
         {
@@ -47,6 +47,7 @@ namespace BusinessLogicLayer
             _context.GenerateParametersNotIncluded();
         }
         #endregion
+
         #region UserBLL
         public int CreateUser(string FirstName, string LastName, string UserName, string Email, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
         {
@@ -97,6 +98,22 @@ namespace BusinessLogicLayer
             }
             return ProposedReturnValue;
         }
+
+
+
+        public UserBLL FindUserByUserName(string UserName)
+        {
+            UserBLL ProposedReturnValue = null;
+            UserDAL DataLayerObject = _context.FindUserByUserName(UserName);
+            if (null != DataLayerObject)
+            {
+                ProposedReturnValue = new UserBLL(DataLayerObject);
+            }
+            return ProposedReturnValue;
+        }
+
+
+
         public List<UserBLL> GetUsers(int skip, int take)
         {
             List<UserBLL> ProposedReturnValue = new List<UserBLL>();
@@ -126,6 +143,7 @@ namespace BusinessLogicLayer
             return ProposedReturnValue;
         }
         #endregion
+
         #region RoleBLL
         public int CreateRole(string RoleName)
         {
@@ -183,6 +201,7 @@ namespace BusinessLogicLayer
             return ProposedReturnValue;
         }
         #endregion
+
         #region CommentBLL
         public int CreateComment(string GameComment, int UserID, int GameID, bool Liked)
         {
@@ -216,6 +235,17 @@ namespace BusinessLogicLayer
         {
             CommentBLL ProposedReturnValue = null;
             CommentDAL DataLayerObject = _context.FindCommentByCommentID(CommentID);
+            if (null != DataLayerObject)
+            {
+                ProposedReturnValue = new CommentBLL(DataLayerObject);
+            }
+            return ProposedReturnValue;
+        }
+
+        public CommentBLL FindCommentByLiked(bool Liked)
+        {
+            CommentBLL ProposedReturnValue = null;
+            CommentDAL DataLayerObject = _context.FindCommentByLiked(Liked);
             if (null != DataLayerObject)
             {
                 ProposedReturnValue = new CommentBLL(DataLayerObject);
@@ -262,6 +292,7 @@ namespace BusinessLogicLayer
             return ProposedReturnValue;
         }
         #endregion
+
         #region GameBLL
         public int CreateGame(string GameName)
         {
@@ -320,6 +351,7 @@ namespace BusinessLogicLayer
         }
 
         #endregion
+
         #region ScoreBLL
         public int CreateScore(int Score, int UserID, int GameID, int AmountPlayed)
         {
@@ -381,10 +413,10 @@ namespace BusinessLogicLayer
             }
             return ProposedReturnValue;
         }
-        public List<ScoreBLL> GetScoresReltatedToRoleID(int RoleID, int skip, int take)
+        public List<ScoreBLL> GetScoresReltatedToUserID(int UserID, int skip, int take)
         {
             List<ScoreBLL> ProposedReturnValue = new List<ScoreBLL>();
-            List<ScoreDAL> ListOfDataLayerObjects = _context.GetScoresRelatedToGameID(RoleID, skip, take);
+            List<ScoreDAL> ListOfDataLayerObjects = _context.GetScoresRelatedToUserID(UserID, skip, take);
             foreach (ScoreDAL score in ListOfDataLayerObjects)
             {
                 ScoreBLL BusinessObject = new ScoreBLL(score);
@@ -395,9 +427,17 @@ namespace BusinessLogicLayer
         public int ObtainScoreCount()
         {
             int ProposedReturnValue = 0;
-            ProposedReturnValue = _context.ObtainRoleCount();
+            ProposedReturnValue = _context.ObtainScoreCount();
+            return ProposedReturnValue;
+        }
+
+        public int ObtainUserScoreCount(int id)
+        {
+            int ProposedReturnValue = 0;
+            ProposedReturnValue = _context.ObtainUserScoreCount(id);
             return ProposedReturnValue;
         }
         #endregion
+
     }
 }

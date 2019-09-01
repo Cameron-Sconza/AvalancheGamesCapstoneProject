@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<BusinessLogicLayer.ScoreBLL>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "MyIndex";
     int PageNumber = ViewBag.PageNumber;
-    int PageSize = 10;//ViewBag.PageSize;
+    int PageSize = ViewBag.PageSize;
     int TotalCount = ViewBag.TotalCount;
     int TotalPageButtonCount = ((TotalCount % PageSize == 0) ? 0 : 1) + TotalCount / PageSize;
     int CorrectedPageButtonCount = (TotalPageButtonCount > 9) ? 10 : TotalPageButtonCount;
@@ -23,19 +23,19 @@
 }
 <table class="table">
     <tr>
-        <th hidden>
+        <th >
             @Html.DisplayNameFor(model => model.ScoreID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Score)
         </th>
-        <th hidden>
+        <th >
             @Html.DisplayNameFor(model => model.UserID)
         </th>
-        <th hidden>
+        <th >
             @Html.DisplayNameFor(model => model.GameID)
         </th>
-        <th hidden>
+        <th>
             @Html.DisplayNameFor(model => model.AmountPlayed)
         </th>
         <th>
@@ -50,19 +50,19 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td hidden>
+            <td>
                 @Html.DisplayFor(modelItem => item.ScoreID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Score)
             </td>
-            <td hidden>
+            <td>
                 @Html.DisplayFor(modelItem => item.UserID)
             </td>
-            <td hidden>
+            <td>
                 @Html.DisplayFor(modelItem => item.GameID)
             </td>
-            <td hidden>
+            <td>
                 @Html.DisplayFor(modelItem => item.AmountPlayed)
             </td>
             <td>
@@ -72,9 +72,10 @@
                 @Html.DisplayFor(modelItem => item.GameName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ScoreID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ScoreID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ScoreID })
+                @*fix this*@
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
     }

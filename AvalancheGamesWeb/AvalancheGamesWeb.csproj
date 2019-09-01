@@ -134,6 +134,8 @@
     <Compile Include="Controllers\ErrorTestController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MyScoresController.cs" />
+    <Compile Include="Controllers\RegisterUserController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -152,12 +154,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\animatedNanonaut.png" />
-    <Content Include="Content\Images\animatedRobot.png" />
     <Content Include="Content\Images\AvalancheGamesLogo.png" />
-    <Content Include="Content\Images\background.png" />
-    <Content Include="Content\Images\bush1.png" />
-    <Content Include="Content\Images\bush2.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -177,7 +174,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\NinjaController.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -221,15 +217,19 @@
     <Content Include="Views\Score\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Game\NinjaGame.cshtml" />
-    <Content Include="Views\Game\EndlessRunner.cshtml" />
     <Content Include="Views\Game\Snake.cshtml" />
-    <Content Include="Views\Game\PongBall.cshtml" />
     <Content Include="Views\Shared\ActionNotAllowed.cshtml" />
     <Content Include="Views\Shared\AlreadyHashed.cshtml" />
     <Content Include="Views\Shared\ItemNotFound.cshtml" />
     <Content Include="Views\Shared\NotLoggedIn.cshtml" />
-    <Content Include="Views\Game\Pongballscore.cshtml" />
+    <Content Include="Views\Game\PongballScore.cshtml" />
+    <Content Include="Views\Game\SnakeScore.cshtml" />
+    <Content Include="Views\Game\FloatyScore.cshtml" />
+    <Content Include="Views\Game\PongBall.cshtml" />
+    <Content Include="Views\Game\Floaty.cshtml" />
+    <Content Include="Views\Score\MyIndex.cshtml" />
+    <Content Include="Views\MyScores\Index.cshtml" />
+    <Content Include="Views\RegisterUser\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

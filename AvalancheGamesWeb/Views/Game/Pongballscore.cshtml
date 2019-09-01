@@ -1,9 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "Pongballscore";
+    ViewBag.Title = "PongballScore";
 }
 
-<h2>Pongballscore</h2>
+<h2>PongballScore</h2>
 
-you scored @ViewBag.score
-
+You Scored @ViewBag.score
+<br />
+<form action="~/Controllers/GameController/PongBallResult/@ViewBag.score" method="get" id="form1"></form>
+<button type="submit" form="form1" value="Submit">Click To Save Score</button>

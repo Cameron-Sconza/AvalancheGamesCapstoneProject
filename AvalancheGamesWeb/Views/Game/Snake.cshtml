@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = null;
+    ViewBag.Title = "Snake";
 }
 
 <!DOCTYPE html>
@@ -215,14 +215,13 @@
                     0 > ny || ny > grid.height - 1 ||
                     grid.get(nx, ny) === SNAKE
                 ) {
-                    var link = document.createElement('a');
-                    link.href = ('http://localhost:44348//Game/PongBallscore/');
-                    document.body.appendChild(link);
-                    link.click();
-                    window.location.href = ('http://localhost:44348//Game/PongBallscore/');
-                    location.reload(true);
-                    debugger;
-                    return;
+                    //var link = document.createElement('a');
+                    //link.href = ('http://localhost:44348//Game/PongBallResult/');
+                    //document.body.appendChild(link);
+                    //link.click();
+
+                    window.location.href = ('/Game/SnakeResult/' + score);
+
                 }
 
                 if (grid.get(nx, ny) === FRUIT) {

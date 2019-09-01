@@ -17,7 +17,7 @@ namespace AvalancheGamesWeb.Controllers
                 {
                     SelectListItem item = new SelectListItem();
                     item.Value = user.UserID.ToString();
-                    item.Text = user.Email;
+                    item.Text = user.UserName;
                     ProposedReturnValue.Add(item);
                 }
             }
@@ -113,7 +113,7 @@ namespace AvalancheGamesWeb.Controllers
             CommentBLL defComment = new CommentBLL();
             defComment.CommentID = 0;
             ViewBag.GameName = GetGameItems();
-            ViewBag.Email = GetGameItems();
+            ViewBag.UserName = GetGameItems();
             return View(defComment);
         }
 
@@ -161,7 +161,7 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Excption = ex;
                 return View("Error");
             }
-            ViewBag.Email = GetUserItems();
+            ViewBag.UserName = GetUserItems();
             ViewBag.GameName = GetGameItems();
             return View(Comment);
         }

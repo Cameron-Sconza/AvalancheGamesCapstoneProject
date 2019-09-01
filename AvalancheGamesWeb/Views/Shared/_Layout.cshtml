@@ -18,56 +18,65 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @*<a href="#" class="navbar-left"><img src=" ~/Content/Images/AvalancheGamesLogo.PNG" width = "100", height= "65"</a>*@
+                <a href="#" class="navbar-left"><img src=" ~/Content/Images/AvalancheGamesLogo.PNG" width = "100", height= "65"</a>
                 @*@Html.ActionLink("Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-
+               
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    @if (User.IsInRole(Constants.AdminRoleName))
-                    {
-                        <li>@Html.ActionLink("Roles", "Index", "Role")</li>
-                        <li>@Html.ActionLink("Users", "Index", "User")</li>
-                        <li>@Html.ActionLink("Comments", "Index", "Comment")</li>
-                        <li>@Html.ActionLink("Testing", "Index", "ErrorTest")</li>
-                    }
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        //my profile
-                        <li class="@Html.ActionLink("GamesList", "Index", "Game")dropdown">
+                    <li>
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Games
+                            About
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("EndlessRunner", "EndlessRunner", "Game")</li>
-                            <li>@Html.ActionLink("PongBall", "PongBall", "Game")</li>
-                            <li>@Html.ActionLink("Snake", "Snake", "Game")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         </ul>
-                            </li>                            
-                        <li>@Html.ActionLink("Scores", "Index", "Score")</li>
-                    }
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("Welcome " + User.Identity.Name, "Index", "Home") </li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
-                        if (User.Identity.AuthenticationType.StartsWith("ClearText"))
+                        @if (User.IsInRole(Constants.AdminRoleName))
                         {
-                            <li>@Html.ActionLink("HASH Password", "Hash", "Home")</li>
-                        }
+                        @*<li>@Html.ActionLink("Roles", "Index", "Role")</li>*@
+                        <li>@Html.ActionLink("Users", "Index", "User")</li>
+                        <li>@Html.ActionLink("Testing", "Index", "ErrorTest")</li>
                     }
-                    else
-                    {
-                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
-                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
-                    }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            //my profile
+                            <li>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Games
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("Floaty", "Floaty", "Game")</li>
+                                    <li>@Html.ActionLink("PongBall", "PongBall", "Game")</li>
+                                    <li>@Html.ActionLink("Snake", "Snake", "Game")</li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Scores", "Index", "Score")</li>
+                            <li>@Html.ActionLink("Comments", "Index", "Comment")</li>
 
-                </ul>
-                </div>
+                        }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Welcome " + User.Identity.Name, "Index", "Home") </li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                            <li>@Html.ActionLink("MyScores","MyIndex", "Score") </li>
+                            if (User.Identity.AuthenticationType.StartsWith("ClearText"))
+                            {
+                                <li>@Html.ActionLink("HASH Password", "Hash", "Home")</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Register", "Register", "RegisterUser")</li>
+                            <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                        }
+
+                    </ul>
+</div>
             </div>
         </div>
     <div class="container body-content">

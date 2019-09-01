@@ -26,7 +26,7 @@ namespace BusinessLogicLayer
         public int AmountPlayed { get; set; }
         #endregion
         #region Indirect Properties
-        public string Email { get; set; }
+        public string UserName { get; set; }
         public string GameName { get; set; }
         #endregion
         public ScoreBLL(ScoreDAL dal)
@@ -36,12 +36,12 @@ namespace BusinessLogicLayer
             this.UserID = dal.UserID;
             this.GameID = dal.GameID;
             this.AmountPlayed = dal.AmountPlayed;
-            this.Email = dal.Email;
+            this.UserName = dal.UserName;
             this.GameName = dal.GameName;
         }
         public override string ToString()
         {
-            return $"ScoreID: {ScoreID} Score: {Score} UserID: {UserID} GameID: {GameID} AmountPlayed: {AmountPlayed} Email: {Email} GameName: {GameName}";
+            return $"ScoreID: {ScoreID} Score: {Score} UserID: {UserID} GameID: {GameID} AmountPlayed: {AmountPlayed} UserName: {UserName} GameName: {GameName}";
         }
     }
 }

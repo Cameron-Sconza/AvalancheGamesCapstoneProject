@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace AvalancheGamesWeb.Models
 {
     public class RegistrationModel
     {
-
+        //registrationUserStuff
+        public int UserID { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -15,6 +18,7 @@ namespace AvalancheGamesWeb.Models
 
         [Required]
         public string Email { get; set; }
+
         [Required]
         [StringLength(Constants.MaxPasswordLength, ErrorMessage = "The {0} must be between {2} and {1} characters long.",
             MinimumLength = Constants.MinPasswordLength)]
@@ -22,6 +26,7 @@ namespace AvalancheGamesWeb.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Verify Password")]
@@ -29,7 +34,18 @@ namespace AvalancheGamesWeb.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
-        //public string Message { get; set; }
+
+        public string Message { get; set; }
+
+        //CommentStuff
+        public int CommentID { get; set; }
+
+        public int GameID { get; set; }
+        public bool Liked { get; set; }
+
+        //GameStuff
+        //public List<SelectListItem> GameName { get; set; }
+        public string GameName { get; set; }
     }
 
 }

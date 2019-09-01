@@ -419,6 +419,44 @@ namespace DataAccessLayer
             }
             return ProposedReturnValue;
         }
+
+
+
+        public UserDAL FindUserByUserName(string UserName)
+        {
+            UserDAL ProposedReturnValue = null;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("FindUserByUserName", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserName", UserName);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        UserMapper mapper = new UserMapper(reader);
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            ProposedReturnValue = mapper.UserFromReader(reader);
+                            count++;
+                        }
+                        if (count > 1)
+                        {
+                            throw new Exception($"Found more than 1 User with key {UserName}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return ProposedReturnValue;
+        }
+
+
+
         //returning a list!!!
         public List<UserDAL> GetUsers(int skip, int take)
         {
@@ -774,7 +812,7 @@ namespace DataAccessLayer
             try
             {
                 EnsureConnected();
-                using (SqlCommand command = new SqlCommand("GetScoresRelatedToGameID"))
+                using (SqlCommand command = new SqlCommand("GetScoresRelatedToGameID", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@GameID", GameID);
@@ -803,7 +841,7 @@ namespace DataAccessLayer
             try
             {
                 EnsureConnected();
-                using (SqlCommand command = new SqlCommand("GetScoresRelatedToUserID"))
+                using (SqlCommand command = new SqlCommand("GetScoresRelatedToUserID", _connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@UserID", UserID);
@@ -845,7 +883,29 @@ namespace DataAccessLayer
             }
 
             return ProposedReturnValue;
-        }     
+        }
+
+        public int ObtainUserScoreCount(int id)
+        {
+            int ProposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("ObtainUserScoreCount", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", id);
+                    object answer = command.ExecuteScalar();
+                    ProposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+
+            return ProposedReturnValue;
+        }
         #endregion
         #region Comment Stuff
         public int CreateComment(string GameComment, int UserID, int GameID, bool Liked)
@@ -944,6 +1004,43 @@ namespace DataAccessLayer
             }
             return ProposedReturnValue;
         }
+
+
+
+        public CommentDAL FindCommentByLiked(bool Liked)
+        {
+            CommentDAL ProposedReturnValue = null;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("FindCommentByLiked", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Liked", Liked);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        CommentMapper mapper = new CommentMapper(reader);
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            ProposedReturnValue = mapper.CommentFromReader(reader);
+                            count++;
+                        }
+                        if (count > 1)
+                        {
+                            throw new Exception($"Found more than 1 Comment with key {Liked}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+            return ProposedReturnValue;
+        }
+
+
         public List<CommentDAL> GetComments(int skip, int take)
         {
             List<CommentDAL> ProposedReturnValue = new List<CommentDAL>();
