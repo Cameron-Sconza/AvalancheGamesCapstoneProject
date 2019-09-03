@@ -36,7 +36,7 @@
                         </ul>
                         @if (User.IsInRole(Constants.AdminRoleName))
                         {
-                        @*<li>@Html.ActionLink("Roles", "Index", "Role")</li>*@
+                            @*<li>@Html.ActionLink("Roles", "Index", "Role")</li>*@
                         <li>@Html.ActionLink("Users", "Index", "User")</li>
                         <li>@Html.ActionLink("Testing", "Index", "ErrorTest")</li>
                     }
@@ -62,8 +62,9 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li>@Html.ActionLink("Welcome " + User.Identity.Name, "Index", "Home") </li>
+                            <li>@Html.ActionLink("MyScores", "Index", "MyScores") </li>
                             <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
-                            <li>@Html.ActionLink("MyScores","Index", "MyScores") </li>
+
                             if (User.Identity.AuthenticationType.StartsWith("ClearText"))
                             {
                                 <li>@Html.ActionLink("HASH Password", "Hash", "Home")</li>

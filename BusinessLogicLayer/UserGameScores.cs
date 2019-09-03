@@ -28,7 +28,7 @@ namespace BusinessLogicLayer
         }
 
         public  List<ScoreStats> CalculateStats(List<ScoreBLL> Scores)
-        {
+        {//linq 
             var Q1 = from scr in Scores group scr by scr.UserName into grp select new ScoreStats() { UserName = grp.Key, Count = grp.Count(), AverageScore = grp.Average(s => s.Score), HighScore = grp.Max(s => s.Score), LowestScore = grp.Min(s => s.Score) };
             return Q1.ToList();
         }
