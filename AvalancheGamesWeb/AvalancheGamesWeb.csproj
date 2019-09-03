@@ -227,9 +227,9 @@
     <Content Include="Views\Game\FloatyScore.cshtml" />
     <Content Include="Views\Game\PongBall.cshtml" />
     <Content Include="Views\Game\Floaty.cshtml" />
-    <Content Include="Views\Score\MyIndex.cshtml" />
     <Content Include="Views\MyScores\Index.cshtml" />
     <Content Include="Views\RegisterUser\Register.cshtml" />
+    <Content Include="Views\Score\ScoreStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

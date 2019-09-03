@@ -127,5 +127,29 @@ namespace AvalancheGamesWeb.Controllers
                 return View();
             }
         }
+        public ActionResult ScoreStats()
+        {
+            try
+            {
+                List<ScoreBLL> Scores;
+                List<ScoreStats> Model;
+                using (ContextBLL ctx = new ContextBLL())
+                {
+                    int TotalCount = ctx.ObtainScoreCount();
+                    Scores = ctx.GetScores(0, TotalCount);
+                    MeaningfulCalculation mc = new MeaningfulCalculation();
+                    Model = mc.CalculateStats(Scores);
+
+                }
+                return View("ScoreStats", Model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Exception = ex;
+                return View("Error");
+            }
+
+
+        }
     }
 }

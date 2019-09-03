@@ -10,30 +10,33 @@ using DataAccessLayer;
 namespace BusinessLogicLayer
 
 {
-    public class UserGameScores
+    public class ScoreStats
     {
-        public List<SelectListItem> GetGameItems(ContextBLL ctx)
-        {
-            List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
-            List<GameBLL> games = ctx.GetGames(0, 25);
-            foreach (GameBLL game in games)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Value = game.GameID.ToString();
-                item.Text = game.GameName;
-                ProposedReturnValue.Add(item);
-            }
-            return ProposedReturnValue;
-        }
-    //    public UserBLL FindUserByUserID(int UserID)
-    //    {
-    //        UserBLL ProposedReturnValue = null;
-    //        UserDAL DataLayerObject = _context.FindUserByUserID(UserID);
-    //        if (null != DataLayerObject)
-    //        {
-    //            ProposedReturnValue = new UserBLL(DataLayerObject);
-    //        }
-    //        return ProposedReturnValue;
-    //    }
+        public string UserName { get; set; }
+        public int Count { get; set; }
+        public double AverageScore { get; set; }
+        public int HighScore { get; set; }
+        public int LowestScore { get; set; }
     }
+    public class MeaningfulCalculation
+    {
+        public double CalculateUserAverage(List<ScoreBLL> Score)
+        {
+            if (Score == null) return 0;
+            if (Score.Count == 0) return 0;
+            return Score.Average(s => s.Score);
+        }
+
+        public  List<ScoreStats> CalculateStats(List<ScoreBLL> Scores)
+        {
+            var Q1 = from scr in Scores group scr by scr.UserName into grp select new ScoreStats() { UserName = grp.Key, Count = grp.Count(), AverageScore = grp.Average(s => s.Score), HighScore = grp.Max(s => s.Score), LowestScore = grp.Min(s => s.Score) };
+            return Q1.ToList();
+        }
+
+    }
+
+
+
+    
 }
+

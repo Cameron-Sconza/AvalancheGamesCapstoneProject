@@ -278,12 +278,13 @@ namespace AvalancheGamesWeb.Controllers
                     var name = ctx.FindUserByUserName(User.Identity.Name);
                     thisScore.Score = id;
                     thisScore.UserID = name.UserID;
-                    thisScore.GameID = 1;
+                    thisScore.GameID = Constants.SnakeGame;
                     ViewBag.score = id;
                 ctx.CreateScore(thisScore);
                 //return View("SnakeScore");
                 // return View(thisScore);
                 return RedirectToAction("Index", "MyScores");
+                //return View("SnakeScore");
             }
             }
 
@@ -334,7 +335,7 @@ namespace AvalancheGamesWeb.Controllers
                 var name = ctx.FindUserByUserName(User.Identity.Name);
                 thisScore.Score = id;
                 thisScore.UserID = name.UserID;
-                thisScore.GameID = 2;
+                thisScore.GameID = Constants.PongBallGame;
                 ViewBag.score = id;
                 ctx.CreateScore(thisScore);
                 //return View("SnakeScore");
@@ -382,9 +383,10 @@ namespace AvalancheGamesWeb.Controllers
                 ScoreBLL thisScore = new ScoreBLL();
                 // string email = Session["AUTHEmail"].ToString();
                 var name = ctx.FindUserByUserName(User.Identity.Name);
+                
                 thisScore.Score = id;
                 thisScore.UserID = name.UserID;
-                thisScore.GameID = FloatyGame;
+                thisScore.GameID = Constants.FloatyGame;
                 ViewBag.score = id;
                 ctx.CreateScore(thisScore);
                 //return View("SnakeScore");

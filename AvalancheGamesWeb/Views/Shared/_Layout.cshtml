@@ -63,7 +63,7 @@
                         {
                             <li>@Html.ActionLink("Welcome " + User.Identity.Name, "Index", "Home") </li>
                             <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
-                            <li>@Html.ActionLink("MyScores","MyIndex", "Score") </li>
+                            <li>@Html.ActionLink("MyScores","Index", "MyScores") </li>
                             if (User.Identity.AuthenticationType.StartsWith("ClearText"))
                             {
                                 <li>@Html.ActionLink("HASH Password", "Hash", "Home")</li>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BusinessLogicLayer.ScoreBLL>
 
 @{
-    ViewBag.Title = "MyIndex";
+    ViewBag.Title = "Index";
     int PageNumber = ViewBag.PageNumber;
     int PageSize = ViewBag.PageSize;
     int TotalCount = ViewBag.TotalCount;
@@ -12,7 +12,8 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
+    @Html.ActionLink("Statistics", "ScoreStats")
 </p>
 @{
     for (int i = 0; i < CorrectedPageButtonCount; i++)
