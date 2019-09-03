@@ -143,7 +143,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         //POST: Score/Create
-       [HttpPost]
+        [HttpPost]
         public ActionResult Create(BusinessLogicLayer.ScoreBLL collection)
         {
             try
@@ -260,6 +260,30 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Exception = ex;
                 return View("Error");
             }
+        }
+        public ActionResult ScoreStats()
+        {
+            try
+            {
+                List<ScoreBLL> Scores;
+                List<ScoreStats> Model;
+                using (ContextBLL ctx = new ContextBLL())
+                {
+                    int TotalCount = ctx.ObtainScoreCount();
+                    Scores = ctx.GetScores(0, TotalCount);
+                    MeaningfulCalculation mc = new MeaningfulCalculation();
+                    Model = mc.CalculateStats(Scores);
+
+                }
+                return View("ScoreStats", Model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Exception = ex;
+                return View("Error");
+            }
+
+
         }
     }
 }
