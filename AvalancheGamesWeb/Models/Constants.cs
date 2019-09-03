@@ -16,12 +16,12 @@ namespace AvalancheGamesWeb
         public const int NormalRole = 3;
         public const string NormalRoleName = "NormalUser";
         //might have to delete these
-        public const int SnakeGame = 1;
-        public const string SnakeGameName = "Snake";
-        public const int PongBallGame = 2;
-        public const string PongBallGameName = "PongBall";
-        public const int FloatyGame = 3;
-        public const string FloatyGameName = "Floaty";
+        //public const int SnakeGame = 1;
+        //public const string SnakeGameName = "Snake";
+        //public const int PongBallGame = 2;
+        //public const string PongBallGameName = "PongBall";
+        //public const int FloatyGame = 3;
+        //public const string FloatyGameName = "Floaty";
         public const int DefaultDefaultPageSize = 10;
         public const int DefaultPageNumber = 0;
         public const int MinPasswordLength = 8;

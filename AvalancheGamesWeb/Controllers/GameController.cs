@@ -384,7 +384,7 @@ namespace AvalancheGamesWeb.Controllers
                 var name = ctx.FindUserByUserName(User.Identity.Name);
                 thisScore.Score = id;
                 thisScore.UserID = name.UserID;
-                thisScore.GameID = 3;
+                thisScore.GameID = FloatyGame;
                 ViewBag.score = id;
                 ctx.CreateScore(thisScore);
                 //return View("SnakeScore");

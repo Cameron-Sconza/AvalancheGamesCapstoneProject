@@ -72,6 +72,7 @@
     <Compile Include="RoleBLL.cs" />
     <Compile Include="ScoreBLL.cs" />
     <Compile Include="UserBLL.cs" />
+    <Compile Include="UserGameScores.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">

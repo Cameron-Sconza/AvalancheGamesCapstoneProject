@@ -113,7 +113,7 @@ namespace AvalancheGamesWeb.Controllers
             CommentBLL defComment = new CommentBLL();
             defComment.CommentID = 0;
             ViewBag.GameName = GetGameItems();
-            ViewBag.UserName = GetGameItems();
+           // ViewBag.UserName = GetGameItems();
             return View(defComment);
         }
 
@@ -130,6 +130,12 @@ namespace AvalancheGamesWeb.Controllers
                 // TODO: Add insert logic here
                 using (ContextBLL ctx = new ContextBLL())
                 {
+                    UserBLL userRecord = ctx.FindUserByUserName(User.Identity.Name);
+                    if (null == userRecord)
+                    {
+                        return View("UserNotFound");
+                    }
+                    collection.UserID = userRecord.UserID;
                     ctx.CreateComment(collection);
                 }
                 return RedirectToAction("Index");

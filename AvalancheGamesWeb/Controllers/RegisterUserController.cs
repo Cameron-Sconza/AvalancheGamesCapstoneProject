@@ -80,6 +80,7 @@ namespace AvalancheGamesWeb.Controllers
                     if (user != null)
                     {
                         collection.Message = $"The UserName  '{collection.UserName}' already exists in the database";
+                        ViewBag.Games = GetGameItems(ctx);
                         return View(collection);
                     }
                     user = new UserBLL();
@@ -95,7 +96,9 @@ namespace AvalancheGamesWeb.Controllers
                     comment.Liked = collection.Liked;
                     comment.GameID = collection.GameID;
                     comment.GameName = collection.GameName;
-                    ctx.CreateUser(user);
+                    comment.GameComment = "I like this Game";
+                    comment.UserID = ctx.CreateUser(user);
+                    
                     ctx.CreateComment(comment);
                     Session["AUTHUserName"] = user.UserName;
                     Session["AUTHRoles"] = user.RoleName;
@@ -104,7 +107,7 @@ namespace AvalancheGamesWeb.Controllers
 
 
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
             catch (Exception ex)
             {
