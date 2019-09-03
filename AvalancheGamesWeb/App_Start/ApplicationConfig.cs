@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 
 namespace AvalancheGamesWeb
-{ 
+{
     public class ApplicationConfig
     {
         public static void RegisterApplicationVariables()
@@ -22,11 +19,11 @@ namespace AvalancheGamesWeb
 
         }
 
-    public static int DefaultPageSize
+        public static int DefaultPageSize
         {
             get
             {
-                return (int)(HttpContext.Current.Application["DefaultPageSize"]??3);
+                return (int)(HttpContext.Current.Application["DefaultPageSize"] ?? 3);
             }
         }
     }

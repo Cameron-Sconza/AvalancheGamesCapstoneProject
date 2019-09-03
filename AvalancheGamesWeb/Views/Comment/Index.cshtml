@@ -42,7 +42,7 @@
             @Html.DisplayNameFor(model => model.GameName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th></th>
     </tr>
@@ -69,7 +69,7 @@
                 @Html.DisplayFor(modelItem => item.GameName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.CommentID }) |

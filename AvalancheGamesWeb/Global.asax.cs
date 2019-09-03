@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
@@ -27,14 +25,14 @@ namespace AvalancheGamesWeb
         }
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            string Email = Session["AUTHEmail"] as string;
+            string UserName = Session["AUTHUserName"] as string;
             string Sessroles = Session["AUTHRoles"] as string;
             string ValidationType = Session["AUTHTYPE"] as string;
-            if (string.IsNullOrEmpty(Email))
+            if (string.IsNullOrEmpty(UserName))
             {
                 return;
             }
-            GenericIdentity i = new GenericIdentity(Email, ValidationType);
+            GenericIdentity i = new GenericIdentity(UserName, ValidationType);
             if (Sessroles == null) { Sessroles = ""; }
             string[] roles = Sessroles.Split(' ');
             GenericPrincipal p = new GenericPrincipal(i, roles);

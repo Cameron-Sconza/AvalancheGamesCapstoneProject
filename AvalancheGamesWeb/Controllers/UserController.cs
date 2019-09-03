@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using AvalancheGamesWeb.Models;
 using BusinessLogicLayer;
-using AvalancheGamesWeb.Models;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace AvalancheGamesWeb.Controllers
 {
@@ -12,14 +10,15 @@ namespace AvalancheGamesWeb.Controllers
 
     public class UserController : Controller
     {
+        //returning a list  List is the return type
         List<SelectListItem> GetRoleItems()
-        {
+        {//creating empty list items
             List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
             using (ContextBLL ctx = new ContextBLL())
             {
                 List<RoleBLL> roles = ctx.GetRoles(0, 25);
                 foreach (RoleBLL role in roles)
-                {
+                {//redefining object
                     SelectListItem item = new SelectListItem();
                     item.Value = role.RoleID.ToString();
                     item.Text = role.RoleName;
@@ -118,7 +117,7 @@ namespace AvalancheGamesWeb.Controllers
                 {
                     return View(info);
                 }
-                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.Email);
+                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserName(info.UserName);
                 //if (user != null)
                 //{
                 //    info.Message = $"The EMail Address '{info.Email}' already exists in the database";
@@ -136,7 +135,7 @@ namespace AvalancheGamesWeb.Controllers
                     HashPassword(info.Password + user.SALT);
                 user.Email = info.Email;
                 ctx.CreateUser(user);
-                Session["AUTHEmail"] = user.Email;
+                Session["AUTHUserName"] = user.UserName;
                 Session["AUTHRoles"] = user.RoleName;
                 Session["AUTHTYPE"] = "HASHED";
                 return RedirectToAction("Index");
@@ -171,11 +170,11 @@ namespace AvalancheGamesWeb.Controllers
                 using (ContextBLL ctx = new ContextBLL())
                 {
                     User = ctx.FindUserByUserID(id);
-                    if(null == User)
+                    if (null == User)
                     {
                         ViewBag.Roles = GetRoleItems();
                         return View("ItemNotFound");
-                        
+
                     }
                 }
             }
@@ -239,7 +238,7 @@ namespace AvalancheGamesWeb.Controllers
 
         // POST: User/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id,BusinessLogicLayer.UserBLL collection)
+        public ActionResult Delete(int id, BusinessLogicLayer.UserBLL collection)
         {
             try
             {
@@ -260,19 +259,19 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-        public ActionResult Impersonate(string Email)
+        public ActionResult Impersonate(string UserName)
         {
             UserBLL user;
             try
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    user = ctx.FindUserByUserEmail(Email);
+                    user = ctx.FindUserByUserName(UserName);
                     if (null == user)
                     {
                         return View("ItemNotFound"); // BKW make this view
                     }
-                    Session["AUTHUsername"] = user.Email;
+                    Session["AUTHUserName"] = user.UserName;
                     Session["AUTHRoles"] = user.RoleName;
                     Session["AUTHTYPE"] = $"IMPERSONATED:{user.UserID}";
 

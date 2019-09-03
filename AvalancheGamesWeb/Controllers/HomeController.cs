@@ -40,7 +40,7 @@ namespace AvalancheGamesWeb.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            Session.Remove("AUTHEmail");
+            Session.Remove("AUTHUserName");
             Session.Remove("AUTHRoles");
             Session.Remove("AuthType");
             return RedirectToAction("Index");
@@ -52,7 +52,7 @@ namespace AvalancheGamesWeb.Controllers
             Models.LoginModel mapper = new Models.LoginModel();
             mapper.Message = TempData["Message"]?.ToString() ?? "";
             mapper.ReturnURL = TempData["ReturnURL"]?.ToString() ?? @"~/Home";
-            mapper.Email = "";
+            mapper.UserName = "";
             mapper.Password = "";
             return View(mapper);
         }
@@ -65,10 +65,10 @@ namespace AvalancheGamesWeb.Controllers
             }
             using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
             {
-                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.Email);
+                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserName(info.UserName);
                 if (user == null)
                 {
-                    info.Message = $"The Email '{info.Email}' does not exist in the database";
+                    info.Message = $"The UserName '{info.UserName}' does not exist in the database";
                     return View(info);
                 }
                 string actual = user.HASH;
@@ -85,7 +85,7 @@ namespace AvalancheGamesWeb.Controllers
                 }
                 if (validateduser)
                 {
-                    Session["AUTHEmail"] = user.Email;
+                    Session["AUTHUserName"] = user.UserName;
                     Session["AUTHRoles"] = user.RoleName;
                     Session["AUTHTYPE"] = ValidationType;
                     return Redirect(info.ReturnURL);
@@ -94,45 +94,44 @@ namespace AvalancheGamesWeb.Controllers
                 return View(info);
             }
         }
-        public ActionResult Register()
-        {
-            return View();
-        }
+        //public ActionResult Register()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public ActionResult Register(Models.RegistrationModel info)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(info);
-            }
-            using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
-            {
-                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(info.Email);
-                //if (user != null)
-                //{
-                //    info.Message = $"The EMail Address '{info.Email}' already exists in the database";
-                //    return View(info);
-                //}
-                user = new UserBLL();
-                user.FirstName = info.FirstName;
-                user.LastName = info.LastName;
-                user.UserName = info.UserName;
-                user.DateOfBirth = info.DateOfBirth;
-                user.SALT = System.Web.Helpers.Crypto.
-                    GenerateSalt(Constants.SaltSize);
-                user.HASH = System.Web.Helpers.Crypto.
-                    HashPassword(info.Password + user.SALT);
-                user.Email = info.Email;
-                user.RoleID = 3;
-
-                ctx.CreateUser(user);
-                Session["AUTHEmail"] = user.Email;
-                Session["AUTHRoles"] = user.RoleName;
-                Session["AUTHTYPE"] = "HASHED";
-                return RedirectToAction("Index");
-            }
-        }
+        //[HttpPost]
+        //public ActionResult Register(Models.RegistrationModel info)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(info);
+        //    }
+        //    using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+        //    {
+        //        BusinessLogicLayer.UserBLL user = ctx.FindUserByUserName(info.UserName);
+        //        //if (user != null)
+        //        //{
+        //        //    info.Message = $"The EMail Address '{info.Email}' already exists in the database";
+        //        //    return View(info);
+        //        //}
+        //        user = new UserBLL();
+        //        user.FirstName = info.FirstName;
+        //        user.LastName = info.LastName;
+        //        user.UserName = info.UserName;
+        //        user.DateOfBirth = info.DateOfBirth;
+        //        user.SALT = System.Web.Helpers.Crypto.
+        //            GenerateSalt(Constants.SaltSize);
+        //        user.HASH = System.Web.Helpers.Crypto.
+        //            HashPassword(info.Password + user.SALT);
+        //        user.Email = info.Email;
+        //        user.RoleID = 3;
+        //        ctx.CreateUser(user);
+        //        Session["AUTHUserName"] = user.UserName;
+        //        Session["AUTHRoles"] = user.RoleName;
+        //        Session["AUTHTYPE"] = "HASHED";
+        //        return RedirectToAction("Index");
+        //    }
+        //}
 
         public ActionResult Hash()
         {
@@ -151,10 +150,10 @@ namespace AvalancheGamesWeb.Controllers
             }
             using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
             {
-                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserEmail(User.Identity.Name);
+                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserName(User.Identity.Name);
                 if (user == null)
                 {
-                    Exception Message = new Exception($"The Email '{User.Identity.Name}' does not exist in the database");
+                    Exception Message = new Exception($"The UserName '{User.Identity.Name}' does not exist in the database");
                     ViewBag.Exception = Message;
                     return View("Error");
                 }
@@ -164,7 +163,7 @@ namespace AvalancheGamesWeb.Controllers
 
                 string ValidationType = $"HASHED:({user.UserID})";
 
-                Session["AUTHEmail"] = user.Email;
+                Session["AUTHUserName"] = user.UserName;
                 Session["AUTHRoles"] = user.RoleName;
                 Session["AUTHTYPE"] = ValidationType;
 

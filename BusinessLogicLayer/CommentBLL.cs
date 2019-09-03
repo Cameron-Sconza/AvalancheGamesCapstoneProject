@@ -25,7 +25,7 @@ namespace BusinessLogicLayer
         #endregion
         #region indirect properties 
         public string GameName { get; set; }
-        public string Email { get; set; }
+        public string UserName { get; set; }
         #endregion
         public CommentBLL(DataAccessLayer.CommentDAL dal)
         {
@@ -35,13 +35,13 @@ namespace BusinessLogicLayer
             this.GameID = dal.GameID;
             this.Liked = dal.Liked;
             this.GameName = dal.GameName;
-            this.Email = dal.Email;
+            this.UserName = dal.UserName;
 
 
         }
         public override string ToString()
         {
-            return $"CommentID: {CommentID} GameComment: {GameComment} UserID: {UserID} GameID: {GameID} Liked: {Liked} GameName: {GameName} Email: {Email}";
+            return $"CommentID: {CommentID} GameComment: {GameComment} UserID: {UserID} GameID: {GameID} Liked: {Liked} GameName: {GameName} UserName: {UserName}";
         }
     }
 }

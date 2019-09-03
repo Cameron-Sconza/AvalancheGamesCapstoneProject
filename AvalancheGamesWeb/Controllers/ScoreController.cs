@@ -1,26 +1,24 @@
-﻿using System;
+﻿using BusinessLogicLayer;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BusinessLogicLayer;
 
 
 namespace AvalancheGamesWeb.Controllers
 {
-       public class ScoreController : Controller
+    public class ScoreController : Controller
     {
         List<SelectListItem> GetUserItems()
         {
             List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
             using (ContextBLL ctx = new ContextBLL())
             {
-                List<UserBLL> users = ctx.GetUsers(0, 25);
+                List<UserBLL> users = ctx.GetUsers(0, 35);
                 foreach (UserBLL user in users)
                 {
                     SelectListItem item = new SelectListItem();
                     item.Value = user.UserID.ToString();
-                    item.Text = user.Email;
+                    item.Text = user.UserName;
                     ProposedReturnValue.Add(item);
                 }
             }
@@ -87,6 +85,29 @@ namespace AvalancheGamesWeb.Controllers
             return View(Model);
         }
 
+        //public ActionResult MyIndex()
+        //{
+
+        //    List<ScoreBLL> Model = new List<ScoreBLL>();
+        //    try
+        //    {
+        //        using (ContextBLL ctx = new ContextBLL())
+        //        {
+        //            var user = ctx.FindUserByUserEmail(User.Identity.Name);
+        //            ViewBag.PageNumber = 0;
+        //            ViewBag.PageSize = ApplicationConfig.DefaultPageSize;
+        //            ViewBag.TotalCount = ctx.ObtainScoreCount();
+        //            Model = ctx.GetScoresReltatedToUserID(user.UserID ,0, ViewBag.PageSize);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Exception = ex;
+        //        return View("Error");
+        //    }
+        //    return View(Model);
+        //}
+
         // GET: Score/Details/5
         public ActionResult Details(int id)
         {
@@ -115,12 +136,14 @@ namespace AvalancheGamesWeb.Controllers
             ScoreBLL defScore = new ScoreBLL();
             defScore.ScoreID = 0;
             ViewBag.GameName = GetGameItems();
-            ViewBag.Email = GetGameItems();
-            return View(defScore);
+            ViewBag.UserName = GetUserItems();
+            {
+                return View(defScore);
+            }
         }
 
-        // POST: Score/Create
-        [HttpPost]
+        //POST: Score/Create
+       [HttpPost]
         public ActionResult Create(BusinessLogicLayer.ScoreBLL collection)
         {
             try
@@ -143,7 +166,7 @@ namespace AvalancheGamesWeb.Controllers
             }
         }
 
-        // GET: Score/Edit/5
+        //GET: Score/Edit/5
         public ActionResult Edit(int id)
         {
             ScoreBLL Score;
@@ -163,7 +186,7 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Excption = ex;
                 return View("Error");
             }
-            ViewBag.Email = GetUserItems();
+            ViewBag.UserName = GetUserItems();
             ViewBag.GameName = GetGameItems();
             return View(Score);
         }

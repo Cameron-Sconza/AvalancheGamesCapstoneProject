@@ -1,31 +1,29 @@
-﻿using System;
+﻿using BusinessLogicLayer;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BusinessLogicLayer;
 
 namespace AvalancheGamesWeb.Controllers
 {
     public class CommentController : Controller
     {
-        List<SelectListItem>GetUserItems()
+        List<SelectListItem> GetUserItems()
         {
             List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
-            using(ContextBLL ctx = new ContextBLL())
+            using (ContextBLL ctx = new ContextBLL())
             {
                 List<UserBLL> users = ctx.GetUsers(0, 25);
                 foreach (UserBLL user in users)
                 {
                     SelectListItem item = new SelectListItem();
                     item.Value = user.UserID.ToString();
-                    item.Text = user.Email;
+                    item.Text = user.UserName;
                     ProposedReturnValue.Add(item);
                 }
             }
             return ProposedReturnValue;
         }
-        List<SelectListItem>GetGameItems()
+        List<SelectListItem> GetGameItems()
         {
             List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
             using (ContextBLL ctx = new ContextBLL())
@@ -63,9 +61,9 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-            // GET: Comment
-            public ActionResult Index()
-            {
+        // GET: Comment
+        public ActionResult Index()
+        {
 
             List<CommentBLL> Model = new List<CommentBLL>();
             try
@@ -85,7 +83,7 @@ namespace AvalancheGamesWeb.Controllers
             }
             return View(Model);
         }
-        
+
         // GET: Comment/Details/5
         public ActionResult Details(int id)
         {
@@ -115,7 +113,7 @@ namespace AvalancheGamesWeb.Controllers
             CommentBLL defComment = new CommentBLL();
             defComment.CommentID = 0;
             ViewBag.GameName = GetGameItems();
-            ViewBag.Email = GetGameItems();
+           // ViewBag.UserName = GetGameItems();
             return View(defComment);
         }
 
@@ -132,6 +130,12 @@ namespace AvalancheGamesWeb.Controllers
                 // TODO: Add insert logic here
                 using (ContextBLL ctx = new ContextBLL())
                 {
+                    UserBLL userRecord = ctx.FindUserByUserName(User.Identity.Name);
+                    if (null == userRecord)
+                    {
+                        return View("UserNotFound");
+                    }
+                    collection.UserID = userRecord.UserID;
                     ctx.CreateComment(collection);
                 }
                 return RedirectToAction("Index");
@@ -152,7 +156,7 @@ namespace AvalancheGamesWeb.Controllers
                 using (ContextBLL ctx = new ContextBLL())
                 {
                     Comment = ctx.FindCommentByCommentID(id);
-                    if(null == Comment)
+                    if (null == Comment)
                     {
                         return View("ItemNotFound");
                     }
@@ -163,7 +167,7 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Excption = ex;
                 return View("Error");
             }
-            ViewBag.Email = GetUserItems();
+            ViewBag.UserName = GetUserItems();
             ViewBag.GameName = GetGameItems();
             return View(Comment);
         }
@@ -201,7 +205,7 @@ namespace AvalancheGamesWeb.Controllers
                 using (ContextBLL ctx = new ContextBLL())
                 {
                     Comment = ctx.FindCommentByCommentID(id);
-                    if(null == Comment)
+                    if (null == Comment)
                     {
                         return View("ItemNotFound");
                     }

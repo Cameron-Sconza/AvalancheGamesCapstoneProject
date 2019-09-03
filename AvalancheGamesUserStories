@@ -4,7 +4,6 @@ UserStories for AvalancheGames Capstone Project
 	-Logout
 	-Sign Up Page
 	-Home
-	-Games
 	-Indiviual Game Pages
 	-Comments on Game Pages
 	-Profile Page
@@ -32,7 +31,7 @@ UserStories for AvalancheGames Capstone Project
 			-Phone Number
 			-BirthDate	
 			-Submit button
-3)Unverified User
+3)Normal User
 	-is able to view Home Page
 		-Unverified User's NavBar consist of 
 			-Home button link
@@ -46,10 +45,10 @@ UserStories for AvalancheGames Capstone Project
 		-is able to play game on game page
 		-will be able to see comments under games
 		-will be shown a message in comment section
-			-"Please login to leave a like or comment!"
+			-"Must be a power user to add comment!"
 			
 			
-4)Verified User
+4)Power User
 		-Is able to Login
 			-Login will require
 					-Email
