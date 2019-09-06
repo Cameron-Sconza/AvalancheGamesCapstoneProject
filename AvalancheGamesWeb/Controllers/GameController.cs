@@ -8,6 +8,8 @@ using AvalancheGamesWeb.Models;
 
 namespace AvalancheGamesWeb.Controllers
 {
+
+    [MustBeLoggedIn]
     public class GameController : Controller
     {
         public ActionResult Page(int? PageNumber, int? PageSize)
@@ -112,6 +114,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // GET: Game/Create
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Create()
         {
             GameBLL defGame = new GameBLL();
@@ -120,6 +123,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // POST: Game/Create
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Create(BusinessLogicLayer.GameBLL collection)
         {
@@ -144,6 +148,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // GET: Game/Edit/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Edit(int id)
         {
             GameBLL Game;
@@ -168,6 +173,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // POST: Game/Edit/5
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Edit(int id, BusinessLogicLayer.GameBLL collection)
         {
@@ -191,6 +197,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // GET: Game/Delete/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Delete(int id)
         {
             GameBLL Game;
@@ -214,6 +221,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // POST: Game/Delete/5
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Delete(int id, BusinessLogicLayer.GameBLL collection)
         {
@@ -236,30 +244,46 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
+
         public ActionResult Snake()
         {
             return View();
         }
 
-
         public ActionResult SnakeResult()
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult SnakeResult(ScoreBLL collection)
+
+        [HttpGet]
+        public ActionResult SnakeResult(int id)
+        {
+            using (ContextBLL ctx = new ContextBLL())
+            {
+                ViewBag.score = id;
+                TempData["score"] = id;
+                return View("SnakeScore");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult SnakeSaveScore()
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(collection);
-                }
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ctx.CreateScore(collection);
+                    ScoreBLL thisScore = new ScoreBLL();
+
+                    var name = ctx.FindUserByUserName(User.Identity.Name);
+                    thisScore.Score = (int)TempData["score"];
+                    thisScore.UserID = name.UserID;
+                    thisScore.GameID = Constants.SnakeGame;
+
+                    ctx.CreateScore(thisScore);
+
+                    return RedirectToAction("Index", "MyScores");
                 }
-                return RedirectToAction("Index");
             }
             catch (Exception Ex)
             {
@@ -267,31 +291,6 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-        [HttpGet]
-        public ActionResult SnakeResult(int id)
-        {
-
-            using (ContextBLL ctx = new ContextBLL())
-            {
-                ScoreBLL thisScore = new ScoreBLL();
-                    // string email = Session["AUTHEmail"].ToString();
-                    var name = ctx.FindUserByUserName(User.Identity.Name);
-                    thisScore.Score = id;
-                    thisScore.UserID = name.UserID;
-                    thisScore.GameID = Constants.SnakeGame;
-                    ViewBag.score = id;
-                ctx.CreateScore(thisScore);
-                //return View("SnakeScore");
-                // return View(thisScore);
-                return RedirectToAction("Index", "MyScores");
-                //return View("SnakeScore");
-            }
-            }
-
-
-
-
-
 
         public ActionResult PongBall()
         {
@@ -303,20 +302,37 @@ namespace AvalancheGamesWeb.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult PongBallResult(ScoreBLL collection)
+
+
+        [HttpGet]
+        public ActionResult PongBallResult(int id)
+        {
+            using (ContextBLL ctx = new ContextBLL())
+            {
+                ViewBag.score = id;
+                TempData["score"] = id;
+                return View("PongballScore");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult PongBallSaveScore()
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(collection);
-                }
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ctx.CreateScore(collection);
+                    ScoreBLL thisScore = new ScoreBLL();
+
+                    var name = ctx.FindUserByUserName(User.Identity.Name);
+                    thisScore.Score = (int)TempData["score"];
+                    thisScore.UserID = name.UserID;
+                    thisScore.GameID = Constants.PongBallGame;
+
+                    ctx.CreateScore(thisScore);
+
+                    return RedirectToAction("Index", "MyScores");
                 }
-                return RedirectToAction("Index");
             }
             catch (Exception Ex)
             {
@@ -324,49 +340,46 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-        [HttpGet]
-        public ActionResult PongBallResult(int id)
-        {
 
-            using (ContextBLL ctx = new ContextBLL())
-            {
-                ScoreBLL thisScore = new ScoreBLL();
-                // string email = Session["AUTHEmail"].ToString();
-                var name = ctx.FindUserByUserName(User.Identity.Name);
-                thisScore.Score = id;
-                thisScore.UserID = name.UserID;
-                thisScore.GameID = Constants.PongBallGame;
-                ViewBag.score = id;
-                ctx.CreateScore(thisScore);
-                //return View("SnakeScore");
-                // return View(thisScore);
-                return RedirectToAction("Index", "MyScores");
-            }
-        }
         public ActionResult Floaty()
         {
             return View();
         }
 
-
         public ActionResult FloatyResult()
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult FloatyResult(ScoreBLL collection)
+
+        [HttpGet]
+        public ActionResult FloatyResult(int id)
+        {
+            using (ContextBLL ctx = new ContextBLL())
+            {
+                ViewBag.score = id;
+                TempData["score"] = id;
+                return View("FloatyScore");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult FloatySaveScore()
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(collection);
-                }
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ctx.CreateScore(collection);
+                    ScoreBLL thisScore = new ScoreBLL();
+
+                    var name = ctx.FindUserByUserName(User.Identity.Name);
+                    thisScore.Score = (int)TempData["score"];
+                    thisScore.UserID = name.UserID;
+                    thisScore.GameID = Constants.FloatyGame;
+
+                    ctx.CreateScore(thisScore);
+
+                    return RedirectToAction("Index", "MyScores");
                 }
-                return RedirectToAction("Index");
             }
             catch (Exception Ex)
             {
@@ -374,26 +387,164 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-        [HttpGet]
-        public ActionResult FloatyResult(int id)
-        {
+        #region Original ScoreSavingCode(Currently no longer needed)
+        //public ActionResult Snake()
+        //{
+        //    return View();
+        //}
 
-            using (ContextBLL ctx = new ContextBLL())
-            {
-                ScoreBLL thisScore = new ScoreBLL();
-                // string email = Session["AUTHEmail"].ToString();
-                var name = ctx.FindUserByUserName(User.Identity.Name);
-                
-                thisScore.Score = id;
-                thisScore.UserID = name.UserID;
-                thisScore.GameID = Constants.FloatyGame;
-                ViewBag.score = id;
-                ctx.CreateScore(thisScore);
-                //return View("SnakeScore");
-                // return View(thisScore);
-                return RedirectToAction("Index", "MyScores");
-            }
-        }
+        //public ActionResult SnakeResult()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public ActionResult SnakeResult(ScoreBLL collection)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return View(collection);
+        //        }
+        //        using (ContextBLL ctx = new ContextBLL())
+        //        {
+        //            ctx.CreateScore(collection);
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception Ex)
+        //    {
+        //        ViewBag.Exception = Ex;
+        //        return View("Error");
+        //    }
+        //}
+        //[HttpGet]
+        //public ActionResult SnakeResult(int id)
+        //{
+
+        //    using (ContextBLL ctx = new ContextBLL())
+        //    {
+        //        ScoreBLL thisScore = new ScoreBLL();
+        //            // string email = Session["AUTHEmail"].ToString();
+        //            var name = ctx.FindUserByUserName(User.Identity.Name);
+        //            thisScore.Score = id;
+        //            thisScore.UserID = name.UserID;
+        //            thisScore.GameID = Constants.SnakeGame;
+        //            ViewBag.score = id;
+        //        ctx.CreateScore(thisScore);
+        //        //return View("SnakeScore");
+        //        // return View(thisScore);
+        //        return RedirectToAction("Index", "MyScores");
+        //        //return View("SnakeScore");
+        //    }
+        //    }
+
+
+
+
+
+
+        //public ActionResult PongBall()
+        //{
+        //    return View();
+        //}
+
+
+        //public ActionResult PongBallResult()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public ActionResult PongBallResult(ScoreBLL collection)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return View(collection);
+        //        }
+        //        using (ContextBLL ctx = new ContextBLL())
+        //        {
+        //            ctx.CreateScore(collection);
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception Ex)
+        //    {
+        //        ViewBag.Exception = Ex;
+        //        return View("Error");
+        //    }
+        //}
+        //[HttpGet]
+        //public ActionResult PongBallResult(int id)
+        //{
+
+        //    using (ContextBLL ctx = new ContextBLL())
+        //    {
+        //        ScoreBLL thisScore = new ScoreBLL();
+        //        // string email = Session["AUTHEmail"].ToString();
+        //        var name = ctx.FindUserByUserName(User.Identity.Name);
+        //        thisScore.Score = id;
+        //        thisScore.UserID = name.UserID;
+        //        thisScore.GameID = Constants.PongBallGame;
+        //        ViewBag.score = id;
+        //        ctx.CreateScore(thisScore);
+        //        //return View("SnakeScore");
+        //        // return View(thisScore);
+        //        return RedirectToAction("Index", "MyScores");
+        //    }
+        //}
+        //public ActionResult Floaty()
+        //{
+        //    return View();
+        //}
+
+
+        //public ActionResult FloatyResult()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public ActionResult FloatyResult(ScoreBLL collection)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return View(collection);
+        //        }
+        //        using (ContextBLL ctx = new ContextBLL())
+        //        {
+        //            ctx.CreateScore(collection);
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception Ex)
+        //    {
+        //        ViewBag.Exception = Ex;
+        //        return View("Error");
+        //    }
+        //}
+        //[HttpGet]
+        //public ActionResult FloatyResult(int id)
+        //{
+
+        //    using (ContextBLL ctx = new ContextBLL())
+        //    {
+        //        ScoreBLL thisScore = new ScoreBLL();
+        //        // string email = Session["AUTHEmail"].ToString();
+        //        var name = ctx.FindUserByUserName(User.Identity.Name);
+
+        //        thisScore.Score = id;
+        //        thisScore.UserID = name.UserID;
+        //        thisScore.GameID = Constants.FloatyGame;
+        //        ViewBag.score = id;
+        //        ctx.CreateScore(thisScore);
+        //        //return View("SnakeScore");
+        //        // return View(thisScore);
+        //        return RedirectToAction("Index", "MyScores");
+        //    }
+        //}
         //[HttpPost]
         //public ActionResult SnakeResult(ScoreBLL collection)
         //{
@@ -443,5 +594,6 @@ namespace AvalancheGamesWeb.Controllers
         //    ViewBag.score = id;
         //    return View("SnakeScore");
         //}
+        #endregion
     }
 }

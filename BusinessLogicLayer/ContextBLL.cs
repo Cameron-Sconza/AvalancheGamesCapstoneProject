@@ -291,6 +291,12 @@ namespace BusinessLogicLayer
             ProposedReturnValue = _context.ObtainCommentCount();
             return ProposedReturnValue;
         }
+        public int ObtainUserCommentCount(int id)
+        {
+            int ProposedReturnValue = 0;
+            ProposedReturnValue = _context.ObtainUserCommentCount(id);
+            return ProposedReturnValue;
+        }
         #endregion
 
         #region GameBLL
@@ -353,25 +359,25 @@ namespace BusinessLogicLayer
         #endregion
 
         #region ScoreBLL
-        public int CreateScore(int Score, int UserID, int GameID, int AmountPlayed)
+        public int CreateScore(int Score, int UserID, int GameID)
         {
             int ProposedReturnValue = -1;
-            ProposedReturnValue = _context.CreateScore(Score, UserID, GameID, AmountPlayed);
+            ProposedReturnValue = _context.CreateScore(Score, UserID, GameID);
             return ProposedReturnValue;
         }
         public int CreateScore(ScoreBLL score)
         {
             int ProposedReturnValue = -1;
-            ProposedReturnValue = _context.CreateScore(score.Score, score.UserID, score.GameID, score.AmountPlayed);
+            ProposedReturnValue = _context.CreateScore(score.Score, score.UserID, score.GameID);
             return ProposedReturnValue;
         }
-        public void UpdateScore(int ScoreID, int Score, int UserID, int GameID, int AmountPlayed)
+        public void UpdateScore(int ScoreID, int Score, int UserID, int GameID)
         {
-            _context.UpdateScore(ScoreID, Score, UserID, GameID, AmountPlayed);
+            _context.UpdateScore(ScoreID, Score, UserID, GameID);
         }
         public void UpdateScore(ScoreBLL score)
         {
-            _context.UpdateScore(score.ScoreID, score.Score, score.UserID, score.GameID, score.AmountPlayed);
+            _context.UpdateScore(score.ScoreID, score.Score, score.UserID, score.GameID);
         }
         public void DeleteScore(int ScoreID)
         {

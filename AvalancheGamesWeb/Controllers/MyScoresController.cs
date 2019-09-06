@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AvalancheGamesWeb.Models;
 
 namespace AvalancheGamesWeb.Controllers
 {
+    [MustBeLoggedIn]
     public class MyScoresController : Controller
     {
         public ActionResult Page(int? PageNumber, int? PageSize)
@@ -59,16 +61,35 @@ namespace AvalancheGamesWeb.Controllers
         // GET: MyScores/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            CommentBLL Comment;
+            try
+            {
+                using (ContextBLL ctx = new ContextBLL())
+                {
+                    Comment = ctx.FindCommentByCommentID(id);
+                    if (null == Comment)
+                    {
+                        return View("ItemNotFound");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Exception = ex;
+                return View("Error");
+            }
+            return View(Comment);
         }
 
         // GET: MyScores/Create
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: MyScores/Create
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -85,12 +106,14 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // GET: MyScores/Edit/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         // POST: MyScores/Edit/5
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -107,12 +130,14 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // GET: MyScores/Delete/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         // POST: MyScores/Delete/5
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -135,8 +160,16 @@ namespace AvalancheGamesWeb.Controllers
                 List<ScoreStats> Model;
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    int TotalCount = ctx.ObtainScoreCount();
-                    Scores = ctx.GetScores(0, TotalCount);
+                    UserBLL ThisUser = ctx.FindUserByUserName(User.Identity.Name);
+                    {
+                        if (null == ThisUser)
+                        {
+                            ViewBag.Exception = new Exception($"Count not find scores for {User.Identity.Name}");
+                            return View("Error");
+                        }
+                        int TotalCount = ctx.ObtainUserScoreCount(ThisUser.UserID);
+                        Scores = ctx.GetScoresReltatedToUserID(ThisUser.UserID, 0, TotalCount);
+                    }
                     MeaningfulCalculation mc = new MeaningfulCalculation();
                     Model = mc.CalculateStats(Scores);
 

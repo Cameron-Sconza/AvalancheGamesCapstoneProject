@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using AvalancheGamesWeb.Models;
 
 namespace AvalancheGamesWeb.Controllers
 {
+    [MustBeLoggedIn]
     public class CommentController : Controller
-    {
+    {      
         List<SelectListItem> GetUserItems()
         {
             List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
@@ -61,6 +63,9 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
+
+
+
         // GET: Comment
         public ActionResult Index()
         {
@@ -84,7 +89,9 @@ namespace AvalancheGamesWeb.Controllers
             return View(Model);
         }
 
+
         // GET: Comment/Details/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Details(int id)
         {
             CommentBLL Comment;
@@ -108,6 +115,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // GET: Comment/Create
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Create()
         {
             CommentBLL defComment = new CommentBLL();
@@ -117,8 +125,10 @@ namespace AvalancheGamesWeb.Controllers
             return View(defComment);
         }
 
+   
         // POST: Comment/Create
         [HttpPost]
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Create(BusinessLogicLayer.CommentBLL collection)
         {
             try
@@ -147,7 +157,9 @@ namespace AvalancheGamesWeb.Controllers
             }
         }
 
+
         // GET: Comment/Edit/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Edit(int id)
         {
             CommentBLL Comment;
@@ -172,7 +184,9 @@ namespace AvalancheGamesWeb.Controllers
             return View(Comment);
         }
 
+
         // POST: Comment/Edit/5
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Edit(int id, BusinessLogicLayer.CommentBLL collection)
         {
@@ -196,7 +210,9 @@ namespace AvalancheGamesWeb.Controllers
             }
         }
 
+
         // GET: Comment/Delete/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Delete(int id)
         {
             CommentBLL Comment;
@@ -220,6 +236,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // POST: Comment/Delete/5
+        [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Delete(int id, BusinessLogicLayer.CommentBLL collection)
         {

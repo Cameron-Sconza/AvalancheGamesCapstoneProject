@@ -17,7 +17,7 @@
             @Html.DisplayFor(model => model.CommentID)
         </dd>
 
-        <dt style="color:#FFFFFF">
+        <dt>
             @Html.DisplayNameFor(model => model.GameComment)
         </dt>
 
@@ -41,7 +41,7 @@
             @Html.DisplayFor(model => model.GameID)
         </dd>
 
-        <dt style="color:#FFFFFF">
+        <dt>
             @Html.DisplayNameFor(model => model.Liked)
         </dt>
 
@@ -49,7 +49,7 @@
             @Html.DisplayFor(model => model.Liked)
         </dd>
 
-        <dt style="color:#FFFFFF">
+        <dt>
             @Html.DisplayNameFor(model => model.GameName)
         </dt>
 
@@ -57,11 +57,11 @@
             @Html.DisplayFor(model => model.GameName)
         </dd>
 
-        <dt style="color:#FFFFFF">
+        <dt>
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
 
-        <dd >
+        <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
 
@@ -69,5 +69,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CommentID }, new { @class = "reroute" })
-    @Html.ActionLink("Back to List", "Index", new { area = "" }, new { @class = "reroute" })
+    @Html.ActionLink("Back to List", "Index", new { area = "" }, new { @class = "BluetextColor" })
 </p>

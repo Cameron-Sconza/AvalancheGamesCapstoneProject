@@ -3,9 +3,16 @@
     ViewBag.Title = "PongballScore";
 }
 
-<h2>PongballScore</h2>
+@*<h2>PongballScore</h2>
 
 You Scored @ViewBag.score
+<br />*@
+
+<h1 class="pageheaders">PongBallScore</h1>
+<h2>You Scored @ViewBag.score</h2>
+
 <br />
-<form action="~/Controllers/GameController/PongBallResult/@ViewBag.score" method="get" id="form1"></form>
-<button type="submit" form="form1" value="Submit">Click To Save Score</button>
+@Html.ActionLink("Save Score", "PongBallSaveScore", null, new { @class = "btn btn-info" })
+@Html.ActionLink("Play Again", "PongBall", null, new { @class = "btn btn-info" })
+@*<form action="~/Controllers/GameController/PongBallResult/@ViewBag.score" method="get" id="form1"></form>
+    <button type="submit" form="form1" value="Submit">Click To Save Score</button>*@

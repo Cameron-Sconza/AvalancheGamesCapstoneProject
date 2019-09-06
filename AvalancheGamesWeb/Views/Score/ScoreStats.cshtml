@@ -4,26 +4,26 @@
     ViewBag.Title = "ScoreStats";
 }
 
-<h2>ScoreStats</h2>
+<h2 class="pageheaders">ScoreStats</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <table class="table">
     <tr>
-        <th>
+        <th style="color:#FFFFFF">
             @Html.DisplayNameFor(model => model.UserName)
         </th>
-        <th>
+        <th style="color:#FFFFFF">
             @Html.DisplayNameFor(model => model.Count)
         </th>
-        <th>
+        <th style="color:#FFFFFF">
             @Html.DisplayNameFor(model => model.AverageScore)
         </th>
-        <th>
+        <th style="color:#FFFFFF">
             @Html.DisplayNameFor(model => model.HighScore)
         </th>
-        <th>
+        <th style="color:#FFFFFF">
             @Html.DisplayNameFor(model => model.LowestScore)
         </th>
         <th></th>

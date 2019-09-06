@@ -7,6 +7,7 @@ using BusinessLogicLayer;
 
 namespace AvalancheGamesWeb.Controllers
 {
+    [AvalancheGamesWeb.Models.MustBeInRole(Roles = Constants.AdminRoleName)]
     public class ErrorTestController : Controller
     {
         // GET: ErrorTest

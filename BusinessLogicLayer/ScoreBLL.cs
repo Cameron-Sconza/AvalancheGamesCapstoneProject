@@ -23,7 +23,6 @@ namespace BusinessLogicLayer
         public int UserID { get; set; }
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int GameID { get; set; }
-        public int AmountPlayed { get; set; }
         #endregion
         #region Indirect Properties
         public string UserName { get; set; }
@@ -35,13 +34,12 @@ namespace BusinessLogicLayer
             this.Score = dal.Score;
             this.UserID = dal.UserID;
             this.GameID = dal.GameID;
-            this.AmountPlayed = dal.AmountPlayed;
             this.UserName = dal.UserName;
             this.GameName = dal.GameName;
         }
         public override string ToString()
         {
-            return $"ScoreID: {ScoreID} Score: {Score} UserID: {UserID} GameID: {GameID} AmountPlayed: {AmountPlayed} UserName: {UserName} GameName: {GameName}";
+            return $"ScoreID: {ScoreID} Score: {Score} UserID: {UserID} GameID: {GameID}  UserName: {UserName} GameName: {GameName}";
         }
     }
 }

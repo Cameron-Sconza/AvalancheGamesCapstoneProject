@@ -7,10 +7,13 @@ namespace AvalancheGamesWeb.Models
     {
         public int UserID { get; set; }
         [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Required]
+        [Display(Name = "UserName")]
         public string UserName { get; set; }
 
         [Required]
@@ -28,6 +31,7 @@ namespace AvalancheGamesWeb.Models
         public string PasswordAgain { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date of Birth")]
         public DateTime DateOfBirth { get; set; }
         //public string Message { get; set; }
         public int RoleID { get; set; }

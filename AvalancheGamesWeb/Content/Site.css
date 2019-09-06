@@ -1,6 +1,29 @@
-﻿body {
+﻿/*.AvalancheGameIMG {
+    background-image: url(Images/AvalancheGames.PNG);
+    background-color: #292828;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: auto;
+}*/
+
+
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    color: #8BD0EE;
+    background-color: #292828;
+}
+
+
+.navbar-brand {
+    background-color: #8BD0EE;
+    color: #292828 !important
+}
+.navbar-custom {
+    background-color: #8BD0EE;
+    color: #292828 !important;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -22,3 +45,29 @@ select,
 textarea {
     max-width: 280px;
 }
+.footer{
+    padding-top: initial;
+}
+.container {
+    color: #FFFFFF;
+    font-weight: bolder
+}
+.reroute{
+    color: #FFFFFF;
+}
+.pageheaders{
+    padding-top:10px;
+    color: #FFFFFF;
+}
+.BluetextColor {
+    color: #8BD0EE
+}
+.classstring {
+    background-color: #8BD0EE;
+}
+.stats {
+    color: #8BD0EE !important;
+    font-weight: bold;
+}
+
+

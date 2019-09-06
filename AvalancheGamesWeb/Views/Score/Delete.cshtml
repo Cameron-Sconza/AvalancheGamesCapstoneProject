@@ -4,7 +4,7 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2 class="pageheaders">Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -42,14 +42,6 @@
             @Html.DisplayFor(model => model.GameID)
         </dd>
 
-        <dt hidden>
-            @Html.DisplayNameFor(model => model.AmountPlayed)
-        </dt>
-
-        <dd hidden>
-            @Html.DisplayFor(model => model.AmountPlayed)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
@@ -73,7 +65,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Index", new { area = "" }, new { @class = "BluetextColor" })
         </div>
     }
 </div>
