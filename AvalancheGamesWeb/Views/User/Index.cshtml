@@ -15,7 +15,7 @@
 @{
     for (int i = 0; i < CorrectedPageButtonCount; i++)
     {
-        string classstring = (i == PageNumber) ? "btn btn-sm btn-info glyphicon glyphicon-star-empty" : "btn btn-sm btn-normal glyphicon glyphicon-star";
+        string classstring = (i == PageNumber) ? "btn btn-sm btn-info glyphicon glyphicon-star-empty" : "btn btn-sm btn-default glyphicon glyphicon-star";
         @Html.ActionLink($"-Page {i}-", "Page", new { PageNumber = i, PageSize = PageSize }, new { @class = classstring });
     }
 }

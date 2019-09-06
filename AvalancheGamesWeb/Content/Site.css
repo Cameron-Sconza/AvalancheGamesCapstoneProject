@@ -17,14 +17,7 @@ body {
 }
 
 
-.navbar-brand {
-    background-color: #8BD0EE;
-    color: #292828 !important
-}
-.navbar-custom {
-    background-color: #8BD0EE;
-    color: #292828 !important;
-}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -69,5 +62,16 @@ textarea {
     color: #8BD0EE !important;
     font-weight: bold;
 }
+.navbar-custom {
+    color: #292828 !important;
+    background-color: #8BD0EE;
+    font-size: 18px;
+}
+.input[type=checkbox]:disabled:after{
+    display:block;
+    background: white;
+
+}
+
 
 
