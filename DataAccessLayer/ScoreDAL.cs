@@ -13,7 +13,6 @@ namespace DataAccessLayer
         public int Score { get; set; }
         public int UserID { get; set; }
         public int GameID { get; set; }
-        public int AmountPlayed { get; set; }
         #endregion
         #region Indirect Properties
         public string UserName { get; set; }
@@ -21,7 +20,7 @@ namespace DataAccessLayer
         #endregion
         public override string ToString()
         {
-            return $"Score: ScoreID: {ScoreID,5} Score: {Score,10} UserID: {UserID}  GameID: {GameID} AmountPlayed: {AmountPlayed}Email: {UserName,25} GameName: {GameName,25}";
+            return $"Score: ScoreID: {ScoreID,5} Score: {Score,10} UserID: {UserID}  GameID: {GameID} Email: {UserName,25} GameName: {GameName,25}";
         }
     }
 }

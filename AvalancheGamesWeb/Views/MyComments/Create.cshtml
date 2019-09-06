@@ -6,10 +6,10 @@
 
 <h2 class="pageheaders">Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -30,30 +30,30 @@
         </div>
 
         @*<div class="form-group">
-            @Html.HiddenFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.HiddenFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         @*<div class="form-group">
-            @Html.HiddenFor(model => model.GameID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.GameID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GameID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.HiddenFor(model => model.GameID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.GameID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GameID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Liked, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                    @Html.CheckBoxFor(model => model.Liked)
-                    @Html.ValidationMessageFor(model => model.Liked, "", new { @class = "text-danger" })
-                </div>
+                @Html.CheckBoxFor(model => model.Liked)
+                @Html.ValidationMessageFor(model => model.Liked, "", new { @class = "text-danger" })
+            </div>
         </div>
 
-        <div class="form-group" >
+        <div class="form-group">
             @Html.LabelFor(model => model.GameName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="color:black">
                 @Html.DropDownListFor(model => model.GameID, (IEnumerable<SelectListItem>)ViewBag.GameName, new { htmlAttributes = new { @class = "form-control" } })
@@ -62,12 +62,12 @@
         </div>
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

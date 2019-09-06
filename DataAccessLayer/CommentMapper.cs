@@ -31,7 +31,7 @@ namespace DataAccessLayer
             OffsetToGameName = reader.GetOrdinal("GameName");
             Assert(5 == OffsetToGameName, $"GameName is {OffsetToGameName} not 5 as expected");
             OffsetToUserName = reader.GetOrdinal("UserName");
-            Assert(6 == OffsetToUserName, $"Email is {OffsetToUserName} not 6 as expected");
+            Assert(6 == OffsetToUserName, $"UserName is {OffsetToUserName} not 6 as expected");
         }
         public CommentDAL CommentFromReader (System.Data.SqlClient.SqlDataReader reader)
         {

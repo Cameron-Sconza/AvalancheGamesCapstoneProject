@@ -93,10 +93,11 @@ namespace AvalancheGamesWeb.Controllers
                     user.HASH = System.Web.Helpers.Crypto.HashPassword(collection.Password + user.SALT);
                     user.Email = collection.Email;
                     user.RoleID = 3;
-                    comment.Liked = collection.Liked;
+                    //comment.Liked = collection.Liked;
+                    comment.Liked = true;
                     comment.GameID = collection.GameID;
                     comment.GameName = collection.GameName;
-                    comment.GameComment = "I like this Game";
+                    comment.GameComment = "User Initial Comment";
                     comment.UserID = ctx.CreateUser(user);
                     
                     ctx.CreateComment(comment);

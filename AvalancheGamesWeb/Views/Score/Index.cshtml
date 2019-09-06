@@ -9,22 +9,22 @@
     int CorrectedPageButtonCount = (TotalPageButtonCount > 9) ? 10 : TotalPageButtonCount;
 }
 
-<h2>Index</h2>
+<h2 class="pageheaders">Scores</h2>
 
-<p >
+<p>
     @*@Html.ActionLink("Create New", "Create")*@
     &nbsp; &nbsp;
-    @Html.ActionLink("Statistics", "ScoreStats")
+    @Html.ActionLink("Statistics", "ScoreStats", new { area = "" }, new { @class = "BluetextColor" })
 </p>
 @{
     for (int i = 0; i < CorrectedPageButtonCount; i++)
     {
-        string classstring = (i == PageNumber) ? "btn btn-sm btn-success glyphicon glyphicon-star-empty" : "btn btn-sm btn-normal glyphicon glyphicon-asterisk";
+        string classstring = (i == PageNumber) ? "btn btn-sm btn-info glyphicon glyphicon-star-empty" : "btn btn-sm btn-normal glyphicon glyphicon-star";
         @Html.ActionLink($"-Page {i}-", "Page", new { PageNumber = i, PageSize = PageSize }, new { @class = classstring });
     }
 }
 <table class="table">
-    <tr>
+    <tr style="color:#FFFFFF">
         <th hidden>
             @Html.DisplayNameFor(model => model.ScoreID)
         </th>
@@ -36,9 +36,6 @@
         </th>
         <th hidden>
             @Html.DisplayNameFor(model => model.GameID)
-        </th>
-        <th hidden>
-            @Html.DisplayNameFor(model => model.AmountPlayed)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserName)
@@ -64,19 +61,16 @@
             <td hidden>
                 @Html.DisplayFor(modelItem => item.GameID)
             </td>
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.AmountPlayed)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GameName)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ScoreID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ScoreID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ScoreID })
+            <td class="reroute">
+                @Html.ActionLink("Edit", "Edit", new { id = item.ScoreID }, new { @class = "reroute" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ScoreID }, new { @class = "reroute" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ScoreID }, new { @class = "reroute" })
             </td>
         </tr>
     }

@@ -4,7 +4,7 @@
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
+<h2 class="pageheaders">Register</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -56,7 +56,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10" style="color:black">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
@@ -64,7 +64,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PasswordAgain, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10" style="color:black">
                 @Html.EditorFor(model => model.PasswordAgain, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PasswordAgain, "", new { @class = "text-danger" })
             </div>
@@ -102,19 +102,21 @@
             </div>
         </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Liked, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
+                <div class="checkbox" style="padding-right:initial">
                     @Html.EditorFor(model => model.Liked)
                     @Html.ValidationMessageFor(model => model.Liked, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-
+        </div>*@
+        <p style="font-size: 15px;color: #FFFFFF;padding-left:77px">
+            Please choose a game that sounds like fun!
+        </p>
         <div class="form-group">
-            @Html.LabelFor(model => model.GameName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.HiddenFor(model => model.GameName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="color:black;padding-left:210px">
                 @Html.DropDownListFor(model => model.GameID, (IEnumerable<SelectListItem>)ViewBag.Games, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.GameID, "", new { @class = "text-danger" })
             </div>
@@ -129,5 +131,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { area = "" }, new { @class = "reroute" })
 </div>

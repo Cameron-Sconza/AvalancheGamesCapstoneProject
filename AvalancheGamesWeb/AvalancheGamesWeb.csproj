@@ -134,6 +134,7 @@
     <Compile Include="Controllers\ErrorTestController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MyCommentsController.cs" />
     <Compile Include="Controllers\MyScoresController.cs" />
     <Compile Include="Controllers\RegisterUserController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -154,7 +155,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\AvalancheGamesLogo.png" />
+    <Content Include="Content\Images\AvalancheGames.PNG" />
+    <Content Include="Content\Images\AvalancheGamesLogoWithOutText.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -216,7 +218,6 @@
     <Content Include="Views\Score\Edit.cshtml" />
     <Content Include="Views\Score\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Game\Snake.cshtml" />
     <Content Include="Views\Shared\ActionNotAllowed.cshtml" />
     <Content Include="Views\Shared\AlreadyHashed.cshtml" />
@@ -230,6 +231,12 @@
     <Content Include="Views\MyScores\Index.cshtml" />
     <Content Include="Views\RegisterUser\Register.cshtml" />
     <Content Include="Views\Score\ScoreStats.cshtml" />
+    <Content Include="Views\MyComments\Index.cshtml" />
+    <Content Include="Views\MyScores\ScoreStats.cshtml" />
+    <Content Include="Views\MyComments\Create.cshtml" />
+    <Content Include="Views\MyComments\Delete.cshtml" />
+    <Content Include="Views\MyComments\Edit.cshtml" />
+    <Content Include="Views\MyComments\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

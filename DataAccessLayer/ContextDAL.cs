@@ -682,7 +682,7 @@ namespace DataAccessLayer
 
         #endregion
         #region Score Stuff
-        public int CreateScore(int Score, int UserID, int GameID, int AmountPlayed)
+        public int CreateScore(int Score, int UserID, int GameID)
         {
             int ProposedReturnValue = -1;
             try
@@ -695,7 +695,6 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@ScoreID", 0);
                     command.Parameters.AddWithValue("@UserID", UserID);
                     command.Parameters.AddWithValue("@GameID", GameID);
-                    command.Parameters.AddWithValue("@AmountPlayed", AmountPlayed);
                     command.Parameters["@ScoreID"].Direction = System.Data.ParameterDirection.Output;
                     command.ExecuteNonQuery();
                     ProposedReturnValue = Convert.ToInt32(command.Parameters["@ScoreID"].Value);
@@ -707,7 +706,7 @@ namespace DataAccessLayer
             }
             return ProposedReturnValue;
         }
-        public void UpdateScore(int ScoreID, int Score, int UserID, int GameID, int AmountPlayed)
+        public void UpdateScore(int ScoreID, int Score, int UserID, int GameID)
         {
             try
             {
@@ -719,7 +718,6 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@Score", Score);
                     command.Parameters.AddWithValue("@UserID", UserID);
                     command.Parameters.AddWithValue("@GameID", GameID);
-                    command.Parameters.AddWithValue("@AmountPlayed", AmountPlayed);
                     command.ExecuteNonQuery();
                 }
             }
@@ -1144,6 +1142,27 @@ namespace DataAccessLayer
             {
 
             }
+            return ProposedReturnValue;
+        }
+        public int ObtainUserCommentCount(int id)
+        {
+            int ProposedReturnValue = -1;
+            try
+            {
+                EnsureConnected();
+                using (SqlCommand command = new SqlCommand("ObtainUserCommentCount", _connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", id);
+                    object answer = command.ExecuteScalar();
+                    ProposedReturnValue = (int)answer;
+                }
+            }
+            catch (Exception ex) when (Log(ex))
+            {
+
+            }
+
             return ProposedReturnValue;
         }
         #endregion

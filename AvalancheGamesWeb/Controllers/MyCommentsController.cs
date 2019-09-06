@@ -4,28 +4,11 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using AvalancheGamesWeb.Models;
 
-
 namespace AvalancheGamesWeb.Controllers
 {
     [MustBeLoggedIn]
-    public class ScoreController : Controller
+    public class MyCommentsController : Controller
     {
-        List<SelectListItem> GetUserItems()
-        {
-            List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
-            using (ContextBLL ctx = new ContextBLL())
-            {
-                List<UserBLL> users = ctx.GetUsers(0, 35);
-                foreach (UserBLL user in users)
-                {
-                    SelectListItem item = new SelectListItem();
-                    item.Value = user.UserID.ToString();
-                    item.Text = user.UserName;
-                    ProposedReturnValue.Add(item);
-                }
-            }
-            return ProposedReturnValue;
-        }
         List<SelectListItem> GetGameItems()
         {
             List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
@@ -48,13 +31,13 @@ namespace AvalancheGamesWeb.Controllers
             int PageS = (PageSize.HasValue) ? PageSize.Value : ApplicationConfig.DefaultPageSize;
             ViewBag.PageNumber = PageNumber;
             ViewBag.PageSize = PageSize;
-            List<ScoreBLL> Model = new List<ScoreBLL>();
+            List<CommentBLL> Model = new List<CommentBLL>();
             try
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ViewBag.TotalCount = ctx.ObtainScoreCount();
-                    Model = ctx.GetScores(PageN * PageS, PageS);
+                    ViewBag.TotalCount = ctx.ObtainCommentCount();
+                    Model = ctx.GetComments(PageN * PageS, PageS);
                 }
                 return View("Index", Model);
             }
@@ -64,19 +47,25 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-        // GET: Score
+
+
+
+        // GET: Comment
         public ActionResult Index()
         {
 
-            List<ScoreBLL> Model = new List<ScoreBLL>();
+            List<CommentBLL> Model = new List<CommentBLL>();
             try
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
+                    var user = ctx.FindUserByUserName(User.Identity.Name);
                     ViewBag.PageNumber = 0;
                     ViewBag.PageSize = ApplicationConfig.DefaultPageSize;
-                    ViewBag.TotalCount = ctx.ObtainScoreCount();
-                    Model = ctx.GetScores(0, ViewBag.PageSize);
+                    int count = ctx.ObtainUserCommentCount(user.UserID);
+                    ViewBag.TotalCount = ctx.ObtainUserCommentCount(user.UserID);
+                    ViewBag.GameName = GetGameItems();
+                    Model = ctx.GetCommentsRelatedToUserID(user.UserID, 0, ViewBag.PageSize);
                 }
             }
             catch (Exception ex)
@@ -87,39 +76,18 @@ namespace AvalancheGamesWeb.Controllers
             return View(Model);
         }
 
-        //public ActionResult MyIndex()
-        //{
 
-        //    List<ScoreBLL> Model = new List<ScoreBLL>();
-        //    try
-        //    {
-        //        using (ContextBLL ctx = new ContextBLL())
-        //        {
-        //            var user = ctx.FindUserByUserEmail(User.Identity.Name);
-        //            ViewBag.PageNumber = 0;
-        //            ViewBag.PageSize = ApplicationConfig.DefaultPageSize;
-        //            ViewBag.TotalCount = ctx.ObtainScoreCount();
-        //            Model = ctx.GetScoresReltatedToUserID(user.UserID ,0, ViewBag.PageSize);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Exception = ex;
-        //        return View("Error");
-        //    }
-        //    return View(Model);
-        //}
-
-        // GET: Score/Details/5
+        // GET: Comment/Details/5
+        [MustBeInRole(Roles = "Administrator")]
         public ActionResult Details(int id)
         {
-            ScoreBLL Score;
+            CommentBLL Comment;
             try
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    Score = ctx.FindScoreByScoreID(id);
-                    if (null == Score)
+                    Comment = ctx.FindCommentByCommentID(id);
+                    if (null == Comment)
                     {
                         return View("ItemNotFound");
                     }
@@ -130,25 +98,25 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Exception = ex;
                 return View("Error");
             }
-            return View(Score);
+            return View(Comment);
         }
-        // GET: Score/Create
+
+        // GET: Comment/Create
         [MustBeInRole(Roles = "Administrator")]
         public ActionResult Create()
         {
-            ScoreBLL defScore = new ScoreBLL();
-            defScore.ScoreID = 0;
+            CommentBLL defComment = new CommentBLL();
+            defComment.CommentID = 0;
             ViewBag.GameName = GetGameItems();
-            ViewBag.UserName = GetUserItems();
-            {
-                return View(defScore);
-            }
+            // ViewBag.UserName = GetGameItems();
+            return View(defComment);
         }
 
-        //POST: Score/Create
-        [MustBeInRole(Roles = "Administrator")]
+
+        // POST: Comment/Create
         [HttpPost]
-        public ActionResult Create(BusinessLogicLayer.ScoreBLL collection)
+        [MustBeInRole(Roles = "Administrator")]
+        public ActionResult Create(BusinessLogicLayer.CommentBLL collection)
         {
             try
             {
@@ -159,7 +127,13 @@ namespace AvalancheGamesWeb.Controllers
                 // TODO: Add insert logic here
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ctx.CreateScore(collection);
+                    UserBLL userRecord = ctx.FindUserByUserName(User.Identity.Name);
+                    if (null == userRecord)
+                    {
+                        return View("UserNotFound");
+                    }
+                    collection.UserID = userRecord.UserID;
+                    ctx.CreateComment(collection);
                 }
                 return RedirectToAction("Index");
             }
@@ -170,17 +144,18 @@ namespace AvalancheGamesWeb.Controllers
             }
         }
 
-        //GET: Score/Edit/5
+
+        // GET: Comment/Edit/5
         [MustBeInRole(Roles = "Administrator")]
         public ActionResult Edit(int id)
         {
-            ScoreBLL Score;
+            CommentBLL Comment;
             try
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    Score = ctx.FindScoreByScoreID(id);
-                    if (null == Score)
+                    Comment = ctx.FindCommentByCommentID(id);
+                    if (null == Comment)
                     {
                         return View("ItemNotFound");
                     }
@@ -191,15 +166,15 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Excption = ex;
                 return View("Error");
             }
-            ViewBag.UserName = GetUserItems();
             ViewBag.GameName = GetGameItems();
-            return View(Score);
+            return View(Comment);
         }
 
-        // POST: Score/Edit/5
+
+        // POST: Comment/Edit/5
         [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
-        public ActionResult Edit(int id, BusinessLogicLayer.ScoreBLL collection)
+        public ActionResult Edit(int id, BusinessLogicLayer.CommentBLL collection)
         {
             try
             {
@@ -210,7 +185,7 @@ namespace AvalancheGamesWeb.Controllers
                 // TODO: Add update logic here
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ctx.UpdateScore(collection);
+                    ctx.UpdateComment(collection);
                 }
                 return RedirectToAction("Index");
             }
@@ -221,17 +196,18 @@ namespace AvalancheGamesWeb.Controllers
             }
         }
 
-        // GET: Score/Delete/5
+
+        // GET: Comment/Delete/5
         [MustBeInRole(Roles = "Administrator")]
         public ActionResult Delete(int id)
         {
-            ScoreBLL Score;
+            CommentBLL Comment;
             try
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    Score = ctx.FindScoreByScoreID(id);
-                    if (null == Score)
+                    Comment = ctx.FindCommentByCommentID(id);
+                    if (null == Comment)
                     {
                         return View("ItemNotFound");
                     }
@@ -242,12 +218,13 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Exception = ex;
                 return View("Error");
             }
-            return View(Score);
+            return View(Comment);
         }
-        // POST: Score/Delete/5
+
+        // POST: Comment/Delete/5
         [MustBeInRole(Roles = "Administrator")]
         [HttpPost]
-        public ActionResult Delete(int id, BusinessLogicLayer.ScoreBLL collection)
+        public ActionResult Delete(int id, BusinessLogicLayer.CommentBLL collection)
         {
             try
             {
@@ -257,7 +234,7 @@ namespace AvalancheGamesWeb.Controllers
                 }
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    ctx.DeleteScore(id);
+                    ctx.DeleteComment(id);
                 }
                 // TODO: Add delete logic here
 
@@ -268,30 +245,6 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Exception = ex;
                 return View("Error");
             }
-        }
-        public ActionResult ScoreStats()
-        {
-            try
-            {
-                List<ScoreBLL> Scores;
-                List<ScoreStats> Model;
-                using (ContextBLL ctx = new ContextBLL())
-                {
-                    int TotalCount = ctx.ObtainScoreCount();
-                    Scores = ctx.GetScores(0, TotalCount);
-                    MeaningfulCalculation mc = new MeaningfulCalculation();
-                    Model = mc.CalculateStats(Scores);
-
-                }
-                return View("ScoreStats", Model);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Exception = ex;
-                return View("Error");
-            }
-
-
         }
     }
 }
