@@ -89,7 +89,7 @@
                     ctx.stroke();
                     ctx.closePath();
                     ctx.beginPath();
-                    ctx.rect(pipes[i].x, pipes[i].y + 75, pipes[i].width, canvas.height);
+                    ctx.rect(pipes[i].x, pipes[i].y + 100, pipes[i].width, canvas.height);
                     ctx.fillStyle = "#22DD22";
                     ctx.fill();
                     ctx.strokeStyle = "#111111";
@@ -112,7 +112,7 @@
 
             function pipeCollision() {
                 for (i = 0; i < pipes.length; i++) {
-                    if ((bird.x + 7 >= pipes[i].x) && (bird.x - 7 <= pipes[i].x + pipes[i].width) && (bird.y - 7 <= pipes[i].y || bird.y + 7 >= pipes[i].y + 75)) {
+                    if ((bird.x + 7 >= pipes[i].x) && (bird.x - 7 <= pipes[i].x + pipes[i].width) && (bird.y - 7 <= pipes[i].y || bird.y + 7 >= pipes[i].y + 100)) {
                         gameOver();
                     } else if (bird.x == pipes[i].x + pipes[i].width / 2) {
                         score++;
