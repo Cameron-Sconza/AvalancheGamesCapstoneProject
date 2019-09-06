@@ -11,9 +11,16 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #8BD0EE; color: #292828 !important">
+    <style>
+       #nav a{
+            color: #292828!important;
+            /*background-color: #8BD0EE;*/
+            font-size: 18px;
+        }
+    </style>
+    <div id="nav" style="color: #292828!important;background-color:#8BD0EE;font-size: 18px;" class="navbar navbar-inverse navbar-fixed-top navbar-custom">
         <div class="container">
-            <div class="navbar-header" style="background-color: #8BD0EE; color: #292828 !important">
+            <div id="nav" style="color: #292828!important;background-color:#8BD0EE;font-size: 18px;" class="navbar-header">
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -27,52 +34,52 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>
-                        <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
                             About
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         </ul>
                         @if (User.IsInRole(Constants.AdminRoleName))
                         {
-                        <li>@Html.ActionLink("Testing", "Index", "ErrorTest", new { area = "" }, new { @class = "navbar-brand" })</li>
-                        <li>@Html.ActionLink("Users", "Index", "User", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li>@Html.ActionLink("Testing", "Index", "ErrorTest")</li>
+                        <li>@Html.ActionLink("Users", "Index", "User")</li>
                         <li>
-                            <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
                                 Games
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Floaty", "Floaty", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("PongBall", "PongBall", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("Snake", "Snake", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                <li>@Html.ActionLink("Floaty", "Floaty", "Game")</li>
+                                <li>@Html.ActionLink("PongBall", "PongBall", "Game")</li>
+                                <li>@Html.ActionLink("Snake", "Snake", "Game")</li>
                             </ul>
                         </li>
 
 
                         <li>
-                            <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
                                 Comments
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Comments", "Index", "Comment", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("MyComments", "Index", "MyComments", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                <li>@Html.ActionLink("Comments", "Index", "Comment")</li>
+                                <li>@Html.ActionLink("MyComments", "Index", "MyComments")</li>
                             </ul>
                         </li>
 
                         <li>
-                            <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
                                 Scores
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Scores", "Index", "Score", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("MyScores", "Index", "MyScores", new { area = "" }, new { @class = "navbar-brand" }) </li>
+                                <li>@Html.ActionLink("Scores", "Index", "Score")</li>
+                                <li>@Html.ActionLink("MyScores", "Index", "MyScores") </li>
 
                             </ul>
                         </li>
@@ -84,72 +91,72 @@
                     {
 
                         <li>
-                            <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
                                 Games
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Floaty", "Floaty", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("PongBall", "PongBall", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("Snake", "Snake", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                <li>@Html.ActionLink("Floaty", "Floaty", "Game")</li>
+                                <li>@Html.ActionLink("PongBall", "PongBall", "Game")</li>
+                                <li>@Html.ActionLink("Snake", "Snake", "Game")</li>
                             </ul>
                         </li>
                         <li>
-                            <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
                                 Comments
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Comments", "Index", "Comment", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("MyComments", "Index", "MyComments", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                <li>@Html.ActionLink("Comments", "Index", "Comment")</li>
+                                <li>@Html.ActionLink("MyComments", "Index", "MyComments")</li>
                             </ul>
                         </li>
                         <li>
-                            <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
                                 Scores
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Scores", "Index", "Score", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                <li>@Html.ActionLink("MyScores", "Index", "MyScores", new { area = "" }, new { @class = "navbar-brand" }) </li>
+                                <li>@Html.ActionLink("Scores", "Index", "Score")</li>
+                                <li>@Html.ActionLink("MyScores", "Index", "MyScores") </li>
 
                             </ul>
                         </li>
 
                     }
                     else if (User.Identity.IsAuthenticated)
-                {
-                    <li>
-                        <a style="background-color: #8BD0EE; color: #292828 !important; font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Games
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("Floaty", "Floaty", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
-                            <li>@Html.ActionLink("PongBall", "PongBall", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
-                            <li>@Html.ActionLink("Snake", "Snake", "Game", new { area = "" }, new { @class = "navbar-brand" })</li>
-                        </ul>
-                    </li>
-                    <li>@Html.ActionLink("MyComments", "Index", "MyComments", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("MyScores", "Index", "MyScores", new { area = "" }, new { @class = "navbar-brand" }) </li>
-                }
-                    @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-                        <li>@Html.ActionLink("Welcome " + User.Identity.Name, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) </li>
-
-                        if (User.Identity.AuthenticationType.StartsWith("ClearText"))
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background-color:#8BD0EE">
+                                Games
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Floaty", "Floaty", "Game")</li>
+                                <li>@Html.ActionLink("PongBall", "PongBall", "Game")</li>
+                                <li>@Html.ActionLink("Snake", "Snake", "Game")</li>
+                            </ul>
+                        </li>
+                        <li>@Html.ActionLink("MyComments", "Index", "MyComments")</li>
+                        <li>@Html.ActionLink("MyScores", "Index", "MyScores") </li>
+                    }
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <li>@Html.ActionLink("HASH Password", "Hash", "Home")</li>
-                        }
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Register", "Register", "RegisterUser", new { area = "" }, new { @class = "navbar-brand" })</li>
-                        <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    }
+                            <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                            <li>@Html.ActionLink("Welcome " + User.Identity.Name, "Index", "Home") </li>
 
-                </ul>
+                            if (User.Identity.AuthenticationType.StartsWith("ClearText"))
+                            {
+                                <li>@Html.ActionLink("HASH Password", "Hash", "Home")</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Register", "Register", "RegisterUser")</li>
+                            <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                        }
+
+                    </ul>
                 </div>
             </div>
         </div>

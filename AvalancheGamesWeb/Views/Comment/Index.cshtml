@@ -17,7 +17,7 @@
 @{
     for (int i = 0; i < CorrectedPageButtonCount; i++)
     {
-        string classstring = (i == PageNumber) ? "btn btn-sm btn-info glyphicon glyphicon-star-empty" : "btn btn-sm btn-normal glyphicon glyphicon-star";
+        string classstring = (i == PageNumber) ? "btn btn-sm btn-info glyphicon glyphicon-star-empty" : "btn btn-sm btn-default glyphicon glyphicon-star";
         @Html.ActionLink($"-Page {i}-", "Page", new { PageNumber = i, PageSize = PageSize }, new { @class = classstring });
         }
     }
@@ -49,7 +49,7 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+            <tr style="color:#8BD0EE">
                 <td hidden>
                     @Html.DisplayFor(modelItem => item.CommentID)
                 </td>
@@ -62,8 +62,8 @@
                 <td hidden>
                     @Html.DisplayFor(modelItem => item.GameID)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Liked)
+                <td >
+                    @Html.CheckBoxFor(modelItem => item.Liked, new { disabled = "disabled", @readonly = "readonly", style="background:white;"})
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GameName)

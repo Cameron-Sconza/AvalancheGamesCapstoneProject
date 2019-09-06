@@ -7,6 +7,7 @@ using AvalancheGamesWeb.Models;
 namespace AvalancheGamesWeb.Controllers
 {
     [MustBeLoggedIn]
+   [MustBeInRole(Roles = "Administrator,PowerUser")]
     public class CommentController : Controller
     {      
         List<SelectListItem> GetUserItems()
