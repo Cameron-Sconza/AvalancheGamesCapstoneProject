@@ -51,7 +51,7 @@ namespace DataAccessLayer
         }
         //method that does all the work
         public UserDAL UserFromReader(System.Data.SqlClient.SqlDataReader reader)
-        {
+        { //mapping the record 
             UserDAL ProposedReturnValue = new UserDAL();
             //primitive type of
             //reader["UserID"]  is very slow and makes a lot of garbage

@@ -67,11 +67,9 @@ textarea {
     background-color: #8BD0EE;
     font-size: 18px;
 }
-.input[type=checkbox]:disabled:after{
-    display:block;
-    background: white;
 
+.MakeCenter{
+    margin: 8%;
+    padding: 2%;
 }
-
-
 

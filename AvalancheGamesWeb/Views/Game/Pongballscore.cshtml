@@ -8,11 +8,37 @@
 You Scored @ViewBag.score
 <br />*@
 
-<h1 class="pageheaders">PongBallScore</h1>
+
+
+    <div class="row">
+        <div class="col-md-offset-4">
+            <div class="col-md-offset-1">
+                <h1 class="pageheaders" style="padding-left:10px; padding-top:20px">PongBallScore</h1>
+                <h2 style="color:#8BD0EE;font-weight:bolder;">You Scored @ViewBag.score</h2>
+            </div>
+            <br />
+            <p style="padding-left:40px;">
+                Like your score?  Go ahead and save it!
+            </p>
+            <div style="padding-left:120px;">@Html.ActionLink("Save Score", "PongBallSaveScore", null, new { @class = "btn btn-info" })</div>
+
+            <p style="margin-top:40px; margin-left:-45px;">Unhappy with your score? Click Try Again and give it another shot</p>
+            <div style="padding-left:130px;">@Html.ActionLink("Try Again", "PongBall", null, new { @class = "btn btn-info" })</div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+@*<h1 class="pageheaders">PongBallScore</h1>
 <h2>You Scored @ViewBag.score</h2>
 
 <br />
 @Html.ActionLink("Save Score", "PongBallSaveScore", null, new { @class = "btn btn-info" })
 @Html.ActionLink("Play Again", "PongBall", null, new { @class = "btn btn-info" })
-@*<form action="~/Controllers/GameController/PongBallResult/@ViewBag.score" method="get" id="form1"></form>
+<form action="~/Controllers/GameController/PongBallResult/@ViewBag.score" method="get" id="form1"></form>
     <button type="submit" form="form1" value="Submit">Click To Save Score</button>*@

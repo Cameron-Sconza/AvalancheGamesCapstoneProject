@@ -1,275 +1,165 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Snake";
 }
 
 <!DOCTYPE html>
-
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Simple JavaScript Snake Game| Webdevtrick.com</title>
-
-    <style>
-        canvas {
-            display: block;
-            position: absolute;
-            border: 5px solid #009BFF;
-            margin: auto;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-        }
-    </style>
+    <title>Snake</title>
 </head>
 <body>
+    <div>
+        <canvas id="game" width="480" height="320"></canvas>
+        <p id="score" style="font-size:36px">Score 0</p>
+    </div>
+    <style>
+         * {
+            padding: 0;
+            margin: 0;
+        }
+          canvas {
+            background-color: #000000;
+            display: block;
+            margin: 0 auto;
+            margin-top: 36px;
+        }
+                p {
+            text-align: center;
+            margin-top: 24px;
+        }
+    </style>
     <script>
-        var
-            COLS = 26,
-            ROWS = 26,
-            EMPTY = 0,
-            SNAKE = 1,
-            FRUIT = 2,
-            LEFT = 0,
-            UP = 1,
-            RIGHT = 2,
-            DOWN = 3,
-            KEY_LEFT = 37,
-            KEY_UP = 38,
-            KEY_RIGHT = 39,
-            KEY_DOWN = 40,
-            canvas,
-            ctx,
-            keystate,
-            frames,
-            score;
+        function randDir() {
+            'use strict';
+            var x = Math.random() * 4;
+            return x - x % 1;
+        }
 
-        grid = {
+        function rnd() {
+            'use strict';
+            var x = (Math.random() * 40);
+            return x - x % 1;
+        }
 
-            width: null,
-            height: null,
-            _grid: null,
+        function drawSquare(ctx, x, y, colour) {
+            'use strict';
+            ctx.fillStyle = colour;
+            ctx.fillRect(x * 11 + 1, y * 11 + 1, 10, 10);
+        }
 
-
-            init: function (d, c, r) {
-                this.width = c;
-                this.height = r;
-
-                this._grid = [];
-                for (var x = 0; x < c; x++) {
-                    this._grid.push([]);
-                    for (var y = 0; y < r; y++) {
-                        this._grid[x].push(d);
-                    }
-                }
-            },
-
-
-            set: function (val, x, y) {
-                this._grid[x][y] = val;
-            },
-
-
-            get: function (x, y) {
-                return this._grid[x][y];
+        function drawSnake(ctx, snake, colour) {
+            'use strict';
+            var i;
+            for (i = 0; i < snake.length; i = i + 1) {
+                drawSquare(ctx, snake[i].x, snake[i].y, colour);
             }
         }
 
-
-        snake = {
-
-            direction: null,
-            last: null,
-            _queue: null,
-
-
-            init: function (d, x, y) {
-                this.direction = d;
-
-                this._queue = [];
-                this.insert(x, y);
-            },
-
-
-            insert: function (x, y) {
-
-                this._queue.unshift({ x: x, y: y });
-                this.last = this._queue[0];
-            },
-
-
-            remove: function () {
-
-                return this._queue.pop();
-            }
-        };
-
-
-        function setFood() {
-            var empty = [];
-
-            for (var x = 0; x < grid.width; x++) {
-                for (var y = 0; y < grid.height; y++) {
-                    if (grid.get(x, y) === EMPTY) {
-                        empty.push({ x: x, y: y });
-                    }
-                }
-            }
-
-            var randpos = empty[Math.round(Math.random() * (empty.length - 1))];
-            grid.set(FRUIT, randpos.x, randpos.y);
+        function pause(ctx) {
+            'use strict';
+            ctx.fillStyle = "rgb(0,0,0)"; //colours the board
+            ctx.fillRect(0, 0, 480, 320);
+            ctx.fillStyle = "rgb(255,255,255)"; //colours the board
+            ctx.font = "bold 20px sans-serif";
+            ctx.fillText("Press spacebar to start", 110, 220);
         }
-
-
-        function main() {
-
-            canvas = document.createElement("canvas");
-            canvas.width = COLS * 20;
-            canvas.height = ROWS * 20;
-            ctx = canvas.getContext("2d");
-
-            document.body.appendChild(canvas);
-
-
-            ctx.font = "12px Helvetica";
-
-            frames = 0;
-            keystate = {};
-
-            document.addEventListener("keydown", function (evt) {
-                keystate[evt.keyCode] = true;
-            });
-            document.addEventListener("keyup", function (evt) {
-                delete keystate[evt.keyCode];
-            });
-
-
-            init();
-            loop();
-        }
-
 
         function init() {
-            score = 0;
-
-            grid.init(EMPTY, COLS, ROWS);
-
-            var sp = { x: Math.floor(COLS / 2), y: ROWS - 1 };
-            snake.init(UP, sp.x, sp.y);
-            grid.set(SNAKE, sp.x, sp.y);
-
-            setFood();
-        }
-
-
-        function loop() {
-            update();
-            draw();
-
-            window.requestAnimationFrame(loop, canvas);
-        }
-
-
-        function update() {
-            frames++;
-
-
-            if (keystate[KEY_LEFT] && snake.direction !== RIGHT) {
-                snake.direction = LEFT;
-            }
-            if (keystate[KEY_UP] && snake.direction !== DOWN) {
-                snake.direction = UP;
-            }
-            if (keystate[KEY_RIGHT] && snake.direction !== LEFT) {
-                snake.direction = RIGHT;
-            }
-            if (keystate[KEY_DOWN] && snake.direction !== UP) {
-                snake.direction = DOWN;
-            }
-
-
-            if (frames % 7 === 0) {
-
-                var nx = snake.last.x;
-                var ny = snake.last.y;
-
-
-                switch (snake.direction) {
-                    case LEFT:
-                        nx--;
-                        break;
-                    case UP:
-                        ny--;
-                        break;
-                    case RIGHT:
-                        nx++;
-                        break;
-                    case DOWN:
-                        ny++;
-                        break;
+            'use strict';
+            var canvas = document.getElementById('game'),
+                ctx = canvas.getContext('2d'),
+                bgSize = 441,
+                bgColour = "rgb(0,0,0)",
+                snakeColour = "rgb(255, 255, 200)",
+                foodColour = "rgb(255, 0, 200)",
+                food,
+                snake = [],
+                direction = randDir(),
+                game = {};
+            //starts the drawning
+            ctx.fillStyle = bgColour;
+            ctx.fillRect(0, 0, bgSize, bgSize);
+            //spawns food and snake
+            food = {
+                x: rnd(),
+                y: rnd()
+            };
+            do {
+                snake.pop();
+                snake.unshift({
+                    x: rnd(),
+                    y: rnd()
+                });
+            } while (snake[0].x === food.x && snake[0].y === food.y);
+            drawSnake(ctx, snake, snakeColour);
+            drawSquare(ctx, food.x, food.y, foodColour);
+            game.score = 0;
+            game.isRunning = false;
+            game.draw = function () {
+                ctx.fillStyle = bgColour; //colours the board
+                ctx.fillRect(0, 0, bgSize, bgSize);
+                drawSquare(ctx, food.x, food.y, foodColour);
+                drawSnake(ctx, snake, snakeColour);
+            };
+            game.update = function () {
+                var i;
+                if (direction === 0) {
+                    snake.unshift({ x: snake[0].x - 1, y: snake[0].y });
+                } else if (direction === 1) {
+                    snake.unshift({ x: snake[0].x, y: snake[0].y - 1 });
+                } else if (direction === 2) {
+                    snake.unshift({ x: snake[0].x + 1, y: snake[0].y });
+                } else if (direction === 3) {
+                    snake.unshift({ x: snake[0].x, y: snake[0].y + 1 });
                 }
-
-
-                if (0 > nx || nx > grid.width - 1 ||
-                    0 > ny || ny > grid.height - 1 ||
-                    grid.get(nx, ny) === SNAKE
-                ) {
-                    //var link = document.createElement('a');
-                    //link.href = ('http://localhost:44348//Game/PongBallResult/');
-                    //document.body.appendChild(link);
-                    //link.click();
-
-                    window.location.href = ('/Game/SnakeResult/' + score);
-
-                }
-
-                if (grid.get(nx, ny) === FRUIT) {
-
-                    score++;
-                    setFood();
-                } else {
-
-                    var tail = snake.remove();
-                    grid.set(EMPTY, tail.x, tail.y);
-                }
-
-                grid.set(SNAKE, nx, ny);
-                snake.insert(nx, ny);
-            }
-        }
-
-
-        function draw() {
-
-            var tw = canvas.width / grid.width;
-            var th = canvas.height / grid.height;
-
-            for (var x = 0; x < grid.width; x++) {
-                for (var y = 0; y < grid.height; y++) {
-
-                    switch (grid.get(x, y)) {
-                        case EMPTY:
-                            ctx.fillStyle = "#fff";
-                            break;
-                        case SNAKE:
-                            ctx.fillStyle = "#333";
-                            break;
-                        case FRUIT:
-                            ctx.fillStyle = "#009BFF";
-                            break;
+                if ((snake[0].x !== food.x) || snake[0].y !== food.y) {
+                    snake.pop(); {
                     }
-                    ctx.fillRect(x * tw, y * th, tw, th);
+                    
+                } else {
+                    game.score = game.score + 1;
+                    food = {
+                        x: rnd(),
+                        y: rnd()
+                    };
                 }
-            }
+                for (i = 1; i < snake.length; i = i + 1) {
+                    if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+                        clearInterval(game.intervalId);
+                    }
+                }
+                if (snake[0].x === 40 || snake[0].x === -1 || snake[0].y === 40 || snake[0].y === -1) {
+                    clearInterval(game.intervalId); {
+                        window.location.href = ('/Game/SnakeResult/' + game.score);
+                    }
+                }
+            };
+            game.run = function () {
+                if (game.isRunning) {
+                    game.update();
+                    game.draw();
+                } else { pause(ctx); }
+                document.getElementById('score').innerHTML = "Score: " + game.score;
+                
+            };
+            //starts game
+            game.intervalId = setInterval(game.run, 1000 / 9);
 
-            ctx.fillStyle = "#000";
-            ctx.fillText("SCORE: " + score, 10, canvas.height - 10);
+            //key listener
+            document.onkeydown = function (e) {
+                var code = e.keyCode - 37;
+                if (code === -5) { game.isRunning = !game.isRunning; }
+                if (0 <= code && code <= 3) {
+                    //if the snake has more than 1 node, it can`t override it (ie: can`t go back the way it came from). That`s why this Math.abs func is used
+                    if (Math.abs(code - direction) !== 2 && snake.length !== 1) {
+                        direction = code;
+                    } else if (snake.length === 1) {
+                        direction = code;
+                    }
+                }
+            };
         }
-
-
-        main();
+        window.onload = init;
     </script>
 </body>
 </html>
-

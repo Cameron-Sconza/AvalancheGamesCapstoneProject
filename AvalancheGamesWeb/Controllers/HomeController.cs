@@ -90,7 +90,7 @@ namespace AvalancheGamesWeb.Controllers
                     Session["AUTHTYPE"] = ValidationType;
                     return Redirect(info.ReturnURL);
                 }
-                info.Message = "The password was incorrect";
+                info.Message = "The UserName or Password was incorrect";
                 return View(info);
             }
         }

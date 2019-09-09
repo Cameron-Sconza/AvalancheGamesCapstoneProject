@@ -8,6 +8,7 @@ using AvalancheGamesWeb.Models;
 namespace AvalancheGamesWeb.Controllers
 {
     [MustBeLoggedIn]
+    [MustBeInRole(Roles = "Administrator,PowerUser")]
     public class ScoreController : Controller
     {
         List<SelectListItem> GetUserItems()
@@ -269,6 +270,7 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
+        [MustBeInRole(Roles = "Administrator,PowerUser")]
         public ActionResult ScoreStats()
         {
             try
