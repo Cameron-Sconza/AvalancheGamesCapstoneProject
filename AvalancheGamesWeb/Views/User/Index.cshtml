@@ -9,10 +9,13 @@
     int CorrectedPageButtonCount = (TotalPageButtonCount > 9) ? 10 : TotalPageButtonCount;
 }
 
-
+<h2 class="pageheaders">Users</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New User", "Create", new { area = "" }, new { @class = "BluetextColor" })
 </p>
+@*<h3>
+        @Html.ActionLink("Create New", "Create")
+    </h3>*@
 @{
     for (int i = 0; i < CorrectedPageButtonCount; i++)
     {

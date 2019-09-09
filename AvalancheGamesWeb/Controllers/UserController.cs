@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace AvalancheGamesWeb.Controllers
 {
-    [AvalancheGamesWeb.Models.MustBeInRole(Roles = Constants.AdminRoleName)]
+    [MustBeInRole(Roles = "Administrator")]
 
     public class UserController : Controller
     {
@@ -49,6 +49,7 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
+        //[MustBeInRole(Roles = "Administrator")]
         // GET: User
         public ActionResult Index()
         {
@@ -111,34 +112,44 @@ namespace AvalancheGamesWeb.Controllers
         [HttpPost]
         public ActionResult Create(Models.CreateUser info)
         {
-            using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
-            {
+            try
+            { 
+            //using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+            //{
                 if (!ModelState.IsValid)
                 {
                     return View(info);
                 }
-                BusinessLogicLayer.UserBLL user = ctx.FindUserByUserName(info.UserName);
-                //if (user != null)
-                //{
-                //    info.Message = $"The EMail Address '{info.Email}' already exists in the database";
-                //    return View(info);
-                //}
-                user = new UserBLL();
-                user.FirstName = info.FirstName;
-                user.LastName = info.LastName;
-                user.UserName = info.UserName;
-                user.DateOfBirth = info.DateOfBirth;
-                user.RoleID = info.RoleID;
-                user.SALT = System.Web.Helpers.Crypto.
-                    GenerateSalt(Constants.SaltSize);
-                user.HASH = System.Web.Helpers.Crypto.
-                    HashPassword(info.Password + user.SALT);
-                user.Email = info.Email;
-                ctx.CreateUser(user);
-                Session["AUTHUserName"] = user.UserName;
-                Session["AUTHRoles"] = user.RoleName;
-                Session["AUTHTYPE"] = "HASHED";
+                using (BusinessLogicLayer.ContextBLL ctx = new BusinessLogicLayer.ContextBLL())
+                {
+                    BusinessLogicLayer.UserBLL user = ctx.FindUserByUserName(info.UserName);
+                    //if (user != null)
+                    //{
+                    //    info.Message = $"The EMail Address '{info.Email}' already exists in the database";
+                    //    return View(info);
+                    //}
+                    user = new UserBLL();
+                    user.FirstName = info.FirstName;
+                    user.LastName = info.LastName;
+                    user.UserName = info.UserName;
+                    user.DateOfBirth = info.DateOfBirth;
+                    user.RoleID = info.RoleID;
+                    user.SALT = System.Web.Helpers.Crypto.
+                        GenerateSalt(Constants.SaltSize);
+                    user.HASH = System.Web.Helpers.Crypto.
+                        HashPassword(info.Password + user.SALT);
+                    user.Email = info.Email;
+                    ctx.CreateUser(user);
+                    Session["AUTHUserName"] = user.UserName;
+                    Session["AUTHRoles"] = user.RoleName;
+                    Session["AUTHTYPE"] = "HASHED";
+                }
                 return RedirectToAction("Index");
+            }
+            catch (Exception Ex)
+            {
+                ViewBag.Exception = Ex;
+                return View("Error");
             }
         }
 
@@ -259,17 +270,17 @@ namespace AvalancheGamesWeb.Controllers
                 return View("Error");
             }
         }
-        public ActionResult Impersonate(string UserName)
+        public ActionResult Impersonate(int id)
         {
             UserBLL user;
             try
             {
                 using (ContextBLL ctx = new ContextBLL())
                 {
-                    user = ctx.FindUserByUserName(UserName);
+                    user = ctx.FindUserByUserID(id);
                     if (null == user)
                     {
-                        return View("ItemNotFound"); // BKW make this view
+                        return View("ItemNotFound"); 
                     }
                     Session["AUTHUserName"] = user.UserName;
                     Session["AUTHRoles"] = user.RoleName;

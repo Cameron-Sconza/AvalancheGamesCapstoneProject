@@ -6,7 +6,7 @@ using AvalancheGamesWeb.Models;
 
 namespace AvalancheGamesWeb.Controllers
 {
-    [MustBeLoggedIn]
+    //[MustBeLoggedIn]
    [MustBeInRole(Roles = "Administrator,PowerUser")]
     public class CommentController : Controller
     {      
@@ -65,7 +65,7 @@ namespace AvalancheGamesWeb.Controllers
             }
         }
 
-
+        [MustBeInRole(Roles = "Administrator,PowerUser")]
 
         // GET: Comment
         public ActionResult Index()

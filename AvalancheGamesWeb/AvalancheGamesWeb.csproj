@@ -237,6 +237,7 @@
     <Content Include="Views\MyComments\Delete.cshtml" />
     <Content Include="Views\MyComments\Edit.cshtml" />
     <Content Include="Views\MyComments\Details.cshtml" />
+    <Content Include="Views\Game\originalsnakecode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

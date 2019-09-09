@@ -152,6 +152,7 @@ namespace AvalancheGamesWeb.Controllers
                 return View();
             }
         }
+        [MustBeInRole(Roles = "Administrator,PowerUser")]
         public ActionResult ScoreStats()
         {
             try

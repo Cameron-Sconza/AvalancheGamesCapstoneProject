@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BusinessLogicLayer;
+using AvalancheGamesWeb.Models;
 
 namespace AvalancheGamesWeb.Controllers
 {
-    [AvalancheGamesWeb.Models.MustBeInRole(Roles = Constants.AdminRoleName)]
+    [MustBeInRole(Roles = "Administrator")]
     public class RoleController : Controller
     {
         public ActionResult Page(int? PageNumber, int? PageSize)
