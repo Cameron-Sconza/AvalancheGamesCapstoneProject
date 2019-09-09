@@ -63,7 +63,7 @@
                     @Html.DisplayFor(modelItem => item.GameID)
                 </td>
                 <td >
-                    @Html.CheckBoxFor(modelItem => item.Liked, new { disabled = "disabled", @readonly = "readonly", style="background:white;"})
+                    @Html.CheckBoxFor(modelItem => item.Liked)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GameName)

@@ -52,22 +52,22 @@ namespace AvalancheGamesWeb.Controllers
         //    }
         //    return ProposedReturnValue;
         //}
-        //List<SelectListItem> GetGameItems()
-        //{
-        //    List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
-        //    using (ContextBLL ctx = new ContextBLL())
-        //    {
-        //        List<GameBLL> games = ctx.GetGames(0, 25);
-        //        foreach (GameBLL game in games)
-        //        {
-        //            SelectListItem item = new SelectListItem();
-        //            item.Value = game.GameID.ToString();
-        //            item.Text = game.GameName;
-        //            ProposedReturnValue.Add(item);
-        //        }
-        //    }
-        //    return ProposedReturnValue;
-        //}
+        List<SelectListItem> GetGameItems()
+        {
+            List<SelectListItem> ProposedReturnValue = new List<SelectListItem>();
+            using (ContextBLL ctx = new ContextBLL())
+            {
+                List<GameBLL> games = ctx.GetGames(0, 25);
+                foreach (GameBLL game in games)
+                {
+                    SelectListItem item = new SelectListItem();
+                    item.Value = game.GameID.ToString();
+                    item.Text = game.GameName;
+                    ProposedReturnValue.Add(item);
+                }
+            }
+            return ProposedReturnValue;
+        }
         // GET: Game
         public ActionResult Index()
         {
@@ -159,6 +159,7 @@ namespace AvalancheGamesWeb.Controllers
                     Game = ctx.FindGameByGameID(id);
                     if (null == Game)
                     {
+                        ViewBag.GameName = GetGameItems();
                         return View("ItemNotFound");
 
                     }
@@ -169,6 +170,7 @@ namespace AvalancheGamesWeb.Controllers
                 ViewBag.Exception = ex;
                 return View("Error");
             }
+            ViewBag.GameName = GetGameItems();
             return View(Game);
         }
 

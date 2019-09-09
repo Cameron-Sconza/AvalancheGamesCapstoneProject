@@ -9,7 +9,7 @@
 </head>
 <body>
     <div>
-        <canvas id="game" width="480" height="320"></canvas>
+        <canvas id="game" width="450" height="450" ></canvas>
         <p id="score" style="font-size:36px">Score 0</p>
     </div>
     <style>
@@ -22,6 +22,9 @@
             display: block;
             margin: 0 auto;
             margin-top: 36px;
+            outline: #8BD0EE 3px solid; 
+            
+
         }
                 p {
             text-align: center;
@@ -68,7 +71,7 @@
             'use strict';
             var canvas = document.getElementById('game'),
                 ctx = canvas.getContext('2d'),
-                bgSize = 441,
+                bgSize = 450,
                 bgColour = "rgb(0,0,0)",
                 snakeColour = "rgb(255, 255, 200)",
                 foodColour = "rgb(255, 0, 200)",
@@ -129,9 +132,8 @@
                     }
                 }
                 if (snake[0].x === 40 || snake[0].x === -1 || snake[0].y === 40 || snake[0].y === -1) {
-                    clearInterval(game.intervalId); {
-                        window.location.href = ('/Game/SnakeResult/' + game.score);
-                    }
+                     window.location.href = ('/Game/SnakeResult/' + game.score);{
+                    }clearInterval(game.intervalId);
                 }
             };
             game.run = function () {
