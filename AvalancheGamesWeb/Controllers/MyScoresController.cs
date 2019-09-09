@@ -9,6 +9,7 @@ using AvalancheGamesWeb.Models;
 namespace AvalancheGamesWeb.Controllers
 {
     [MustBeLoggedIn]
+    [MustBeInRole(Roles = "Administrator,PowerUser,NormalUser")]
     public class MyScoresController : Controller
     {
         public ActionResult Page(int? PageNumber, int? PageSize)
@@ -152,7 +153,7 @@ namespace AvalancheGamesWeb.Controllers
                 return View();
             }
         }
-        [MustBeInRole(Roles = "Administrator,PowerUser")]
+        [MustBeInRole(Roles = "Administrator,PowerUser,NormalUser")]
         public ActionResult ScoreStats()
         {
             try
