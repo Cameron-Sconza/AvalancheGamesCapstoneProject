@@ -37,13 +37,13 @@
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
                 @Html.HiddenFor(model => model.GameID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.HiddenFor(model => model.GameID, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.GameID, "", new { @class = "text-danger" })
                 </div>
-            </div>*@
+            </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Liked, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -57,8 +57,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.GameName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="color:black">
-                @Html.DropDownListFor(model => model.GameID, (IEnumerable<SelectListItem>)ViewBag.GameName, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10" @*style="color:black"*@>
+                @Html.DisplayFor(model => model.GameName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.GameName, "", new { @class = "text-danger" })
             </div>
         </div>

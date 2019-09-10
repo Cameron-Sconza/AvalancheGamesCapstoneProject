@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BusinessLogicLayer
 {
+    //maps from dal
     public class UserBLL
     {
         public UserBLL()
