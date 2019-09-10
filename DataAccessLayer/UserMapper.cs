@@ -10,7 +10,7 @@ namespace DataAccessLayer
     public class UserMapper : Mapper
     {
         //feilds
-        //checking shape (column offset) in database //int is primitive type(bulit in typs are primative)
+        //checking shape (column offset) in database //int is primitive type(bulit in typs are primative) efficient 
         int OffsetToUserID; //expected to be 0
         int OffsetToFirstName; //expected to be 1
         int OffsetToLastName; //expected to be 2
@@ -52,7 +52,7 @@ namespace DataAccessLayer
         //method that does all the work
         public UserDAL UserFromReader(System.Data.SqlClient.SqlDataReader reader)
         { //mapping the record 
-            UserDAL ProposedReturnValue = new UserDAL();
+            UserDAL ProposedReturnValue = new UserDAL(); //instantiating
             //primitive type of
             //reader["UserID"]  is very slow and makes a lot of garbage
             //reader[0] makes a lot of garbage

@@ -27,7 +27,7 @@ namespace BusinessLogicLayer
             {
                 string connectionstring;
                 connectionstring = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnectionString"].ConnectionString;
-                _context.ConnectionString = connectionstring;
+                _context.ConnectionString = connectionstring;//from Web.config
             }
             catch (Exception ex) when (Log(ex))
             {
@@ -49,14 +49,14 @@ namespace BusinessLogicLayer
         #endregion
 
         #region UserBLL
-        public int CreateUser(string FirstName, string LastName, string UserName, string Email, string SALT, string HASH, DateTime DateOfBirth, int RoleID)
+        public int CreateUser(string FirstName, string LastName, string UserName, string Email, string SALT, string HASH, DateTime DateOfBirth, int RoleID)//individual items
         {
             int ProposedReturnValue = -1;
             ProposedReturnValue = _context.CreateUser(FirstName, LastName, UserName, Email, SALT, HASH, DateOfBirth, RoleID);
             return ProposedReturnValue;
         }
         //overloading 
-        public int CreateUser(UserBLL user)
+        public int CreateUser(UserBLL user)//gets entire object, more convenient
         {
             int ProposedReturnValue = -1;
             ProposedReturnValue = _context.CreateUser(user.FirstName, user.LastName, user.UserName, user.Email, user.SALT, user.HASH, user.DateOfBirth, user.RoleID);

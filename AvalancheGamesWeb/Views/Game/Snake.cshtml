@@ -9,8 +9,8 @@
 </head>
 <body>
     <div>
-        <canvas id="game" width="450" height="450" ></canvas>
-        <p id="score" style="font-size:36px">Score 0</p>
+        <canvas id="game" width="441" height="441" ></canvas>
+        <p id="score" style="font-size:30px;padding-bottom:-30px">Score 0</p>
     </div>
     <style>
          * {
@@ -21,14 +21,13 @@
             background-color: #000000;
             display: block;
             margin: 0 auto;
-            margin-top: 36px;
+            margin-top: 30px;
             outline: #8BD0EE 3px solid; 
             
 
         }
                 p {
             text-align: center;
-            margin-top: 24px;
         }
     </style>
     <script>
@@ -61,7 +60,7 @@
         function pause(ctx) {
             'use strict';
             ctx.fillStyle = "rgb(0,0,0)"; //colours the board
-            ctx.fillRect(0, 0, 480, 320);
+            ctx.fillRect(0, 0, 441, 441);
             ctx.fillStyle = "rgb(255,255,255)"; //colours the board
             ctx.font = "bold 20px sans-serif";
             ctx.fillText("Press spacebar to start", 110, 220);
@@ -71,7 +70,7 @@
             'use strict';
             var canvas = document.getElementById('game'),
                 ctx = canvas.getContext('2d'),
-                bgSize = 450,
+                bgSize = 441,
                 bgColour = "rgb(0,0,0)",
                 snakeColour = "rgb(255, 255, 200)",
                 foodColour = "rgb(255, 0, 200)",

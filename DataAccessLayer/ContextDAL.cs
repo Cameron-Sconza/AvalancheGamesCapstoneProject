@@ -302,9 +302,9 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@HASH", HASH);
                     command.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
                     command.Parameters.AddWithValue("@RoleID", RoleID);
-                    command.Parameters["@UserID"].Direction = System.Data.ParameterDirection.Output;
+                    command.Parameters["@UserID"].Direction = System.Data.ParameterDirection.Output; 
                     command.ExecuteNonQuery();
-                    ProposedReturnValue = Convert.ToInt32(command.Parameters["@UserID"].Value);
+                    ProposedReturnValue = Convert.ToInt32(command.Parameters["@UserID"].Value); //userID is extracted from commandParameteers
                 }
             }
             catch (Exception ex) when (Log(ex))
@@ -434,7 +434,7 @@ namespace DataAccessLayer
                     command.Parameters.AddWithValue("@UserName", UserName);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        UserMapper mapper = new UserMapper(reader);
+                        UserMapper mapper = new UserMapper(reader);//instantiates the UserMapper and references sqldatareader
                         int count = 0;
                         while (reader.Read())
                         {
@@ -475,7 +475,7 @@ namespace DataAccessLayer
                     {
                         //verifing the shape 
                         UserMapper mapper = new UserMapper(reader);
-                        //reader.read is the condition and when it returns false it ends the while loop
+                        //reader.read is the condition and when it returns false it ends the loop
                         //reader.read reads the process for SQL
                         while (reader.Read())
                         {

@@ -48,31 +48,38 @@
 
     @foreach (var item in Model)
     {
-        <tr style="color:#8BD0EE">
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.ScoreID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.UserID)
-            </td>
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.GameID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GameName)
-            </td>
+<tr style="color:#8BD0EE">
+    <td hidden>
+        @Html.DisplayFor(modelItem => item.ScoreID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Score)
+    </td>
+    <td hidden>
+        @Html.DisplayFor(modelItem => item.UserID)
+    </td>
+    <td hidden>
+        @Html.DisplayFor(modelItem => item.GameID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.GameName)
+    </td>
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("Administrator"))
+        {
             <td class="reroute">
+
                 @Html.ActionLink("Edit", "Edit", new { id = item.ScoreID }, new { @class = "reroute" }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ScoreID }, new { @class = "reroute" }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ScoreID }, new { @class = "reroute" })
+                
             </td>
+        }
+    }
         </tr>
     }
-
 </table>

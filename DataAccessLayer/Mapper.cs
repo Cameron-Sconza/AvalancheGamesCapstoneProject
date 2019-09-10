@@ -9,7 +9,6 @@ namespace DataAccessLayer
 {
     public class Mapper
     {
-        //what I think is going on here
         //method named Assert is calling a condition with type bool and message with type string 
         public void Assert(bool condition, string message)
         {

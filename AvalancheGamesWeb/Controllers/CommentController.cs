@@ -92,7 +92,7 @@ namespace AvalancheGamesWeb.Controllers
 
 
         // GET: Comment/Details/5
-        [MustBeInRole(Roles = "Administrator")]
+        [MustBeInRole(Roles = "Administrator,PowerUser")]
         public ActionResult Details(int id)
         {
             CommentBLL Comment;
@@ -116,7 +116,7 @@ namespace AvalancheGamesWeb.Controllers
         }
 
         // GET: Comment/Create
-        [MustBeInRole(Roles = "Administrator")]
+        [MustBeInRole(Roles = "Administrator,PowerUser")]
         public ActionResult Create()
         {
             CommentBLL defComment = new CommentBLL();
@@ -129,7 +129,7 @@ namespace AvalancheGamesWeb.Controllers
    
         // POST: Comment/Create
         [HttpPost]
-        [MustBeInRole(Roles = "Administrator")]
+        [MustBeInRole(Roles = "Administrator,PowerUser")]
         public ActionResult Create(BusinessLogicLayer.CommentBLL collection)
         {
             try
